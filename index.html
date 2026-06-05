@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <link rel="manifest" href="manifest.json">
-    
     <link rel="icon" type="image/png" href="logo.png">
 
     <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlZFRVIgRVhQTE9SRVIiLAogICJzaG9ydF9uYW1lIjogIlZFRVItWCIsCiAgInN0YXJ0X3VybCI6ICIuLyIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzAyMDYxNyIsCiAgInRoZW1lX2NvbG9yIjogIiM2MzY2ZjEiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJodHRwczovL2Nkbi1pY29ucy1wbmcuZmxhdGljb24uY29tLzUxMi8xMzg0LzEzODQwNjAucG5nIiwKICAgICAgInNpemVzIjogIjUxMng1MTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9wbmciCiAgICB9CiAgXQp9">
@@ -13,6 +12,7 @@
     <title>VEER EXPLORER | The Ultimate Quantum Suite</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
     <style>
         :root { 
             --bg: #020617; 
@@ -29,7 +29,7 @@
             --nav-bg: rgba(248, 250, 252, 0.8);
         }
         
-body { 
+        body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
             background-color: var(--bg); 
             color: var(--text-main); 
@@ -38,12 +38,12 @@ body {
             width: 100%;
             
             /* --- GLOBAL DESKTOP SCALE FIX --- */
-            zoom: 0.75; /* Chrome, Edge aur Safari ke liye poora page 90% fit karega */
-            -moz-transform: scale(0.75); /* Firefox ke liye scale */
+            zoom: 0.75; 
+            -moz-transform: scale(0.75); 
             -moz-transform-origin: top center;
         }
 
-        /* Responsive Safe-Guard: Mobile screens (tablets aur phones) par scale normal 100% rahega */
+        /* Responsive Safe-Guard */
         @media (max-width: 1024px) {
             body {
                 zoom: 1;
@@ -51,8 +51,6 @@ body {
             }
         }
 
-        /* --- YAHAN CURSOR CHANGE HUA HAI --- */
-        /* DEFAULT DARK MODE (Jab html par .light class NAHI hai) */
         * {
             cursor: url('cursor-white.png'), auto !important;
         }
@@ -60,7 +58,6 @@ body {
             cursor: url('cursor-white.png'), pointer !important;
         }
 
-        /* LIGHT MODE (Jab html par .light class active ho) */
         html.light * {
             cursor: url('cursor.png'), auto !important;
         }
@@ -71,7 +68,6 @@ body {
         html.light textarea {
             cursor: url('cursor.png'), pointer !important;
         }
-        /* ---------------------------------- */
 
         .glass { background: var(--card); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--border); }
         
@@ -87,23 +83,15 @@ body {
             -webkit-text-fill-color: transparent;
         }
 
-        /* --- VEER EXPLORER HERO TEXT ANIMATION (ADDED) --- */
+        /* --- CONTROLLED TEXT ANIMATION INTERFACE --- */
         @keyframes customSlideUp {
-            0% {
-                transform: translateY(100%);
-                opacity: 0;
-            }
-            100% {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            0% { transform: translateY(100%); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
         }
 
-        .animate-slide-up {
-            animation: customSlideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            will-change: transform, opacity; /* 120 FPS buttery smooth performance */
+        .start-hero-anim {
+            animation: customSlideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
         }
-        /* ------------------------------------------------- */
 
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .animate-marquee { animation: marquee 25s linear infinite; }
@@ -116,20 +104,106 @@ body {
         @keyframes pulse-slow { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
         .animate-pulse-slow { animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
 
-        /* Liquid Glass Modal Transitions */
         #contact-modal.flex { display: flex !important; opacity: 1; }
         #modal-content { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
 
-        /* New Animations */
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
         .float-anim { animation: float 6s ease-in-out infinite; }
 
-        /* [ADDITION] Install Button Style */
         #pwaInstallBtn { display: none; }
+
+        /* ==========================================
+           🚀 FIXED COMPONENT: DYNAMIC BACKGROUND LOADER
+           ========================================== */
+        .welcome-loader {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 134vw !important;  
+            height: 134vh !important;
+            background-color: var(--bg) !important; 
+            z-index: 9999999 !important; 
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            transform: translate(0, 0) scale(1) !important;
+            transform-origin: top left !important;
+            transition: transform 0.9s cubic-bezier(0.85, 0, 0.15, 1) !important;
+        }
+
+        .loader-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .loader-svg {
+            animation: spinClockwise 1.5s linear infinite;
+        }
+
+        /* 📊 PROGRESS PERCENTAGE STYLING */
+        .loader-percentage {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(to bottom, #6366f1, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .loader-text {
+            color: var(--text-main); 
+            font-size: 11px;
+            letter-spacing: 6px;
+            font-weight: 800;
+            opacity: 0.6;
+            text-transform: uppercase;
+        }
+
+        .welcome-loader.loaded {
+            transform: translateY(-135vh) !important;
+            pointer-events: none !important;
+        }
+
+        @keyframes spinClockwise {
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 1024px) {
+            .welcome-loader {
+                width: 100vw !important;
+                height: 100vh !important;
+                transform-origin: center center !important;
+            }
+            .welcome-loader.loaded {
+                transform: translateY(-100vh) !important;
+            }
+        }
     </style>
 </head>
 <body class="antialiased">
-<canvas id="trail-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; pointer-events: none;"></canvas>
+
+    <div class="welcome-loader" id="welcomeLoader">
+        <div class="loader-content">
+            <svg class="loader-svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="2" x2="12" y2="6"></line>
+                <line x1="12" y1="18" x2="12" y2="22"></line>
+                <line x1="4.93" y1="4.93" x2="7.05" y2="7.05"></line>
+                <line x1="16.95" y1="16.95" x2="19.07" y2="19.07"></line>
+                <line x1="2" y1="12" x2="6" y2="12"></line>
+                <line x1="18" y1="12" x2="22" y2="12"></line>
+                <line x1="4.93" y1="19.07" x2="7.05" y2="16.95"></line>
+                <line x1="16.95" y1="7.05" x2="19.07" y2="4.93"></line>
+            </svg>
+            <div class="loader-percentage" id="percentCounter">0%</div>
+            <span class="loader-text" id="statusText">Loading System Resources</span>
+        </div>
+    </div>
+
+    <canvas id="trail-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; pointer-events: none;"></canvas>
 
     <nav class="fixed top-0 w-full z-[100] glass border-b px-4 md:px-12 py-5 flex justify-between items-center">
         <div class="text-2xl font-black italic grad-text">VEER EXPLORER_X</div>
@@ -175,13 +249,74 @@ body {
         </div>
 
         <div class="mb-12 overflow-hidden py-4">
-            <h1 class="text-6xl md:text-[140px] font-black tracking-tighter leading-[0.8] select-none animate-slide-up opacity-0">
+            <h1 id="heroText1" class="text-6xl md:text-[140px] font-black tracking-tighter leading-[0.8] select-none opacity-0">
                 LIMITLESS
             </h1>
-            <h1 class="text-6xl md:text-[140px] font-black tracking-tighter leading-[0.8] select-none grad-text animate-slide-up opacity-0" style="animation-delay: 0.25s;">
+            <h1 id="heroText2" class="text-6xl md:text-[140px] font-black tracking-tighter leading-[0.8] select-none grad-text opacity-0">
                 POWER.
             </h1>
         </div>
+    </section>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const percentCounter = document.getElementById('percentCounter');
+            const statusText = document.getElementById('statusText');
+            let currentPercent = 0;
+
+            // Fluid speed acceleration loop simulation
+            const progressInterval = setInterval(() => {
+                // Thoda non-linear random increments generate karne ke liye taaki calculation asli lage
+                let increment = Math.floor(Math.random() * 3) + 1; 
+                currentPercent += increment;
+
+                if (currentPercent >= 100) {
+                    currentPercent = 100;
+                    clearInterval(progressInterval);
+                    percentCounter.textContent = "100%";
+                    statusText.textContent = "LAUNCHING SUITE";
+                    
+                    // 100% hone par direct launch trigger
+                    setTimeout(launchMainApp, 300);
+                } else {
+                    percentCounter.textContent = currentPercent + "%";
+                    
+                    // Percentage ke mutabik status text change text simulation (optional clean interface look)
+                    if(currentPercent > 40 && currentPercent < 75) {
+                        statusText.textContent = "Loading Quantum Cores";
+                    } else if(currentPercent >= 75) {
+                        statusText.textContent = "Finalizing Core Interface";
+                    }
+                }
+            }, 45); // Smooth processing interval
+
+            function launchMainApp() {
+                const globalLoader = document.getElementById('welcomeLoader');
+                if(globalLoader) {
+                    globalLoader.classList.add('loaded'); // Loader upar slide karega
+                }
+
+                // Smoothly unfreeze core UI text animations layer wise
+                setTimeout(() => {
+                    const txt1 = document.getElementById('heroText1');
+                    const txt2 = document.getElementById('heroText2');
+                    
+                    if(txt1) txt1.classList.add('start-hero-anim');
+                    
+                    setTimeout(() => {
+                        if(txt2) txt2.classList.add('start-hero-anim');
+                    }, 250); 
+
+                }, 400);
+            }
+        });
+
+        function toggleMenu() {
+            document.getElementById('mobile-nav').classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
 
         <p class="max-w-2xl mx-auto text-lg md:text-2xl opacity-50 mb-12 leading-relaxed">
             The first cloud OS designed for neural-sync execution. Deploy globally in 200ms with zero configuration overhead.
