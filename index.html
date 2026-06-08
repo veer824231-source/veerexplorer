@@ -204,7 +204,7 @@
     <canvas id="trail-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; pointer-events: none;"></canvas>
 
     <nav class="fixed top-0 w-full z-[100] glass border-b px-4 md:px-12 py-5 flex justify-between items-center">
-        <div class="text-2xl font-black  grad-text">VEER EXPLORER</div>
+        <div class="text-2xl font-black italic grad-text">VEER EXPLORER_X</div>
         
         <div class="hidden lg:flex gap-8 font-bold text-[10px] uppercase tracking-[0.2em] opacity-70">
             <a href="#hero" class="hover:text-indigo-400 transition">Core</a>
@@ -427,7 +427,7 @@
                 <p class="opacity-60 mb-12 text-lg">We don't just host websites; we optimize the entire execution path from server to browser.</p>
                 <div class="space-y-8">
                     <div>
-                        <div class="flex justify-between mb-2 font-bold text-xs uppercase tracking-widest">Veer Explorer Speed</div>
+                        <div class="flex justify-between mb-2 font-bold text-xs uppercase tracking-widest">Veer Explorer_X Speed</div>
                         <div class="w-full h-2 bg-white/10 rounded-full overflow-hidden">
                             <div class="w-[98%] h-full bg-gradient-to-r from-indigo-500 to-cyan-400"></div>
                         </div>
@@ -672,7 +672,7 @@
             <a href="instructions.html" class="opacity-40 hover:opacity-100 text-indigo-300 transition-opacity duration-300">User Instructions</a>
         </div>
 
-        <div class="text-center opacity-20 text-[10px] tracking-[1.5em] font-black uppercase">© 2026 Veer Explorer</div>
+        <div class="text-center opacity-20 text-[10px] tracking-[1.5em] font-black uppercase">© 2026 Veer Explorer_X</div>
     </footer>
 
     <script>
@@ -806,16 +806,23 @@
         }
     }
 </script>
-<!-- MacOS Dock Structure -->
+
 <div id="macos-dock">
-    <a href="https://wa.me/9973997087" target="_blank" class="app-icon"><img src="whatsapp.jpg" alt="WhatsApp"></a>
-    <a href="https://www.instagram.com/yadav._.veer/" target="_blank" class="app-icon"><img src="instagram.jpg" alt="Instagram"></a>
-    <a href="https://www.youtube.com/@DangerEditz19" target="_blank" class="app-icon"><img src="youtube.jpg" alt="YouTube"></a>
-    <a href="https://mail.google.com/mail/u/0/#inbox?compose=jrjtXLFTmZsVjqFcQVmTScnQNlHSVdZJdfcDqpkTfDrBlkbrdlmjZfbRVhHNHtWdSgcZBcxB" target="_blank" class="app-icon"><img src="gmail.jpg" alt="Gmail"></a>
+    <a href="https://web.whatsapp.com" target="_blank" class="app-icon"><img src="whatsapp.jpg" alt="WhatsApp"></a>
+    <a href="https://instagram.com" target="_blank" class="app-icon"><img src="instagram.jpg" alt="Instagram"></a>
+    <a href="https://youtube.com" target="_blank" class="app-icon"><img src="youtube.jpg" alt="YouTube"></a>
+    <a href="https://gmail.com" target="_blank" class="app-icon"><img src="gmail.jpg" alt="Gmail"></a>
+    
+    <a onclick="openAppPhoto(this)" id="photo-icon" class="app-icon" style="cursor: pointer;">
+        <img src="myphoto.jpg" alt="My Photo">
+    </a>
 </div>
 
+<div id="photo-modal" class="fixed inset-0 z-[2000] hidden flex items-center justify-center bg-black/80 backdrop-blur-md opacity-0 transition-opacity duration-300" onclick="closeAppPhoto()">
+    <img src="myphoto.jpg" id="modal-image" style="width: 350px; height: 350px; object-fit: cover; border-radius: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: all 0.5s cubic-bezier(0.2,0.8,0.2,1);">
+</div>
 <style>
-    /* MacOS Dock Styling */
+    /* Tumhara purana Styling same hai */
     #macos-dock {
         position: fixed;
         bottom: 20px;
@@ -824,7 +831,7 @@
         background: rgba(255, 255, 255, 0.05);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
-        border: 2px solid rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         padding: 12px;
         border-radius: 24px;
         display: flex;
@@ -832,35 +839,67 @@
         transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         z-index: 1000;
     }
-    #macos-dock.show {
-        transform: translate(-50%, 0);
-    }
-    .app-icon {
-        width: 50px;
-        height: 50px;
-        border-radius: 12px;
-        overflow: hidden;
-        transition: transform 0.2s ease;
-        cursor: default;
-    }
-    .app-icon:hover {
-        transform: scale(1.2);
-    }
-    .app-icon img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+    #macos-dock.show { transform: translate(-50%, 0); }
+    .app-icon { width: 50px; height: 50px; border-radius: 12px; overflow: hidden; transition: transform 0.3s ease; cursor: pointer; }
+    .app-icon:hover { transform: scale(1.2); }
+    .app-icon img { width: 100%; height: 100%; object-fit: cover; }
 </style>
 
 <script>
-    // MacOS Dock 8-second delay trigger
     window.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             const dock = document.getElementById('macos-dock');
             if(dock) dock.classList.add('show');
-        }, 20000); // 8000ms = 8 seconds delay
+        }, 12000); 
     });
+
+    // Naya Animation Logic
+    function openAppPhoto(element) {
+        const modal = document.getElementById('photo-modal');
+        const img = document.getElementById('modal-image');
+        const iconRect = element.getBoundingClientRect();
+
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+
+        // Icon ki jagah se shuru karo
+        img.style.position = 'fixed';
+        img.style.width = iconRect.width + 'px';
+        img.style.height = iconRect.height + 'px';
+        img.style.top = iconRect.top + 'px';
+        img.style.left = iconRect.left + 'px';
+        img.style.borderRadius = '12px';
+
+setTimeout(() => {
+            modal.classList.add('opacity-100');
+            // Image square aur rounded
+            img.style.width = '350px'; 
+            img.style.height = '350px';
+            img.style.objectFit = 'cover'; // Image ko square mein crop karega
+            img.style.top = '50%';
+            img.style.left = '50%';
+            img.style.transform = 'translate(-50%, -50%)';
+            img.style.borderRadius = '40px'; // Rounded corners
+        }, 50);
+    }
+
+    function closeAppPhoto() {
+        const modal = document.getElementById('photo-modal');
+        const img = document.getElementById('modal-image');
+        const icon = document.getElementById('photo-icon').getBoundingClientRect();
+
+        modal.classList.remove('opacity-100');
+        img.style.width = icon.width + 'px';
+        img.style.height = icon.height + 'px';
+        img.style.top = icon.top + 'px';
+        img.style.left = icon.left + 'px';
+        img.style.borderRadius = '12px';
+
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }, 500);
+    }
 </script>
 </body>
 </html>
