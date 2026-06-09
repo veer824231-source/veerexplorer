@@ -9,7 +9,7 @@
 
     <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlZFRVIgRVhQTE9SRVIiLAogICJzaG9ydF9uYW1lIjogIlZFRVItWCIsCiAgInN0YXJ0X3VybCI6ICIuLyIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzAyMDYxNyIsCiAgInRoZW1lX2NvbG9yIjogIiM2MzY2ZjEiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJodHRwczovL2Nkbi1pY29ucy1wbmcuZmxhdGljb24uY29tLzUxMi8xMzg0LzEzODQwNjAucG5nIiwKICAgICAgInNpemVzIjogIjUxMng1MTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9wbmciCiAgICB9CiAgXQp9">
 
-    <title>VEER EXPLORER | The Ultimate Quantum Suite</title>
+    <title>VEER EXPLORER</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     
@@ -201,10 +201,8 @@
         </div>
     </div>
 
-    <canvas id="trail-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; pointer-events: none;"></canvas>
-
     <nav class="fixed top-0 w-full z-[100] glass border-b px-4 md:px-12 py-5 flex justify-between items-center">
-        <div class="text-2xl font-black italic grad-text">VEER EXPLORER_X</div>
+        <div class="text-2xl font-black bold grad-text">VEER EXPLORER</div>
         
         <div class="hidden lg:flex gap-8 font-bold text-[10px] uppercase tracking-[0.2em] opacity-70">
             <a href="#hero" class="hover:text-indigo-400 transition">Core</a>
@@ -427,7 +425,7 @@
                 <p class="opacity-60 mb-12 text-lg">We don't just host websites; we optimize the entire execution path from server to browser.</p>
                 <div class="space-y-8">
                     <div>
-                        <div class="flex justify-between mb-2 font-bold text-xs uppercase tracking-widest">Veer Explorer_X Speed</div>
+                        <div class="flex justify-between mb-2 font-bold text-xs uppercase tracking-widest">Veer Explorer Speed</div>
                         <div class="w-full h-2 bg-white/10 rounded-full overflow-hidden">
                             <div class="w-[98%] h-full bg-gradient-to-r from-indigo-500 to-cyan-400"></div>
                         </div>
@@ -520,14 +518,14 @@
     <section class="py-40 px-6 max-w-4xl mx-auto">
         <h2 class="text-4xl md:text-6xl font-black mb-20 text-center tracking-tighter">QUANTUM <span class="text-cyan-400">QUERIES.</span></h2>
         <div class="space-y-4">
-            <details class="group glass rounded-3xl p-6 border-white/5 cursor-pointer">
+            <details class="group glass rounded-3xl p-6 border-white/5 cursor-default">
                 <summary class="list-none flex justify-between items-center font-bold text-lg">
                     How is Veer Explorer faster than Vercel?
                     <span class="group-open:rotate-180 transition-transform">↓</span>
                 </summary>
                 <p class="pt-6 opacity-50 text-sm leading-relaxed">Unlike traditional CDNs, Veer uses Neural Sync to pre-cache data based on user behavioral patterns, reducing Time to First Byte (TTFB) to near-zero levels.</p>
             </details>
-            <details class="group glass rounded-3xl p-6 border-white/5 cursor-pointer">
+            <details class="group glass rounded-3xl p-6 border-white/5 cursor-default">
                 <summary class="list-none flex justify-between items-center font-bold text-lg">
                     Is my data encrypted during Sync?
                     <span class="group-open:rotate-180 transition-transform">↓</span>
@@ -672,7 +670,7 @@
             <a href="instructions.html" class="opacity-40 hover:opacity-100 text-indigo-300 transition-opacity duration-300">User Instructions</a>
         </div>
 
-        <div class="text-center opacity-20 text-[10px] tracking-[1.5em] font-black uppercase">© 2026 Veer Explorer_X</div>
+        <div class="text-center opacity-20 text-[10px] tracking-[1.5em] font-black uppercase">© 2026 Veer Explorer</div>
     </footer>
 
     <script>
@@ -745,6 +743,10 @@
     </script>
 <div id="cookie-portal" class="fixed bottom-6 left-6 z-[250] hidden max-w-sm w-[calc(100%-48px)] sm:w-80 p-6 rounded-3xl border border-white/10 bg-black/40 backdrop-blur-xl text-white shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-500 opacity-0 translate-y-4 overflow-hidden html-light:bg-white/60 html-light:text-[#0f172a] html-light:border-black/10 html-light:backdrop-blur-xl">
     
+    <button onclick="acceptSystemCookies()" class="absolute top-4 right-4 z-20 opacity-60 hover:opacity-100 transition-opacity">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+
     <div class="absolute inset-0 pointer-events-none opacity-40 mix-blend-screen overflow-hidden">
         <div class="absolute -top-12 -left-12 w-36 h-36 bg-indigo-500 rounded-full filter blur-[25px] animate-[liquid-one_8s_infinite_alternate]"></div>
         <div class="absolute -bottom-12 -right-12 w-36 h-36 bg-cyan-400 rounded-full filter blur-[25px] animate-[liquid-two_10s_infinite_alternate]"></div>
@@ -763,7 +765,7 @@
 
         <div class="flex items-center justify-between gap-4 pt-3 border-t border-white/10 html-light:border-black/10">
             <a href="privacy.html" class="text-xs font-bold uppercase tracking-wider text-black-400 hover:text-white-300 transition-colors">Privacy Policy</a>
-            <button onclick="acceptSystemCookies()" class="bg-[#06b6d4] text-white font-bold text-xs uppercase tracking-widest px-5 py-2.5 rounded-xl hover:bg-[#0891b2] active:scale-95 transition-all shadow-lg shadow-cyan-500/20 cursor-pointer">Got It</button>
+            <button onclick="acceptSystemCookies()" class="bg-[#06b6d4] text-white font-bold text-xs uppercase tracking-widest px-5 py-2.5 rounded-xl hover:bg-[#0891b2] active:scale-95 transition-all shadow-lg shadow-cyan-500/20 cursor-default">Got It</button>
         </div>
     </div>
 </div>
@@ -780,11 +782,9 @@
 </style>
 
 <script>
-    // 🧠 AUTOMATED LAYER ROUTING WITH 5-SECOND TIME DELAY
     window.addEventListener('DOMContentLoaded', () => {
         const cookieBox = document.getElementById('cookie-portal');
         if (cookieBox) {
-            // Page load hone ke 5 second baad chalega
             setTimeout(() => {
                 cookieBox.classList.remove('hidden');
                 setTimeout(() => {
@@ -795,6 +795,7 @@
         }
     });
 
+    // Ye function ab 'Got It' aur 'X' dono ke liye kaam karega
     function acceptSystemCookies() {
         const cookieBox = document.getElementById('cookie-portal');
         if (cookieBox) {
@@ -813,7 +814,7 @@
     <a href="https://youtube.com" target="_blank" class="app-icon"><img src="youtube.jpg" alt="YouTube"></a>
     <a href="https://gmail.com" target="_blank" class="app-icon"><img src="gmail.jpg" alt="Gmail"></a>
     
-    <a onclick="openAppPhoto(this)" id="photo-icon" class="app-icon" style="cursor: pointer;">
+    <a onclick="openAppPhoto(this)" id="photo-icon" class="app-icon" style="cursor: default;">
         <img src="myphoto.jpg" alt="My Photo">
     </a>
 </div>
@@ -840,7 +841,7 @@
         z-index: 1000;
     }
     #macos-dock.show { transform: translate(-50%, 0); }
-    .app-icon { width: 50px; height: 50px; border-radius: 12px; overflow: hidden; transition: transform 0.3s ease; cursor: pointer; }
+    .app-icon { width: 50px; height: 50px; border-radius: 12px; overflow: hidden; transition: transform 0.3s ease; cursor: default; }
     .app-icon:hover { transform: scale(1.2); }
     .app-icon img { width: 100%; height: 100%; object-fit: cover; }
 </style>
