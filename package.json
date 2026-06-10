@@ -1,11 +1,17 @@
 {
   "name": "Veer Explorer",
   "version": "1.0.0",
-  "description": "Veer Explorer App",
+  "description": "Veer Explorer - Next Gen Cloud OS",
   "main": "index.html",
-  "dependencies": {},
-  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "live-server",
+    "build": "echo 'Building project...'",
+    "deploy": "echo 'Deploying to production...'"
+  },
+  "author": "Veer",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "live-server": "^1.2.1"
   }
 }
