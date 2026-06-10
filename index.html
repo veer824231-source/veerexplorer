@@ -204,7 +204,7 @@
     <nav class="fixed top-0 w-full z-[100] glass border-b px-4 md:px-12 py-5 flex justify-between items-center">
         <div class="flex items-center">
     <a href="#">
-        <img src="logo.png" alt="Veer Explorer Logo" class="h-10 w-auto object-contain">
+        <img id="siteLogo" src="logo-dark.png" alt="Veer Explorer Logo" class="h-10 w-auto object-contain">
     </a>
 <span class="text-sm font-bold tracking-widest uppercase text-cyan-400">.  EXPLORER  .</span>
 </div>
@@ -906,6 +906,24 @@ setTimeout(() => {
             document.body.style.overflow = 'auto';
         }, 500);
     }
+</script>
+<script>
+const themeBtn = document.querySelector('[onclick*="classList.toggle"]');
+const logo = document.getElementById('siteLogo');
+
+function updateLogo() {
+    if (document.documentElement.classList.contains('light')) {
+        logo.src = 'logo.png';
+    } else {
+        logo.src = 'darklogo.png';
+    }
+}
+
+updateLogo();
+
+themeBtn.addEventListener('click', () => {
+    setTimeout(updateLogo, 10);
+});
 </script>
 </body>
 </html>
