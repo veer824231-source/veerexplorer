@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth light">
+<html lang="en" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -835,11 +835,11 @@
         left: 50%;
         transform: translate(-50%, 150px);
         background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px) saturate(250%); -webkit-backdrop-filter: blur(20px) saturate(250%);
         border: 1px solid rgba(255, 255, 255, 0.1);
         padding: 12px;
         border-radius: 24px;
+        border-color: #F8FAFC;
         display: flex;
         gap: 15px;
         transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
@@ -924,6 +924,201 @@ updateLogo();
 themeBtn.addEventListener('click', () => {
     setTimeout(updateLogo, 10);
 });
+</script>
+<script src="https://unpkg.com/lenis@1.1.16/dist/lenis.min.js"></script>
+
+<script>
+const lenis = new Lenis({
+    duration: 2.5,
+    smoothWheel: true,
+    wheelMultiplier: 0.8,
+    touchMultiplier: 1.8
+});
+
+function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+}
+
+requestAnimationFrame(raf);
+</script>
+<style>
+/* Hide default scrollbar */
+html, body{
+    scrollbar-width:none;
+}
+body::-webkit-scrollbar{
+    display:none;
+}
+
+/* Container */
+.vx-scrollbar{
+    position:fixed;
+    right:10px;
+    top:20px;
+    bottom:20px;
+    height:auto;
+    z-index:999999;
+}
+
+/* Glass base rail (invisible but needed for feel) */
+.vx-rail{
+    position:absolute;
+    right:50%;
+    transform:translateX(50%);
+    width:6px;
+    height:100%;
+    border-radius:999px;
+}
+
+/* Liquid thumb */
+.vx-thumb{
+    position:absolute;
+    right:50%;
+    transform:translateX(50%);
+
+    width:14px;
+    height:70px;
+
+    border-radius:999px;
+
+    background: rgba(167,139,250,.6);
+    backdrop-filter:blur(18px) saturate(180%);
+    -webkit-backdrop-filter:blur(18px) saturate(180%);
+
+    border:1px solid rgba(255,255,255,.35);
+
+    box-shadow:
+        0 10px 25px rgba(99,102,241,.25),
+        inset 0 1px 1px rgba(255,255,255,.6);
+
+    top:0;
+
+    transition:
+        top .12s linear,
+        transform .35s cubic-bezier(.22,1,.36,1),
+        width .35s ease,
+        height .35s ease,
+        background .35s ease,
+        backdrop-filter .35s ease,
+        box-shadow .35s ease;
+}
+
+/* CLICK / ACTIVE (iOS toggle style zoom + glass) */
+.vx-thumb.active{
+    width:22px;
+    height:72px;
+
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(35px) saturate(220%);
+    -webkit-backdrop-filter:blur(35px) saturate(220%);
+
+    border:1px solid rgba(255,255,255,.5);
+
+    box-shadow:
+        0 20px 50px rgba(99,102,241,.35),
+        0 0 25px rgba(255,255,255,.2),
+        inset 0 2px 2px rgba(255,255,255,.7);
+
+    transform:translateX(50%) scale(1.08);
+}
+</style>
+
+<div class="vx-scrollbar">
+    <div class="vx-rail"></div>
+    <div class="vx-thumb"></div>
+</div>
+
+<script>
+const thumb = document.querySelector('.vx-thumb');
+
+let dragging = false;
+let startY = 0;
+let startTop = 0;
+
+/* Update position */
+function update(){
+    const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
+    const maxMove = window.innerHeight - thumb.offsetHeight;
+
+    const ratio = window.scrollY / scrollMax;
+    thumb.style.top = (ratio * maxMove) + "px";
+}
+
+/* Scroll sync */
+window.addEventListener("scroll", update);
+
+/* CLICK = zoom glass effect */
+thumb.addEventListener("mousedown", (e)=>{
+    dragging = true;
+    thumb.classList.add("active");
+
+    startY = e.clientY;
+    startTop = parseFloat(thumb.style.top) || 0;
+
+    document.body.style.userSelect = "none";
+});
+
+/* MOVE */
+window.addEventListener("mousemove", (e)=>{
+    if(!dragging) return;
+
+    const maxMove = window.innerHeight - thumb.offsetHeight;
+
+    let top = startTop + (e.clientY - startY);
+    top = Math.max(0, Math.min(top, maxMove));
+
+    thumb.style.top = top + "px";
+
+    const ratio = top / maxMove;
+
+    window.scrollTo({
+        top: ratio * (document.documentElement.scrollHeight - window.innerHeight),
+        behavior: "auto"
+    });
+});
+
+/* RELEASE */
+window.addEventListener("mouseup", ()=>{
+    dragging = false;
+    thumb.classList.remove("active");
+    document.body.style.userSelect = "";
+});
+
+/* TOUCH */
+thumb.addEventListener("touchstart", (e)=>{
+    dragging = true;
+    thumb.classList.add("active");
+
+    startY = e.touches[0].clientY;
+    startTop = parseFloat(thumb.style.top) || 0;
+},{passive:true});
+
+window.addEventListener("touchmove", (e)=>{
+    if(!dragging) return;
+
+    const maxMove = window.innerHeight - thumb.offsetHeight;
+
+    let top = startTop + (e.touches[0].clientY - startY);
+    top = Math.max(0, Math.min(top, maxMove));
+
+    thumb.style.top = top + "px";
+
+    const ratio = top / maxMove;
+
+    window.scrollTo({
+        top: ratio * (document.documentElement.scrollHeight - window.innerHeight),
+        behavior: "auto"
+    });
+},{passive:true});
+
+window.addEventListener("touchend", ()=>{
+    dragging = false;
+    thumb.classList.remove("active");
+});
+
+/* init */
+update();
 </script>
 </body>
 </html>
