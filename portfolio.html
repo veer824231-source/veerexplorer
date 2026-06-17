@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veer • Premium Cinematic Stacking Experience</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    /* Sophisticated Pure Matte Palette */
+    --bg-main: #f8fafc;        /* Infinite light matte surface */
+    --text-dark: #0f172a;      /* Deep midnight text */
+    --text-muted: #64748b;     /* Slate gray details */
+    
+    /* Solid High-Contrast Visual Signals */
+    --brand-indigo: #4f46e5;
+    --brand-coral: #ff6b6b;
+    --brand-mint: #06b6d4;
+    --brand-amber: #f59e0b;
+    --brand-violet: #8b5cf6;
+
+    --card-radius: 40px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Fluid Edge-to-Edge Desktop Settings (Removed Outer Frame Borders) */
+html, body {
+    background-color: var(--bg-main);
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--text-dark);
+    display: flex;
+    padding: 32px;
+    gap: 32px;
+    letter-spacing: -0.02em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* LEFT SIDE PANEL: Clean Static Executive Branding Hub */
+.sidebar-panel {
+    width: 420px;
+    background: #ffffff;
+    border: 10px solid var(--text-dark);
+    border-radius: var(--card-radius);
+    padding: 56px 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    flex-shrink: 0;
+    box-shadow: 0 30px 60px rgba(15, 23, 42, 0.02);
+}
+
+.studio-logo {
+    font-weight: 900;
+    font-size: 1.6rem;
+    letter-spacing: -2px;
+    background: linear-gradient(135deg, var(--brand-indigo), var(--brand-coral));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.avatar-shield {
+    width: 100%;
+    aspect-ratio: 1;
+    background: var(--text-dark);
+    border-radius: calc(var(--card-radius) - 8px);
+    padding: 10px;
+    margin: 36px 0;
+}
+
+.avatar-frame {
+    width: 100%;
+    height: 100%;
+    background: var(--bg-main);
+    border-radius: calc(var(--card-radius) - 16px);
+    overflow: hidden;
+}
+
+.avatar-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sidebar-panel h1 {
+    font-size: 2.6rem;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -2px;
+}
+
+.sidebar-panel h1 span {
+    color: var(--brand-indigo);
+}
+
+.sidebar-panel p {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-top: 16px;
+    font-weight: 500;
+}
+
+.action-trigger {
+    text-decoration: none;
+    background: var(--text-dark);
+    color: #ffffff;
+    text-align: center;
+    padding: 22px;
+    border-radius: 24px;
+    font-weight: 800;
+    font-size: 1.05rem;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    margin-top: auto;
+    border: 3px solid transparent;
+}
+
+.action-trigger:hover {
+    background: transparent;
+    color: var(--text-dark);
+    border-color: var(--text-dark);
+    transform: translateY(-4px);
+}
+
+/* RIGHT SIDE PANEL: Fluid Momentum Stacking Space */
+.scroll-workspace {
+    flex: 1;
+    height: 100%;
+    overflow-y: scroll;
+    padding-right: 12px;
+    scroll-behavior: smooth;
+    scrollbar-width: none;  
+}
+
+.scroll-workspace::-webkit-scrollbar {
+    display: none; 
+}
+
+/* Extended Deep Structural Wrapper */
+.stack-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12vh; /* Expanded height gaps to make it feel naturally longer */
+    padding-bottom: 30vh;
+}
+
+/* THE MASSIVE STICKY STACKING ENGINE CARD */
+.stack-card {
+    position: sticky;
+    border-radius: var(--card-radius);
+    border: 3.5px solid var(--text-dark);
+    padding: 64px;
+    min-height: 520px; /* Made cards significantly taller and bigger */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #ffffff;
+    box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.03);
+    position: relative;
+    overflow: hidden;
+    
+    transform-origin: center top;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+                filter 0.6s ease, 
+                opacity 0.6s ease;
+}
+
+/* Color Mappings */
+.stack-card:nth-child(1) { background: #f5f3ff; top: 0px; }
+.stack-card:nth-child(2) { background: #fff5f5; top: 24px; }
+.stack-card:nth-child(3) { background: #ecfeff; top: 48px; }
+.stack-card:nth-child(4) { background: #fffbeb; top: 72px; }
+.stack-card:nth-child(5) { background: #fdf4ff; top: 96px; }
+
+/* Dynamic Collapse Depth Scale States */
+.stack-card.under-stacked {
+    transform: scale(0.93) translateY(-14px);
+    filter: blur(1.5px) brightness(0.92);
+    opacity: 0.8;
+}
+
+/* GIANT BACKGROUND TYPOGRAPHY DIGITS */
+.giant-number {
+    position: absolute;
+    right: 40px;
+    top: -20px;
+    font-size: 14rem;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -6px;
+    opacity: 0.12; /* Subtle sleek design element */
+    pointer-events: none;
+    user-select: none;
+    color: var(--text-dark);
+    transition: all 0.5s ease;
+}
+
+.stack-card:hover .giant-number {
+    opacity: 0.22;
+    transform: translateY(10px);
+}
+
+/* Inner Layout Architecture */
+.card-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+}
+
+.sub-title-badge {
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-dark);
+}
+
+/* SMOOTH SVG ARROW CONTAINER BUTTON */
+.arrow-action-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--text-dark);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.arrow-action-btn svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    /* Precise kinetic curve for arrow rotation */
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Rotates only the vector on wrapper hover */
+.stack-card:hover .arrow-action-btn svg {
+    transform: rotate(45deg);
+}
+
+.card-main-content {
+    margin-top: 60px;
+    z-index: 2;
+}
+
+.stack-card h2 {
+    font-size: 2.8rem; /* Giant Clean Typography */
+    font-weight: 900;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.stack-card p {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 680px;
+    font-weight: 500;
+}
+
+.progress-track-wrapper {
+    width: 100%;
+    height: 8px;
+    background: rgba(15, 23, 42, 0.06);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 60px;
+    z-index: 2;
+}
+
+.progress-track-fill {
+    height: 100%;
+    border-radius: 20px;
+    width: 0%;
+    transition: width 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* RESPONSIVE FLUID MEDIA MATRIX FOR SCREEN VIEWPORTS */
+@media (max-width: 1100px) {
+    body {
+        flex-direction: column;
+        overflow-y: auto;
+        height: auto;
+        padding: 24px;
+        gap: 24px;
+    }
+    html, body {
+        overflow-y: auto;
+    }
+    .sidebar-panel {
+        width: 100%;
+        height: auto;
+        padding: 44px 32px;
+    }
+    .avatar-shield {
+        width: 140px;
+        margin: 24px 0;
+    }
+    .scroll-workspace {
+        overflow-y: visible;
+        height: auto;
+        width: 100%;
+    }
+    .stack-card {
+        position: relative !important; 
+        top: 0 !important;
+        min-height: auto;
+        padding: 44px 32px;
+        transform: none !important;
+        opacity: 1 !important;
+        filter: none !important;
+    }
+    .giant-number {
+        font-size: 8rem;
+        right: 20px;
+        top: 10px;
+    }
+    .stack-card h2 {
+        font-size: 2.2rem;
+    }
+    .stack-wrapper {
+        gap: 24px;
+    }
+}
+</style>
+</head>
+<body>
+
+    <!-- LEFT SIDEBAR HUB PANEL -->
+    <aside class="sidebar-panel">
+        <div class="studio-logo">VEER SYSTEM</div>
+        <div>
+            <div class="avatar-shield">
+                <div class="avatar-frame">
+                    <img src="myphoto.png" alt="Veer Dynamic Digital Anchor">
+                </div>
+            </div>
+            <h1>I am <span>Veer.</span></h1>
+            <p>Designing expansive high-performance digital environments layered with raw typographic clarity.</p>
+        </div>
+        <a href="mailto:your-email@example.com" class="action-trigger">Establish Protocol</a>
+    </aside>
+
+    <!-- RIGHT EXPANSIVE STACK WORKSPACE -->
+    <main class="scroll-workspace" id="scrollContainer">
+        <div class="stack-wrapper">
+            
+            <!-- Long Card Layer 1 -->
+            <div class="stack-card">
+                <div class="giant-number">1</div>
+                <div class="card-header-row">
+                    <span class="sub-title-badge">Architecture Framework</span>
+                    <div class="arrow-action-btn">
+                        <!-- Clean, Smooth Line-Art Vector SVG -->
+                        <svg viewBox="0 0 24 24">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="card-main-content">
+                    <h2>Advanced Platform Pipeline</h2>
+                    <p>Building specialized low-latency computing models, optimized semantic systems, and lightweight data stream configurations designed entirely for unhindered lightning fast performance execution loops.</p>
+                </div>
+                <div class="progress-track-wrapper">
+                    <div class="progress-track-fill" style="width: 94%; background: var(--brand-indigo);"></div>
+                </div>
+            </div>
+
+            <!-- Long Card Layer 2 -->
+            <div class="stack-card">
+                <div class="giant-number">2</div>
+                <div class="card-header-row">
+                    <span class="sub-title-badge">Performance Auditing</span>
+                    <div class="arrow-action-btn">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="card-main-content">
+                    <h2>Structural System Metrics</h2>
+                    <p>Auditing runtime processing overhead states, assessing asset file transmission matrices, running continuous memory heap diagnostic trees, and tracking interface response delays under massive server loads.</p>
+                </div>
+                <div class="progress-track-wrapper">
+                    <div class="progress-track-fill" style="width: 86%; background: var(--brand-coral);"></div>
+                </div>
+            </div>
+
+            <!-- Long Card Layer 3 -->
+            <div class="stack-card">
+                <div class="giant-number">3</div>
+                <div class="card-header-row">
+                    <span class="sub-title-badge">Asynchronous Routing</span>
+                    <div class="arrow-action-btn">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="card-main-content">
+                    <h2>Hydration Orchestration</h2>
+                    <p>Deploying specialized client state orchestration rules, creating progressive payload optimization nodes, and configuring multi-threaded logic segments to eliminate critical interface rendering blocks.</p>
+                </div>
+                <div class="progress-track-wrapper">
+                    <div class="progress-track-fill" style="width: 78%; background: var(--brand-mint);"></div>
+                </div>
+            </div>
+
+            <!-- Long Card Layer 4 -->
+            <div class="stack-card">
+                <div class="giant-number">4</div>
+                <div class="card-header-row">
+                    <span class="sub-title-badge">Responsive Physics</span>
+                    <div class="arrow-action-btn">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="card-main-content">
+                    <h2>Coordinate Tracking Matrix</h2>
+                    <p>Enforcing absolute canvas coordinate tracking layouts ensuring every graphic interface system remains perfectly anchored within responsive limits without running spatial layout deformation bugs.</p>
+                </div>
+                <div class="progress-track-wrapper">
+                    <div class="progress-track-fill" style="width: 96%; background: var(--brand-amber);"></div>
+                </div>
+            </div>
+
+            <!-- Long Card Layer 5 -->
+            <div class="stack-card">
+                <div class="giant-number">5</div>
+                <div class="card-header-row">
+                    <span class="sub-title-badge">Edge Decentralization</span>
+                    <div class="arrow-action-btn">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="card-main-content">
+                    <h2>Global CDN Compilations</h2>
+                    <p>Compiling clean production-ready application trees across globally distributed server clusters to assure immediate sub-millisecond network retrieval records anywhere in the world.</p>
+                </div>
+                <div class="progress-track-wrapper">
+                    <div class="progress-track-fill" style="width: 100%; background: var(--brand-violet);"></div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const scrollWorkspace = document.getElementById('scrollContainer');
+    const cards = document.querySelectorAll('.stack-card');
+
+    // Smooth High-Performance Stacking Event Hook
+    scrollWorkspace.addEventListener('scroll', () => {
+        cards.forEach((card, index) => {
+            const cardTopPosition = card.getBoundingClientRect().top;
+            
+            // Checks if element locks on the sticky threshold calculation margin
+            if (cardTopPosition <= (24 * index + 34)) { 
+                if(index > 0) {
+                    cards[index - 1].classList.add('under-stacked');
+                }
+            } else {
+                if(index > 0) {
+                    cards[index - 1].classList.remove('under-stacked');
+                }
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>
