@@ -521,7 +521,7 @@
     </section>
 
     <section class="py-40 px-6 max-w-4xl mx-auto">
-        <h2 class="text-4xl md:text-6xl font-black mb-20 text-center tracking-tighter">QUANTUM <span class="text-cyan-400">QUERIES.</span></h2>
+        <h2 class="text-4xl md:text-6xl font-black mb-20 text-center tracking-tighter">(F&Q)QUANTUM <span class="text-cyan-400">QUERIES.</span></h2>
         <div class="space-y-4">
             <details class="group glass rounded-3xl p-6 border-white/5 cursor-default">
                 <summary class="list-none flex justify-between items-center font-bold text-lg">
@@ -669,10 +669,10 @@
 
         <!-- Links are now mapped to separate independent documents -->
         <div class="max-w-7xl mx-auto flex flex-wrap justify-center gap-x-8 gap-y-3 mb-10 text-xs font-bold uppercase tracking-wider">
-            <a href="privacy.html" class="opacity-40 hover:opacity-100 text-indigo-300 transition-opacity duration-300">Privacy Policy</a>
-            <a href="terms.html" class="opacity-40 hover:opacity-100 text-indigo-300 transition-opacity duration-300">Terms & Conditions</a>
-            <a href="cookies.html" class="opacity-40 hover:opacity-100 text-indigo-300 transition-opacity duration-300">Cookie Policy</a>
-            <a href="instructions.html" class="opacity-40 hover:opacity-100 text-indigo-300 transition-opacity duration-300">User Instructions</a>
+            <a href="privacy" class="opacity-40 hover:opacity-100 text-indigo-300 transition-opacity duration-300">Privacy Policy</a>
+            <a href="terms" class="opacity-40 hover:opacity-100 text-indigo-300 transition-opacity duration-300">Terms & Conditions</a>
+            <a href="cookies" class="opacity-40 hover:opacity-100 text-indigo-300 transition-opacity duration-300">Cookie Policy</a>
+            <a href="instructions" class="opacity-40 hover:opacity-100 text-indigo-300 transition-opacity duration-300">User Instructions</a>
         </div>
 
         <div class="text-center opacity-20 text-[10px] tracking-[1.5em] font-black uppercase">© 2026 Veer Explorer</div>
@@ -769,7 +769,7 @@
         </p>
 
         <div class="flex items-center justify-between gap-4 pt-3 border-t border-white/10 html-light:border-black/10">
-            <a href="privacy.html" class="text-xs font-bold uppercase tracking-wider text-black-400 hover:text-white-300 transition-colors">Privacy Policy</a>
+            <a href="privacy" class="text-xs font-bold uppercase tracking-wider text-black-400 hover:text-white-300 transition-colors">Privacy Policy</a>
             <button onclick="acceptSystemCookies()" class="bg-[#06b6d4] text-white font-bold text-xs uppercase tracking-widest px-5 py-2.5 rounded-xl hover:bg-[#0891b2] active:scale-95 transition-all shadow-lg shadow-cyan-500/20 cursor-default">Got It</button>
         </div>
     </div>
@@ -1119,6 +1119,23 @@ window.addEventListener("touchend", ()=>{
 
 /* init */
 update();
+</script>
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+
+    link.addEventListener('click', function(e){
+
+        e.preventDefault();
+
+        const target = this.getAttribute('href');
+
+        lenis.scrollTo(target,{
+            duration:2
+        });
+
+    });
+
+});
 </script>
 </body>
 </html>
