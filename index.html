@@ -942,38 +942,26 @@ function raf(time) {
 
 requestAnimationFrame(raf);
 </script>
-<!-- ===== CUSTOM LIQUID SCROLLBAR START ===== -->
-
 <style>
-/* Hide default scrollbar (all browsers) */
+/* Hide default scrollbar */
 html, body{
-    margin:0;
-    padding:0;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    scrollbar-width:none;
 }
-
 body::-webkit-scrollbar{
-    width:0;
-    height:0;
     display:none;
 }
 
-/* Custom scrollbar container */
+/* Container */
 .vx-scrollbar{
     position:fixed;
     right:10px;
     top:20px;
     bottom:20px;
-    width:18px;
-
-    /* ABOVE EVERYTHING (navbar included) */
-    z-index:50;
-transition:opacity 0.3s ease;
-    pointer-events:auto;
+    height:auto;
+    z-index:999999;
 }
 
-/* Track */
+/* Glass base rail (invisible but needed for feel) */
 .vx-rail{
     position:absolute;
     right:50%;
@@ -981,35 +969,58 @@ transition:opacity 0.3s ease;
     width:6px;
     height:100%;
     border-radius:999px;
-    background:rgba(255,255,255,0.08);
-    backdrop-filter: blur(12px);
-display:none;
 }
 
-/* Thumb */
+/* Liquid thumb */
 .vx-thumb{
     position:absolute;
     right:50%;
     transform:translateX(50%);
-    width:10px;
-    height:50px;
+
+    width:14px;
+    height:70px;
+
     border-radius:999px;
-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    background:linear-gradient(180deg,#a78bfa,#60a5fa,#34d399);
+
+    background: rgba(167,139,250,.6);
+    backdrop-filter:blur(18px) saturate(180%);
+    -webkit-backdrop-filter:blur(18px) saturate(180%);
+
+    border:1px solid rgba(255,255,255,.35);
+
     box-shadow:
         0 10px 25px rgba(99,102,241,.25),
-        inset 0 1px 2px rgba(255,255,255,.6);
+        inset 0 1px 1px rgba(255,255,255,.6);
 
     top:0;
-    cursor:pointer;
+
+    transition:
+        top .12s linear,
+        transform .35s cubic-bezier(.22,1,.36,1),
+        width .35s ease,
+        height .35s ease,
+        background .35s ease,
+        backdrop-filter .35s ease,
+        box-shadow .35s ease;
 }
 
+/* CLICK / ACTIVE (iOS toggle style zoom + glass) */
 .vx-thumb.active{
-    width:20px;
-    height:90px;
-    filter:brightness(1.2);
-    box-shadow:0 20px 50px rgba(99,102,241,.45);
-transform: scale(1.05);
+    width:22px;
+    height:72px;
+
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(35px) saturate(220%);
+    -webkit-backdrop-filter:blur(35px) saturate(220%);
+
+    border:1px solid rgba(255,255,255,.5);
+
+    box-shadow:
+        0 20px 50px rgba(99,102,241,.35),
+        0 0 25px rgba(255,255,255,.2),
+        inset 0 2px 2px rgba(255,255,255,.7);
+
+    transform:translateX(50%) scale(1.08);
 }
 </style>
 
@@ -1019,40 +1030,37 @@ transform: scale(1.05);
 </div>
 
 <script>
-const thumb = document.querySelector(".vx-thumb");
+const thumb = document.querySelector('.vx-thumb');
 
 let dragging = false;
 let startY = 0;
 let startTop = 0;
-let currentTop = 0;
-let targetTop = 0;
 
-function sync(){
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+/* Update position */
+function update(){
+    const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
     const maxMove = window.innerHeight - thumb.offsetHeight;
 
-    const ratio = window.scrollY / maxScroll;
-    targetTop = ratio * maxMove;
+    const ratio = window.scrollY / scrollMax;
+    thumb.style.top = (ratio * maxMove) + "px";
 }
 
-function animate(){
-    currentTop += (targetTop - currentTop) * 0.18;
-    thumb.style.top = currentTop + "px";
-    requestAnimationFrame(animate);
-}
+/* Scroll sync */
+window.addEventListener("scroll", update);
 
-window.addEventListener("scroll", sync);
-
-/* Mouse */
-thumb.addEventListener("mousedown",(e)=>{
+/* CLICK = zoom glass effect */
+thumb.addEventListener("mousedown", (e)=>{
     dragging = true;
     thumb.classList.add("active");
+
     startY = e.clientY;
-    startTop = currentTop;
+    startTop = parseFloat(thumb.style.top) || 0;
+
     document.body.style.userSelect = "none";
 });
 
-window.addEventListener("mousemove",(e)=>{
+/* MOVE */
+window.addEventListener("mousemove", (e)=>{
     if(!dragging) return;
 
     const maxMove = window.innerHeight - thumb.offsetHeight;
@@ -1060,30 +1068,33 @@ window.addEventListener("mousemove",(e)=>{
     let top = startTop + (e.clientY - startY);
     top = Math.max(0, Math.min(top, maxMove));
 
-    targetTop = top;
+    thumb.style.top = top + "px";
 
     const ratio = top / maxMove;
+
     window.scrollTo({
         top: ratio * (document.documentElement.scrollHeight - window.innerHeight),
         behavior: "auto"
     });
 });
 
-window.addEventListener("mouseup",()=>{
+/* RELEASE */
+window.addEventListener("mouseup", ()=>{
     dragging = false;
     thumb.classList.remove("active");
     document.body.style.userSelect = "";
 });
 
-/* Touch */
-thumb.addEventListener("touchstart",(e)=>{
+/* TOUCH */
+thumb.addEventListener("touchstart", (e)=>{
     dragging = true;
     thumb.classList.add("active");
+
     startY = e.touches[0].clientY;
-    startTop = currentTop;
+    startTop = parseFloat(thumb.style.top) || 0;
 },{passive:true});
 
-window.addEventListener("touchmove",(e)=>{
+window.addEventListener("touchmove", (e)=>{
     if(!dragging) return;
 
     const maxMove = window.innerHeight - thumb.offsetHeight;
@@ -1091,24 +1102,23 @@ window.addEventListener("touchmove",(e)=>{
     let top = startTop + (e.touches[0].clientY - startY);
     top = Math.max(0, Math.min(top, maxMove));
 
-    targetTop = top;
+    thumb.style.top = top + "px";
 
     const ratio = top / maxMove;
+
     window.scrollTo({
         top: ratio * (document.documentElement.scrollHeight - window.innerHeight),
         behavior: "auto"
     });
 },{passive:true});
 
-window.addEventListener("touchend",()=>{
+window.addEventListener("touchend", ()=>{
     dragging = false;
     thumb.classList.remove("active");
 });
 
-sync();
-animate();
+/* init */
+update();
 </script>
-
-<!-- ===== CUSTOM LIQUID SCROLLBAR END ===== -->
 </body>
 </html>

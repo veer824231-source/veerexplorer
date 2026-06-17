@@ -1,54 +1,513 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms & Conditions - Veer Explorer</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;900&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b0b0c; }
-        .grad-text {
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms & Conditions • Veer Explorer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#050505;
+    --card:rgba(255,255,255,.05);
+    --border:rgba(255,255,255,.08);
+    --text:#e5e7eb;
+    --muted:#9ca3af;
+    --indigo:#6366f1;
+    --purple:#8b5cf6;
+    --pink:#ec4899;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    background:#050505;
+    color:#fff;
+    overflow-x:hidden;
+}
+
+/* Progress Bar */
+
+#progress{
+    position:fixed;
+    top:0;
+    left:0;
+    width:0%;
+    height:4px;
+    z-index:9999;
+    background:linear-gradient(90deg,#6366f1,#8b5cf6,#ec4899);
+    box-shadow:0 0 25px #8b5cf6;
+}
+
+/* Aurora Background */
+
+.aurora{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    z-index:-2;
+}
+
+.blob{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(120px);
+    opacity:.4;
+    animation:float 18s ease-in-out infinite;
+}
+
+.blob:nth-child(1){
+    width:500px;
+    height:500px;
+    background:#6366f1;
+    top:-150px;
+    left:-150px;
+}
+
+.blob:nth-child(2){
+    width:450px;
+    height:450px;
+    background:#8b5cf6;
+    right:-100px;
+    top:20%;
+}
+
+.blob:nth-child(3){
+    width:500px;
+    height:500px;
+    background:#ec4899;
+    bottom:-200px;
+    left:30%;
+}
+
+@keyframes float{
+    0%,100%{
+        transform:translate(0,0);
+    }
+    50%{
+        transform:translate(60px,-40px);
+    }
+}
+
+.grid{
+    position:fixed;
+    inset:0;
+    background:
+    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+    background-size:50px 50px;
+    z-index:-1;
+    mask-image:radial-gradient(circle at center, black, transparent 90%);
+}
+
+/* Header */
+
+header{
+    max-width:1200px;
+    margin:auto;
+    padding:30px 20px;
+}
+
+.nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-weight:900;
+    letter-spacing:3px;
+}
+
+.back-btn{
+    text-decoration:none;
+    color:white;
+    padding:12px 22px;
+    border-radius:16px;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.04);
+    backdrop-filter:blur(20px);
+    transition:.35s;
+}
+
+.back-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 0 30px rgba(99,102,241,.4);
+}
+
+/* Hero */
+
+.hero{
+    max-width:1200px;
+    margin:auto;
+    padding:80px 20px 50px;
+}
+
+.badge{
+    display:inline-block;
+    padding:10px 18px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.04);
+    margin-bottom:25px;
+    backdrop-filter:blur(20px);
+}
+
+.hero h1{
+    font-size:clamp(3rem,8vw,6rem);
+    font-weight:900;
+    line-height:1;
+    letter-spacing:-3px;
+
+    background:linear-gradient(
+        135deg,
+        #ffffff,
+        #a5b4fc,
+        #c084fc,
+        #f472b6
+    );
+
+    background-size:300% 300%;
+    animation:gradient 8s linear infinite;
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+@keyframes gradient{
+    0%{background-position:0%}
+    100%{background-position:300%}
+}
+
+.hero p{
+    max-width:700px;
+    margin-top:25px;
+    color:#9ca3af;
+    line-height:1.9;
+    font-size:1.05rem;
+}
+
+/* Content */
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+.glass{
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(30px);
+    border-radius:35px;
+    padding:40px;
+}
+
+.card{
+    padding:30px;
+    border-radius:28px;
+    margin-bottom:25px;
+
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.05);
+
+    transition:.4s ease;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(99,102,241,.4);
+    box-shadow:0 20px 40px rgba(99,102,241,.15);
+}
+
+.number{
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:18px;
+    font-weight:800;
+
+    background:linear-gradient(
+        135deg,
+        #6366f1,
+        #8b5cf6
+    );
+}
+
+.card h2{
+    font-size:1.4rem;
+    margin-bottom:15px;
+}
+
+.card p{
+    color:#cbd5e1;
+    line-height:1.9;
+}
+
+/* Footer */
+
+footer{
+    margin-top:80px;
+    border-top:1px solid rgba(255,255,255,.05);
+    padding:40px 20px;
+}
+
+.footer-wrap{
+    max-width:1200px;
+    margin:auto;
+
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.footer-links{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.footer-links a{
+    color:#9ca3af;
+    text-decoration:none;
+}
+
+.footer-links a:hover{
+    color:white;
+}
+
+/* Reveal */
+
+.reveal{
+    opacity:0;
+    transform:translateY(60px);
+    transition:.8s;
+}
+
+.reveal.show{
+    opacity:1;
+    transform:none;
+}
+
+@media(max-width:768px){
+
+.hero{
+    padding-top:50px;
+}
+
+.glass{
+    padding:20px;
+}
+
+.card{
+    padding:20px;
+}
+
+.footer-wrap{
+    flex-direction:column;
+}
+}
+</style>
 </head>
-<body class="text-white/80 min-height-screen flex flex-col justify-between">
+<body>
 
-    <main class="max-w-4xl mx-auto px-6 py-20 w-full">
-        <div class="flex justify-between items-center border-b border-white/5 pb-6 mb-12">
-            <h1 class="text-3xl md:text-4xl font-black italic grad-text uppercase tracking-wide">Terms & Conditions</h1>
-            <a href="index.html" class="text-white/40 hover:text-white font-bold text-xs md:text-sm tracking-widest uppercase border border-white/10 hover:border-white/30 px-4 py-2 rounded-lg bg-white/5 transition-all">&larr; Back To Home</a>
-        </div>
+<div id="progress"></div>
 
-        <div class="space-y-10 text-base md:text-lg leading-relaxed font-medium">
-            <div>
-                <h2 class="font-black text-white text-xl mb-3 uppercase tracking-wider text-indigo-400">1. Technical Agreement and Platform Rights</h2>
-                <p>Welcome to Veer Explorer. Accessing our next-generation infrastructure stacks constitutes mandatory compliance with these Terms. Unauthorized platform modification, script injection, or attempting unauthorized structural access is legally prohibited.</p>
-            </div>
+<div class="aurora">
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+</div>
 
-            <div>
-                <h2 class="font-black text-white text-xl mb-3 uppercase tracking-wider text-indigo-400">2. Resource Allocations & Fair Usage Limitations</h2>
-                <p>Users are assigned dedicated slots across Cloud Nodes and Neural Engine loops. Sustained automated stress patterns, high-frequency script attacks, or artificial load-injection loops designed to intentionally destabilize ecosystem stability will result in instant node termination.</p>
-            </div>
+<div class="grid"></div>
 
-            <div>
-                <h2 class="font-black text-white text-xl mb-3 uppercase tracking-wider text-indigo-400">3. Intellectual Property Rights</h2>
-                <p>All core computational frameworks, unique canvas trail renders, gradient text parameters, PWA architecture schemes, and operational software systems remain the intellectual property of Veer Explorer_X.</p>
-            </div>
+<header>
+    <div class="nav">
+        <div class="logo">VEER EXPLORER</div>
+        <a href="index.html" class="back-btn">← Back Home</a>
+    </div>
+</header>
 
-            <div>
-                <h2 class="font-black text-white text-xl mb-3 uppercase tracking-wider text-indigo-400">4. Complete Liability Disclaimer</h2>
-                <p>Services are strictly offered on an "as-is" structural configuration. We give zero guarantees regarding operational continuity, live zero-latency guarantees, or hardware disruption backups resulting from unstable cluster routing.</p>
-            </div>
-        </div>
-    </main>
+<section class="hero">
 
-    <footer class="py-10 border-t border-white/5 text-center opacity-20 text-[10px] tracking-[1.5em] font-black uppercase">
-        © 2026 Veer Explorer_X
-    </footer>
+    <div class="badge">
+        Legal Agreement & Usage Terms
+    </div>
+
+    <h1>Terms & Conditions</h1>
+
+    <p>
+        By accessing or using Veer Explorer, you agree to comply
+        with these Terms & Conditions. Please review them carefully,
+        as they govern your access to our platform, products,
+        services, and digital experiences.
+    </p>
+
+</section>
+
+<section class="container">
+
+<div class="glass">
+
+    <div class="card reveal">
+        <div class="number">1</div>
+        <h2>Acceptance of Terms</h2>
+        <p>
+            Accessing, browsing, or using Veer Explorer constitutes
+            acceptance of these Terms & Conditions. If you do not
+            agree with any part of these terms, you should discontinue
+            use of the platform immediately.
+        </p>
+    </div>
+
+    <div class="card reveal">
+        <div class="number">2</div>
+        <h2>User Responsibilities</h2>
+        <p>
+            Users are expected to use the platform responsibly,
+            lawfully, and respectfully. Any misuse, abuse,
+            unauthorized access attempts, malicious activity,
+            or interference with platform operations may result
+            in account suspension or permanent restriction.
+        </p>
+    </div>
+
+    <div class="card reveal">
+        <div class="number">3</div>
+        <h2>Intellectual Property</h2>
+        <p>
+            All content, branding, designs, software, visual assets,
+            source code, and platform features remain the exclusive
+            property of Veer Explorer unless otherwise stated.
+            Unauthorized copying, redistribution, or reproduction
+            is prohibited.
+        </p>
+    </div>
+
+    <div class="card reveal">
+        <div class="number">4</div>
+        <h2>Service Availability</h2>
+        <p>
+            We strive to provide reliable access to our services;
+            however, uninterrupted availability cannot be guaranteed.
+            Maintenance, upgrades, security measures, or technical
+            issues may occasionally affect platform accessibility.
+        </p>
+    </div>
+
+    <div class="card reveal">
+        <div class="number">5</div>
+        <h2>Third-Party Links</h2>
+        <p>
+            The platform may contain references or links to
+            third-party resources. We are not responsible for
+            the content, privacy practices, availability, or
+            reliability of external websites or services.
+        </p>
+    </div>
+
+    <div class="card reveal">
+        <div class="number">6</div>
+        <h2>Limitation of Liability</h2>
+        <p>
+            Veer Explorer shall not be liable for any direct,
+            indirect, incidental, consequential, or special
+            damages arising from the use of, or inability to
+            use, the platform and its services.
+        </p>
+    </div>
+
+    <div class="card reveal">
+        <div class="number">7</div>
+        <h2>Termination</h2>
+        <p>
+            We reserve the right to suspend, restrict, or terminate
+            access to the platform at any time if a user violates
+            these terms or engages in activities that threaten the
+            security, integrity, or operation of our services.
+        </p>
+    </div>
+
+    <div class="card reveal">
+        <div class="number">8</div>
+        <h2>Updates to Terms</h2>
+        <p>
+            These Terms & Conditions may be modified periodically.
+            Continued use of the platform following updates
+            constitutes acceptance of the revised terms.
+        </p>
+    </div>
+
+</div>
+
+</section>
+
+<footer>
+
+<div class="footer-wrap">
+
+    <div>
+        © 2026 Veer Explorer
+    </div>
+
+    <div class="footer-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="cookies.html">Cookies</a>
+        <a href="instructions.html">Instructions</a>
+    </div>
+
+</div>
+
+</footer>
+
+<script>
+
+/* Reading Progress */
+
+window.addEventListener('scroll',()=>{
+
+const scrollTop=window.scrollY;
+const height=document.documentElement.scrollHeight-window.innerHeight;
+const progress=(scrollTop/height)*100;
+
+document.getElementById('progress').style.width=progress+'%';
+
+});
+
+/* Reveal Animation */
+
+const observer=new IntersectionObserver(entries=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+entry.target.classList.add('show');
+}
+
+});
+
+},{threshold:.15});
+
+document.querySelectorAll('.reveal').forEach(el=>{
+observer.observe(el);
+});
+
+</script>
 
 </body>
 </html>

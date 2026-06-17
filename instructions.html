@@ -1,54 +1,549 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Instructions - Veer Explorer</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;900&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b0b0c; }
-        .grad-text {
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Instructions • Veer Explorer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#050505;
+    --text:#ffffff;
+    --muted:#9ca3af;
+    --glass:rgba(255,255,255,.05);
+    --border:rgba(255,255,255,.08);
+    --indigo:#6366f1;
+    --purple:#8b5cf6;
+    --pink:#ec4899;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
+}
+
+/* Progress */
+
+#progress{
+    position:fixed;
+    top:0;
+    left:0;
+    width:0%;
+    height:4px;
+    z-index:99999;
+    background:linear-gradient(90deg,var(--indigo),var(--purple),var(--pink));
+    box-shadow:0 0 25px var(--purple);
+}
+
+/* Aurora Background */
+
+.aurora{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    z-index:-2;
+}
+
+.blob{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(120px);
+    opacity:.4;
+    animation:float 20s ease-in-out infinite;
+}
+
+.blob:nth-child(1){
+    width:500px;
+    height:500px;
+    background:var(--indigo);
+    top:-150px;
+    left:-150px;
+}
+
+.blob:nth-child(2){
+    width:450px;
+    height:450px;
+    background:var(--purple);
+    right:-120px;
+    top:20%;
+}
+
+.blob:nth-child(3){
+    width:500px;
+    height:500px;
+    background:var(--pink);
+    bottom:-180px;
+    left:30%;
+}
+
+@keyframes float{
+    0%,100%{
+        transform:translate(0,0);
+    }
+    50%{
+        transform:translate(70px,-50px);
+    }
+}
+
+/* Grid */
+
+.grid{
+    position:fixed;
+    inset:0;
+    background:
+    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+    background-size:50px 50px;
+    mask-image:radial-gradient(circle at center, black, transparent 90%);
+    z-index:-1;
+}
+
+/* Header */
+
+header{
+    max-width:1200px;
+    margin:auto;
+    padding:30px 20px;
+}
+
+.nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-weight:900;
+    letter-spacing:3px;
+}
+
+.back-btn{
+    text-decoration:none;
+    color:white;
+    padding:12px 22px;
+    border-radius:16px;
+    border:1px solid var(--border);
+    background:var(--glass);
+    backdrop-filter:blur(20px);
+    transition:.35s;
+}
+
+.back-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 0 30px rgba(99,102,241,.4);
+}
+
+/* Hero */
+
+.hero{
+    max-width:1200px;
+    margin:auto;
+    padding:80px 20px 50px;
+}
+
+.badge{
+    display:inline-block;
+    padding:10px 18px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:var(--glass);
+    backdrop-filter:blur(20px);
+    margin-bottom:25px;
+}
+
+.hero h1{
+    font-size:clamp(3rem,8vw,6rem);
+    font-weight:900;
+    line-height:1;
+    letter-spacing:-3px;
+
+    background:linear-gradient(
+        135deg,
+        #ffffff,
+        #a5b4fc,
+        #c084fc,
+        #f472b6
+    );
+
+    background-size:300% 300%;
+    animation:gradient 8s linear infinite;
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+@keyframes gradient{
+    from{
+        background-position:0%;
+    }
+    to{
+        background-position:300%;
+    }
+}
+
+.hero p{
+    max-width:700px;
+    margin-top:25px;
+    color:var(--muted);
+    line-height:1.9;
+}
+
+/* Content */
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+.glass{
+    background:var(--glass);
+    border:1px solid var(--border);
+    backdrop-filter:blur(30px);
+    border-radius:35px;
+    padding:40px;
+}
+
+.step{
+    display:flex;
+    gap:25px;
+    padding:28px;
+    margin-bottom:25px;
+    border-radius:28px;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.05);
+    transition:.4s;
+}
+
+.step:hover{
+    transform:translateY(-8px);
+    border-color:rgba(99,102,241,.4);
+    box-shadow:0 20px 50px rgba(99,102,241,.15);
+}
+
+.number{
+    min-width:55px;
+    height:55px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+    font-size:1.1rem;
+    background:linear-gradient(135deg,var(--indigo),var(--purple));
+}
+
+.content h2{
+    margin-bottom:12px;
+    font-size:1.4rem;
+}
+
+.content p{
+    color:#cbd5e1;
+    line-height:1.9;
+}
+
+/* Tips Section */
+
+.tips{
+    margin-top:20px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.tip{
+    padding:24px;
+    border-radius:24px;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.tip h3{
+    margin-bottom:10px;
+    color:#c4b5fd;
+}
+
+.tip p{
+    color:#cbd5e1;
+    line-height:1.7;
+}
+
+/* Footer */
+
+footer{
+    margin-top:80px;
+    border-top:1px solid rgba(255,255,255,.05);
+    padding:40px 20px;
+}
+
+.footer-wrap{
+    max-width:1200px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.footer-links{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.footer-links a{
+    text-decoration:none;
+    color:var(--muted);
+}
+
+.footer-links a:hover{
+    color:white;
+}
+
+/* Reveal */
+
+.reveal{
+    opacity:0;
+    transform:translateY(60px);
+    transition:.8s;
+}
+
+.reveal.show{
+    opacity:1;
+    transform:none;
+}
+
+@media(max-width:768px){
+
+.hero{
+    padding-top:50px;
+}
+
+.glass{
+    padding:20px;
+}
+
+.step{
+    flex-direction:column;
+    gap:15px;
+}
+
+.number{
+    min-width:55px;
+}
+}
+</style>
 </head>
-<body class="text-white/80 min-height-screen flex flex-col justify-between">
+<body>
 
-    <main class="max-w-4xl mx-auto px-6 py-20 w-full">
-        <div class="flex justify-between items-center border-b border-white/5 pb-6 mb-12">
-            <h1 class="text-3xl md:text-4xl font-black italic grad-text uppercase tracking-wide">User Instructions</h1>
-            <a href="index.html" class="text-white/40 hover:text-white font-bold text-xs md:text-sm tracking-widest uppercase border border-white/10 hover:border-white/30 px-4 py-2 rounded-lg bg-white/5 transition-all">&larr; Back To Home</a>
+<div id="progress"></div>
+
+<div class="aurora">
+    <div class="blob"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+</div>
+
+<div class="grid"></div>
+
+<header>
+    <div class="nav">
+        <div class="logo">VEER EXPLORER</div>
+        <a href="index.html" class="back-btn">← Back Home</a>
+    </div>
+</header>
+
+<section class="hero">
+
+    <div class="badge">
+        Getting Started Guide
+    </div>
+
+    <h1>User Instructions</h1>
+
+    <p>
+        Welcome to Veer Explorer. This guide will help you understand
+        the platform, navigate features efficiently, and get the best
+        experience while exploring available tools and services.
+    </p>
+
+</section>
+
+<section class="container">
+
+<div class="glass">
+
+    <div class="step reveal">
+        <div class="number">1</div>
+        <div class="content">
+            <h2>Explore the Platform</h2>
+            <p>
+                Use the navigation menu to access different sections of
+                the platform. Browse available features, tools, and
+                resources through the main interface.
+            </p>
+        </div>
+    </div>
+
+    <div class="step reveal">
+        <div class="number">2</div>
+        <div class="content">
+            <h2>Create or Access Your Account</h2>
+            <p>
+                Sign in to access personalized features, saved settings,
+                and account-specific content. Ensure your information
+                remains accurate and secure.
+            </p>
+        </div>
+    </div>
+
+    <div class="step reveal">
+        <div class="number">3</div>
+        <div class="content">
+            <h2>Customize Your Experience</h2>
+            <p>
+                Adjust preferences, themes, and interface settings to
+                match your workflow. Personalized settings help create a
+                more efficient browsing experience.
+            </p>
+        </div>
+    </div>
+
+    <div class="step reveal">
+        <div class="number">4</div>
+        <div class="content">
+            <h2>Use Available Features</h2>
+            <p>
+                Explore platform tools and services. Follow on-screen
+                instructions whenever performing actions, managing data,
+                or interacting with platform resources.
+            </p>
+        </div>
+    </div>
+
+    <div class="step reveal">
+        <div class="number">5</div>
+        <div class="content">
+            <h2>Keep Your Account Secure</h2>
+            <p>
+                Protect your login credentials and avoid sharing account
+                access with others. Use strong passwords and review
+                account activity regularly.
+            </p>
+        </div>
+    </div>
+
+    <div class="step reveal">
+        <div class="number">6</div>
+        <div class="content">
+            <h2>Contact Support</h2>
+            <p>
+                If you experience issues or need assistance, use the
+                contact section or support channels provided on the
+                platform to receive help.
+            </p>
+        </div>
+    </div>
+
+    <div class="tips reveal">
+
+        <div class="tip">
+            <h3>Performance Tip</h3>
+            <p>
+                Keep your browser updated to ensure optimal performance
+                and compatibility with platform features.
+            </p>
         </div>
 
-        <div class="space-y-10 text-base md:text-lg leading-relaxed font-medium">
-            <div>
-                <h2 class="font-black text-white text-xl mb-3 uppercase tracking-wider text-indigo-400">1. System Setup & Interactive Interface Nav</h2>
-                <p>To engage with our digital infrastructure layer, move your mouse cursor across the main view field to see the interactive responsive trail rendering effect. Use the sidebar header panel controls to browse modular tools.</p>
-            </div>
-
-            <div>
-                <h2 class="font-black text-white text-xl mb-3 uppercase tracking-wider text-indigo-400">2. Progressive Web App (PWA) Setup Guide</h2>
-                <p>For native execution performance directly from your taskbar or mobile home screen, click the **Install App** alert button. The modern service worker layer will instantly cache terminal parameters, unlocking high-speed offline asset rendering capabilities.</p>
-            </div>
-
-            <div>
-                <h2 class="font-black text-white text-xl mb-3 uppercase tracking-wider text-indigo-400">3. Debugging Terminal Performance & Node Checks</h2>
-                <p>Keep a regular check on the network status loop tracker visible inside your node view field. The ping tracker runs an automated script that refreshes every 3000ms. If network response latency displays data metrics exceeding 20ms, try updating your proxy configuration stack.</p>
-            </div>
-
-            <div>
-                <h2 class="font-black text-white text-xl mb-3 uppercase tracking-wider text-indigo-400">4. Contact Modal System Workflow</h2>
-                <p>To reach administrative layers, press the main Contact trigger button. Fill in the data matrix fields and click submit. To close any open portal screens, simply use the clear layout **[ Close ]** tags located at the top-right margins.</p>
-            </div>
+        <div class="tip">
+            <h3>Security Tip</h3>
+            <p>
+                Always verify information before sharing sensitive data
+                and use trusted networks whenever possible.
+            </p>
         </div>
-    </main>
 
-    <footer class="py-10 border-t border-white/5 text-center opacity-20 text-[10px] tracking-[1.5em] font-black uppercase">
-        © 2026 Veer Explorer_X
-    </footer>
+        <div class="tip">
+            <h3>Best Experience</h3>
+            <p>
+                Use a modern browser and stable internet connection to
+                enjoy smooth navigation and faster loading times.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+<footer>
+
+<div class="footer-wrap">
+
+    <div>
+        © 2026 Veer Explorer
+    </div>
+
+    <div class="footer-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="cookies.html">Cookies</a>
+        <a href="instructions.html">Instructions</a>
+    </div>
+
+</div>
+
+</footer>
+
+<script>
+
+/* Progress Bar */
+
+window.addEventListener('scroll',()=>{
+
+const scrollTop=window.scrollY;
+const height=document.documentElement.scrollHeight-window.innerHeight;
+const progress=(scrollTop/height)*100;
+
+document.getElementById('progress').style.width=progress+'%';
+
+});
+
+/* Reveal Animation */
+
+const observer=new IntersectionObserver(entries=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+entry.target.classList.add('show');
+}
+
+});
+
+},{threshold:.15});
+
+document.querySelectorAll('.reveal').forEach(el=>{
+observer.observe(el);
+});
+
+</script>
 
 </body>
 </html>
