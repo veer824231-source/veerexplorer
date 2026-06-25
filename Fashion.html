@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="logo.png">
+    <title>Fashion. - Ultimate Commercial Collection</title>
+    <style>
+html{
+    zoom: 100%;
+}
+/* --- Premium Explore Button Container --- */
+.explore-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 0;
+    width: 100%;
+}
+
+.explore-btn-modern {
+    display: inline-flex;
+    align-items: center;
+    gap: 18px;
+    text-decoration: none;
+    background: #111111; /* Sleek dark base */
+    color: #ffffff;
+    padding: 12px 14px 12px 32px; /* Left me zyada roomy spacing */
+    border-radius: 40px;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.2px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Arrow container jo bubble ki tarah pop karega */
+.btn-arrow-circle {
+    width: 42px;
+    height: 42px;
+    background: #ff5c35; /* Tumhara premium signature orange color */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.btn-arrow-circle svg {
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* --- Premium Interactive Hover Effects --- */
+.explore-btn-modern:hover {
+    background: #000000;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(255, 92, 53, 0.15); /* Orange glowing subtle shadow */
+}
+
+/* Hover hote hi arrow circle bada hokar button ka background banne ki koshish karega */
+.explore-btn-modern:hover .btn-arrow-circle {
+    transform: scale(1.1);
+    background: #ff451a; /* Thoda aur vibrant depth */
+}
+
+/* Arrow thoda sa right me slide karega dynamic feel dene ke liye */
+.explore-btn-modern:hover .btn-arrow-circle svg {
+    transform: translateX(3px);
+}
+
+/* Active click state squeeze micro-interaction */
+.explore-btn-modern:active {
+    transform: translateY(-1px) scale(0.98);
+}
+        /* --- Reset & Base Styles --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #111111;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            zoom: 70%;
+            overflow-x: hidden;
+        }
+
+        /* --- Custom Scrollbar --- */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ddd;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #bbb;
+        }
+
+/* --- High-End Modern Header Base (With Premium Glassmorphism) --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 8%;
+            width: 100%;
+            
+            /* Pure Glass Effect Layout */
+            background-color: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            cursor: default;
+        }
+
+        .logo span {
+            color: #ff5c35;
+        }
+
+        /* --- Liquid Interaction Wrapper (Glass Style) --- */
+        .liquid-nav-wrapper {
+            position: relative;
+            display: flex;
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.05);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+            padding: 6px;
+            border-radius: 30px;
+            filter: url(#liquid-goo);
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #111111;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 10px 24px;
+            position: relative;
+            z-index: 2;
+            transition: color 0.3s cubic-bezier(0.2, 1, 0.2, 1);
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: #FF5C35;
+        }
+
+        /* --- The Dynamic Liquid Capsule --- */
+
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* --- Glass Style Action Buttons --- */
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            cursor: default;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            transition: all 0.3s cubic-bezier(0.2, 1, 0.2, 1);
+            color: #111111;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+        }
+
+        .icon-btn:hover {
+            background-color: #111111;
+            border-color: #111111;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background-color: #ff5c35;
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #ffffff;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 60px 5% 80px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .hero-title {
+            font-size: clamp(42px, 7vw, 80px);
+            font-weight: 800;
+            line-height: 1.05;
+            margin-bottom: 40px;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+        }
+
+        .title-line {
+            display: block;
+            overflow: hidden;
+            height: 1.2em;
+            margin-bottom: -0.1em;
+        }
+
+        .title-line span {
+            display: block;
+            transform: translateY(100%);
+            animation: textReveal 1.2s cubic-bezier(0.2, 1, 0.2, 1) forwards;
+        }
+
+        .line-2 span {
+            animation-delay: 0.15s;
+            color: #ff5c35;
+        }
+
+        /* --- Cards Showcase Layout --- */
+        .cards-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 460px;
+            margin-bottom: 50px;
+        }
+
+        .hero .card {
+            position: absolute;
+            width: 220px;
+            height: 320px;
+            border-radius: 24px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            border: none;
+            cursor: default;
+            transition: transform 0.6s cubic-bezier(0.2, 1, 0.2, 1), box-shadow 0.4s ease, opacity 0.5s ease;
+            opacity: 0;
+            transform: translateY(60px) scale(0.8);
+            will-change: transform, z-index;
+        }
+
+        .cards-container.animated .card {
+            opacity: 1;
+        }
+
+        .cards-container.animated .card-1 { transform: rotate(-22deg) translateX(-420px) translateY(30px); }
+        .cards-container.animated .card-2 { transform: rotate(-13deg) translateX(-220px) translateY(-5px); }
+        .cards-container.animated .card-3 { transform: rotate(-4deg) translateX(-20px) translateY(-25px); z-index: 2; }
+        .cards-container.animated .card-4 { transform: rotate(5deg) translateX(180px) translateY(-15px); z-index: 2; }
+        .cards-container.animated .card-5 { transform: rotate(14deg) translateX(370px) translateY(20px); }
+        .cards-container.animated .card-6 { transform: rotate(24deg) translateX(550px) translateY(55px); }
+
+        .hero .card.active {
+            transform: translateY(-50px) scale(1.15) rotate(0deg) !important;
+            box-shadow: 0 35px 70px rgba(0,0,0,0.2);
+            z-index: 50 !important;
+        }
+
+        .cards-container.has-active .card:not(.active) {
+            opacity: 0.4;
+        }
+
+        .card-img-wrapper {
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            background-color: #eaeaea;
+        }
+
+        .card-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.2, 1, 0.2, 1);
+        }
+
+        .hero .card.active .card-img-wrapper img {
+            transform: scale(1.08);
+        }
+
+        .card-tag {
+            position: absolute;
+            top: 24px;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            z-index: 3;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-left { left: 24px; }
+        .tag-right { right: 24px; }
+        .tag-orange { background-color: #ff5c35; color: white; }
+        .tag-white { background-color: white; color: #111; }
+        .tag-dark { background-color: #111; color: white; }
+
+        .card-1 { background-color: #ffb366; transition-delay: 0.05s; }
+        .card-2 { background-color: #e5e2da; transition-delay: 0.12s; }
+        .card-3 { background-color: #4a85a8; transition-delay: 0.19s; }
+        .card-4 { background-color: #e87b67; transition-delay: 0.26s; }
+        .card-5 { background-color: #82b5aa; transition-delay: 0.33s; }
+        .card-6 { background-color: #ed8b53; transition-delay: 0.40s; }
+
+        .hero-description {
+            font-size: 16px;
+            color: #666;
+            max-width: 540px;
+            line-height: 1.7;
+            margin-bottom: 35px;
+            font-weight: 500;
+            opacity: 0;
+            animation: fadeInUp 1s cubic-bezier(0.2, 1, 0.2, 1) forwards 0.6s;
+        }
+
+        /* --- Brand Stats Section --- */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: #111111;
+            color: #ffffff;
+            padding: 60px 8%;
+            width: 100%;
+            text-align: center;
+            gap: 30px;
+        }
+        .stat-box h3 {
+            font-size: clamp(32px, 4vw, 54px);
+            font-weight: 800;
+            color: #ff5c35;
+            letter-spacing: -1px;
+        }
+        .stat-box p {
+            font-size: 12px;
+            color: #888888;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 5px;
+        }
+
+        /* --- Product Section --- */
+        .product-section {
+            background-color: #ffffff;
+            background-image: 
+                linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+                linear-gradient(to bottom, #e2e8f0 1px, transparent 1px);
+            background-size: 40px 40px; 
+            padding: 100px 8%;
+            width: 100%;
+            border-top: 1px solid #eee;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 42px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+        }
+
+        .section-title span {
+            color: #ff5c35;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 12px;
+        }
+
+        .tab-btn {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #555;
+            cursor: default;
+            transition: all 0.3s cubic-bezier(0.2, 1, 0.2, 1);
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background-color: #111;
+            border-color: #111;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .product-card {
+            background-color: #ffffff;
+            border-radius: 32px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.05);
+            transition: transform 0.6s cubic-bezier(0.2, 1, 0.2, 1), box-shadow 0.6s ease;
+            border: 1px solid #f0f0f0;
+            cursor: default;
+        }
+
+        .product-card:hover {
+            transform: translateY(-14px);
+            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.12);
+        }
+
+        .product-image-frame {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1.15 / 1;
+            margin-bottom: 20px;
+            overflow: hidden;
+            border-radius: 20px;
+            background-color: #eaeaea;
+        }
+
+        .product-image-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: transform 0.7s cubic-bezier(0.2, 1, 0.2, 1), filter 0.5s ease;
+        }
+
+        .product-card:hover .product-image-frame img {
+            transform: scale(1.08);
+            filter: grayscale(0%);
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            font-size: 10px;
+            font-weight: 800;
+            color: #222222;
+            background: #ffffff;
+            padding: 6px 12px;
+            border-radius: 10px;
+            z-index: 5;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .product-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .product-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #111111;
+            letter-spacing: -0.5px;
+        }
+
+        .product-badge-price {
+            font-size: 13px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 20px;
+            color: white;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .product-desc {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #666;
+            font-weight: 400;
+            margin-bottom: 18px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .subtags-row {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .subtag {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 12px;
+        }
+
+        .add-to-cart-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 18px;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: default;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s cubic-bezier(0.2, 1, 0.2, 1), box-shadow 0.3s ease;
+        }
+
+        .add-to-cart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        /* --- Infinite Marquee Loop --- */
+        .marquee-container {
+            background: #ff5c35;
+            color: #ffffff;
+            padding: 24px 0;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            display: flex;
+            border-top: 2px solid #111;
+            border-bottom: 2px solid #111;
+        }
+        .marquee-track {
+            display: flex;
+            animation: infiniteMarquee 25s linear infinite;
+        }
+        .marquee-track span {
+            font-size: 28px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- Cinematic Lookbook Section --- */
+        .lookbook-section {
+            background-color: #ffffff;
+            padding: 100px 8%;
+            width: 100%;
+        }
+        .lookbook-banner {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            background: #f1f3f5;
+            border-radius: 40px;
+            overflow: hidden;
+            min-height: 520px;
+        }
+        .lookbook-content {
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .lookbook-sub {
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #ff5c35;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        .lookbook-content h2 {
+            font-size: clamp(32px, 4vw, 52px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -1.5px;
+        }
+        .lookbook-content p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #555;
+            max-width: 480px;
+            margin-bottom: 35px;
+        }
+        .lookbook-btn {
+            align-self: flex-start;
+            background: #111;
+            color: #fff;
+            border: none;
+            padding: 16px 36px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: default;
+            transition: background 0.3s;
+        }
+        .lookbook-btn:hover { background: #ff5c35; }
+        .lookbook-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* --- Social Community Grid --- */
+        .social-section {
+            background-color: #ffffff;
+            padding: 100px 8%;
+            width: 100%;
+            border-top: 1px solid #eee;
+        }
+        .social-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .social-header h2 {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+        .social-header p { font-size: 15px; color: #666; }
+        .social-header p span { color: #ff5c35; font-weight: 700; }
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .social-item {
+            aspect-ratio: 1 / 1;
+            border-radius: 24px;
+            overflow: hidden;
+            background: #eaeaea;
+        }
+        .social-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .social-item:hover img { transform: scale(1.06); }
+
+        /* --- Premium Footer --- */
+        .footer {
+            background: #111111;
+            color: #ffffff;
+            padding: 80px 8% 40px 8%;
+            width: 100%;
+            margin-top: auto;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 2fr;
+            gap: 50px;
+            border-bottom: 1px solid #222;
+            padding-bottom: 60px;
+        }
+        .footer-brand p {
+            font-size: 14px;
+            color: #aaa;
+            line-height: 1.6;
+            margin-top: 15px;
+            max-width: 260px;
+        }
+        .footer-links h4, .footer-newsletter h4 {
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        .footer-links a {
+            display: block;
+            color: #aaa;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 12px;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover { color: #ff5c35; }
+        .footer-newsletter p {
+            font-size: 14px;
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .newsletter-form {
+            display: flex;
+            background: #222;
+            padding: 6px;
+            border-radius: 14px;
+        }
+        .newsletter-form input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            padding: 10px 15px;
+            width: 100%;
+            font-size: 14px;
+        }
+        .newsletter-form button {
+            background: #ff5c35;
+            color: #fff;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: default;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 30px;
+            font-size: 13px;
+            color: #666;
+        }
+        .footer-legal a {
+            color: #666;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        .footer-legal a:hover { color: #aaa; }
+
+        /* --- Product Detail Overlay --- */
+        .product-detail-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .product-detail-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .detail-card {
+            background: #ffffff;
+            width: 90%;
+            max-width: 850px;
+            border-radius: 32px;
+            padding: 32px;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+            transform: scale(0.7) translateY(50px);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .product-detail-overlay.open .detail-card {
+            transform: scale(1) translateY(0);
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .detail-img-box {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #eaeaea;
+        }
+
+        .detail-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .detail-info-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .detail-badge {
+            align-self: flex-start;
+            font-size: 11px;
+            font-weight: 800;
+            color: #ff5c35;
+            background: #fff0ed;
+            padding: 6px 14px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        #detailTitle {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .detail-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 20px;
+        }
+
+        #detailDesc {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .buy-now-btn {
+            background: #111;
+            color: #fff;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: default;
+            width: 100%;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .buy-now-btn:hover {
+            background: #ff5c35;
+            transform: translateY(-2px);
+        }
+
+        .close-detail-btn {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: #f1f3f5;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: default;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .close-detail-btn:hover {
+            background: #111;
+            color: #fff;
+            transform: rotate(90deg);
+        }
+
+        /* Color Themes Setup */
+        .theme-1 .product-badge-price, .theme-1 .add-to-cart-btn { background-color: #b74635; }
+        .theme-1 .subtag { background-color: #fbebe9; color: #b74635; }
+
+        .theme-2 .product-badge-price, .theme-2 .add-to-cart-btn { background-color: #4e7f99; }
+        .theme-2 .subtag { background-color: #e9f2f6; color: #4e7f99; }
+
+        .theme-3 .product-badge-price, .theme-3 .add-to-cart-btn { background-color: #e66e57; }
+        .theme-3 .subtag { background-color: #fff0ed; color: #e66e57; }
+
+        .theme-4 .product-badge-price, .theme-4 .add-to-cart-btn { background-color: #2d6a4f; }
+        .theme-4 .subtag { background-color: #d8f3dc; color: #2d6a4f; }
+
+        /* --- Keyframe Animations --- */
+        @keyframes textReveal {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes infiniteMarquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* --- Responsive Viewports --- */
+        @media (max-width: 1200px) {
+            .product-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+            .cards-container { height: 380px; transform: scale(0.85); }
+        }
+
+        @media (max-width: 990px) {
+            .product-grid { grid-template-columns: repeat(2, 1fr); }
+            .section-header { flex-direction: column; align-items: flex-start; gap: 25px; }
+            .product-section { padding: 70px 5%; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+        }
+
+        @media (max-width: 900px) {
+            .lookbook-banner { grid-template-columns: 1fr; }
+            .lookbook-content { padding: 40px 30px; }
+            .lookbook-img-box { height: 350px; }
+        }
+
+        @media (max-width: 768px) {
+            .stats-section { grid-template-columns: repeat(2, 1fr); gap: 40px 20px; }
+        }
+
+        /* --- MOBILE RESOLUTION OPTIMIZATION --- */
+        @media (max-width: 600px) {
+            .liquid-nav-wrapper { display: none; }
+            
+            .cards-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; height: auto; transform: none; margin-bottom: 40px; padding: 0 10px; }
+            .hero .card { position: relative; transform: none !important; width: 100%; height: 200px; opacity: 1 !important; padding: 10px; border-radius: 16px; }
+            .card-tag { display: none; }
+
+            /* Smooth Mobile Horizontal Swipe for Products Grid */
+            .product-grid {
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                gap: 16px;
+                padding: 10px 5px 30px 5px;
+                scrollbar-width: none;
+            }
+            .product-grid::-webkit-scrollbar {
+                display: none;
+            }
+            .product-card {
+                flex: 0 0 280px;
+                scroll-snap-align: start;
+            }
+
+            .social-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 35px; }
+            .footer-bottom { flex-direction: column; gap: 15px; text-align: center; }
+            .footer-legal a { margin: 0 10px; }
+
+            .detail-grid { grid-template-columns: 1fr; gap: 20px; }
+            .detail-card { padding: 20px; max-height: 90vh; overflow-y: auto; }
+            #detailTitle { font-size: 28px; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="logo">Fashion<span>.</span></div>
+        
+        <nav class="liquid-nav-wrapper">
+            <div class="liquid-pill"></div>
+            <a href="#" class="nav-item active">Home</a>
+            <a href="#" class="nav-item">Product</a>
+            <a href="#" class="nav-item">About Us</a>
+            <a href="#" class="nav-item">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+            <button class="icon-btn" aria-label="Profile">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </button>
+            <button class="icon-btn" aria-label="Cart">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                <span class="badge">4</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="hero">
+        <h1 class="hero-title">
+            <span class="title-line line-1"><span>The Ultimate</span></span>
+            <span class="title-line line-2"><span>Collections</span></span>
+        </h1>
+
+        <div class="cards-container" id="cardContainer">
+            <div class="card card-1">
+                <span class="card-tag tag-left tag-white">Get upto 30% Off</span>
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=400&q=80" alt="Urban style orange hoodie">
+                </div>
+            </div>
+
+            <div class="card card-2">
+                <span class="card-tag tag-right tag-dark">New Release</span>
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=400&q=80" alt="Minimalist look with mask statement">
+                </div>
+            </div>
+
+            <div class="card card-3">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=400&q=80" alt="Vibrant blue summer wear set">
+                </div>
+            </div>
+
+            <div class="card card-4">
+                <span class="card-tag tag-right tag-white">Top Pick</span>
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=400&q=80" alt="Streetwear white oversize fit">
+                </div>
+            </div>
+
+            <div class="card card-5">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=400&q=80" alt="Contemporary aesthetic pose">
+                </div>
+            </div>
+
+            <div class="card card-6">
+                <span class="card-tag tag-left tag-orange">Best Seller</span>
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=400&q=80" alt="Retro studio outerwear fashion">
+                </div>
+            </div>
+        </div>
+
+        <p class="hero-description">
+            We Do Not Divide Our Collections Into Seasons. We Create New Models Every Week, And We Release Them In Limited Fluid Batches.
+        </p>
+
+        <div class="explore-container">
+    <a href="#" class="explore-btn-modern">
+        <span class="btn-text">Explore More Collection</span>
+        <span class="btn-arrow-circle">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </span>
+    </a>
+</div>
+    </main>
+
+    <section class="stats-section">
+        <div class="stat-box">
+            <h3>10M+</h3>
+            <p>Happy Customers</p>
+        </div>
+        <div class="stat-box">
+            <h3>50+</h3>
+            <p>Global Outlets</p>
+        </div>
+        <div class="stat-box">
+            <h3>99.4%</h3>
+            <p>Satisfaction Rate</p>
+        </div>
+        <div class="stat-box">
+            <h3>Top 1%</h3>
+            <p>Global Fashion Brand</p>
+        </div>
+    </section>
+
+    <section class="product-section">
+        <div class="section-header">
+            <h2 class="section-title">Our Best<br><span>Products</span></h2>
+            <div class="filter-tabs">
+                <button class="tab-btn active">All Products</button>
+                <button class="tab-btn">Trending</button>
+                <button class="tab-btn">Essentials</button>
+            </div>
+        </div>
+
+<div class="product-grid">
+            <div class="product-card theme-1">
+                <div class="product-image-frame">
+                    <span class="category-badge">Premium Outerwear</span>
+                    <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=600&q=80" alt="Aesthetic lookbook">
+                </div>
+                <div class="product-header-row">
+                    <h3 class="product-title">Product 01</h3>
+                    <span class="product-badge-price">¥2,000</span>
+                </div>
+                <p class="product-desc">Crafted from top-tier textiles designed to provide exceptional posture support while ensuring relaxed utility during everyday use.</p>
+                <div class="subtags-row">
+                    <span class="subtag">Cotton Wrap</span>
+                    <span class="subtag">Minimalist</span>
+                </div>
+                <button class="add-to-cart-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    Add To Cart
+                </button>
+            </div>
+
+            <div class="product-card theme-2">
+                <div class="product-image-frame">
+                    <span class="category-badge">Modernist Set</span>
+                    <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80" alt="Architectural clean structure look">
+                </div>
+                <div class="product-header-row">
+                    <h3 class="product-title">Product 02</h3>
+                    <span class="product-badge-price">¥2,400</span>
+                </div>
+                <p class="product-desc">A structured masterpiece incorporating sharp angles, clean seam detailing, and responsive adjustments for continuous comfort.</p>
+                <div class="subtags-row">
+                    <span class="subtag">Structural Fit</span>
+                    <span class="subtag">New Wave</span>
+                </div>
+                <button class="add-to-cart-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    Add To Cart
+                </button>
+            </div>
+
+            <div class="product-card theme-3">
+                <div class="product-image-frame">
+                    <span class="category-badge">Aesthetic Basics</span>
+                    <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80" alt="Macro organic product view">
+                </div>
+                <div class="product-header-row">
+                    <h3 class="product-title">Product 03</h3>
+                    <span class="product-badge-price">¥1,800</span>
+                </div>
+                <p class="product-desc">Earth-conscious design patterns using dyed yarn fibers, guaranteeing a robust canvas that resists structural fading over time.</p>
+                <div class="subtags-row">
+                    <span class="subtag">Earth Tone</span>
+                    <span class="subtag">Organic Canvas</span>
+                </div>
+                <button class="add-to-cart-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    Add To Cart
+                </button>
+            </div>
+
+            <div class="product-card theme-4">
+                <div class="product-image-frame">
+                    <span class="category-badge">Urban Streetwear</span>
+                    <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=600&q=80" alt="Streetwear fit look">
+                </div>
+                <div class="product-header-row">
+                    <h3 class="product-title">Product 04</h3>
+                    <span class="product-badge-price">¥3,100</span>
+                </div>
+                <p class="product-desc">Premium oversized silhouettes crafted from heavy-knit cotton loops, giving the absolute luxury weight feel and style presence.</p>
+                <div class="subtags-row">
+                    <span class="subtag">Heavy Knit</span>
+                    <span class="subtag">Oversized</span>
+                </div>
+                <button class="add-to-cart-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    Add To Cart
+                </button>
+            </div>
+
+            <div class="product-card theme-1">
+                <div class="product-image-frame">
+                    <span class="category-badge">Minimalist Utility</span>
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=600&q=80" alt="Techwear utilitarian piece">
+                </div>
+                <div class="product-header-row">
+                    <h3 class="product-title">Product 05</h3>
+                    <span class="product-badge-price">¥2,750</span>
+                </div>
+                <p class="product-desc">Engineered for dynamic environments featuring smart storage drop zones and water-repellent microfibers for all-weather utility.</p>
+                <div class="subtags-row">
+                    <span class="subtag">Waterproof</span>
+                    <span class="subtag">Tech Utility</span>
+                </div>
+                <button class="add-to-cart-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    Add To Cart
+                </button>
+            </div>
+
+            <div class="product-card theme-2">
+                <div class="product-image-frame">
+                    <span class="category-badge">Heavyweight Basics</span>
+                    <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=600&q=80" alt="Boxy luxury loopback sweater">
+                </div>
+                <div class="product-header-row">
+                    <h3 class="product-title">Product 06</h3>
+                    <span class="product-badge-price">¥1,900</span>
+                </div>
+                <p class="product-desc">A boxy cut knit from authentic 450GSM loopback cotton paneling. Designed to maintain its raw architectural drop drape indefinitely.</p>
+                <div class="subtags-row">
+                    <span class="subtag">450 GSM</span>
+                    <span class="subtag">Boxy Fit</span>
+                </div>
+                <button class="add-to-cart-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    Add To Cart
+                </button>
+            </div>
+
+            <div class="product-card theme-3">
+                <div class="product-image-frame">
+                    <span class="category-badge">Avant-Garde Tailoring</span>
+                    <img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=600&q=80" alt="Avant garde draping coat">
+                </div>
+                <div class="product-header-row">
+                    <h3 class="product-title">Product 07</h3>
+                    <span class="product-badge-price">¥4,200</span>
+                </div>
+                <p class="product-desc">Pushing structural borders with off-center seams, distressed edges, and reactive raw cotton accents for individual expression.</p>
+                <div class="subtags-row">
+                    <span class="subtag">Distressed</span>
+                    <span class="subtag">Raw Edge</span>
+                </div>
+                <button class="add-to-cart-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    Add To Cart
+                </button>
+            </div>
+
+            <div class="product-card theme-4">
+                <div class="product-image-frame">
+                    <span class="category-badge">Modular Lounge</span>
+                    <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=600&q=80" alt="Relaxed oversized fleece set">
+                </div>
+                <div class="product-header-row">
+                    <h3 class="product-title">Product 08</h3>
+                    <span class="product-badge-price">¥2,150</span>
+                </div>
+                <p class="product-desc">Ultra-soft combed fleece blends optimized for structural recovery and adaptive temperature breathing during cold climate switches.</p>
+                <div class="subtags-row">
+                    <span class="subtag">Combed Fleece</span>
+                    <span class="subtag">Thermal Rise</span>
+                </div>
+                <button class="add-to-cart-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    Add To Cart
+                </button>
+            </div>
+
+            <div class="product-card theme-1">
+                <div class="product-image-frame">
+                    <span class="category-badge">Asymmetric Core</span>
+                    <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=600&q=80" alt="Asymmetrical clean t-shirt style">
+                </div>
+                <div class="product-header-row">
+                    <h3 class="product-title">Product 09</h3>
+                    <span class="product-badge-price">¥1,600</span>
+                </div>
+                <p class="product-desc">Redefining daily tees via layered split hem architectures and double-stitch structural borders for higher longevity.</p>
+                <div class="subtags-row">
+                    <span class="subtag">Split Hem</span>
+                    <span class="subtag">Layered Base</span>
+                </div>
+                <button class="add-to-cart-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    Add To Cart
+                </button>
+            </div>
+
+            <div class="product-card theme-2">
+                <div class="product-image-frame">
+                    <span class="category-badge">Lunar Capsule</span>
+                    <img src="https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=600&q=80" alt="Reflective tactical overlay">
+                </div>
+                <div class="product-header-row">
+                    <h3 class="product-title">Product 10</h3>
+                    <span class="product-badge-price">¥3,500</span>
+                </div>
+                <p class="product-desc">Finished with high-visibility reflective yarn weaves and matte structural hardware clips for modern statement aesthetics.</p>
+                <div class="subtags-row">
+                    <span class="subtag">Reflective</span>
+                    <span class="subtag">Matte Alloy</span>
+                </div>
+                <button class="add-to-cart-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    Add To Cart
+                </button>
+            </div>
+        </div>
+
+        <div class="product-detail-overlay" id="detailOverlay">
+            <div class="detail-card">
+                <button class="close-detail-btn" id="closeDetailBtn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <div class="detail-grid">
+                    <div class="detail-img-box">
+                        <img src="" id="detailImage" alt="Product Image">
+                    </div>
+                    <div class="detail-info-box">
+                        <span class="detail-badge" id="detailCategory">Category</span>
+                        <h2 id="detailTitle">Product Name</h2>
+                        <div class="detail-price" id="detailPrice">¥0,000</div>
+                        <p id="detailDesc">Product full description will go here...</p>
+                        
+                        <div class="detail-actions">
+                            <button class="buy-now-btn">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <div class="marquee-container">
+        <div class="marquee-track">
+            <span>NEW ARRIVALS // UP TO 40% OFF // URBAN STREETWEAR // LIMITED FLUID BATCHES // ATTAINABLE LUXURY //&nbsp;</span>
+            <span>NEW ARRIVALS // UP TO 40% OFF // URBAN STREETWEAR // LIMITED FLUID BATCHES // ATTAINABLE LUXURY //&nbsp;</span>
+        </div>
+    </div>
+
+    <section class="lookbook-section">
+        <div class="lookbook-banner">
+            <div class="lookbook-content">
+                <span class="lookbook-sub">Aesthetic Statement</span>
+                <h2>Radical Reality.<br>Expression 2026</h2>
+                <p>Our designs don't just dress the body; they manifest the modern mindset. Uncompromised cuts, extreme detailing, and heavy organic canvas textiles.</p>
+                <button class="lookbook-btn">View Campaign</button>
+            </div>
+            <div class="lookbook-img-box">
+                <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=800&q=80" alt="Cinematic Campaign View">
+            </div>
+        </div>
+    </section>
+
+    <section class="social-section">
+        <div class="social-header">
+            <h2>Shop The Community</h2>
+            <p>Tag <span>@Fashion.Studio</span> on your posts to get featured in our global aesthetic index.</p>
+        </div>
+        <div class="social-grid">
+            <div class="social-item"><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=400&q=80" alt="Gram 1"></div>
+            <div class="social-item"><img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=400&q=80" alt="Gram 2"></div>
+            <div class="social-item"><img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=400&q=80" alt="Gram 3"></div>
+            <div class="social-item"><img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=400&q=80" alt="Gram 4"></div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo" style="color: #fff;">Fashion<span>.</span></div>
+                <p>Architecting future-proof streetwear and modular garments for the global generation.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Collections</h4>
+                <a href="#">Urban Core</a>
+                <a href="#">Heavy Knit Basics</a>
+                <a href="#">Limited Batches</a>
+            </div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <a href="#">Our Story</a>
+                <a href="#">Sustainability</a>
+                <a href="#">Careers</a>
+            </div>
+            <div class="footer-newsletter">
+                <h4>Join The Movement</h4>
+                <p>Subscribe to unlock early drops and private collection keys.</p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Enter your email address">
+                    <button>→</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Fashion Studio Inc. All Rights Reserved.</p>
+            <div class="footer-legal">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+            </div>
+        </div>
+    </footer>
+
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display:none;">
+      <defs>
+        <filter id="liquid-goo">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 25 -10" result="goo" />
+          <feBlend in="SourceGraphic" in2="goo" />
+        </filter>
+      </defs>
+    </svg>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Hero Animation Entry Trigger
+            setTimeout(() => {
+                const container = document.getElementById("cardContainer");
+                if (container) container.classList.add("animated");
+            }, 250);
+
+            // Tabs Interactions
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                });
+            });
+
+            // Hero Deck Click States
+            const cardContainer = document.getElementById("cardContainer");
+            const cards = document.querySelectorAll(".hero .card");
+
+            cards.forEach(card => {
+                card.addEventListener("click", (e) => {
+                    e.stopPropagation(); 
+                    if (card.classList.contains("active")) {
+                        card.classList.remove("active");
+                        cardContainer.classList.remove("has-active");
+                    } else {
+                        cards.forEach(c => c.classList.remove("active"));
+                        card.classList.add("active");
+                        cardContainer.classList.add("has-active");
+                    }
+                });
+            });
+
+            document.addEventListener("click", () => {
+                cards.forEach(c => c.classList.remove("active"));
+                if(cardContainer) cardContainer.classList.remove("has-active");
+            });
+
+            // Production View Overlay Data Injection
+            const overlay = document.getElementById("detailOverlay");
+            const closeBtn = document.getElementById("closeDetailBtn");
+            const productCards = document.querySelectorAll(".product-card");
+
+            const detailImg = document.getElementById("detailImage");
+            const detailTitle = document.getElementById("detailTitle");
+            const detailPrice = document.getElementById("detailPrice");
+            const detailDesc = document.getElementById("detailDesc");
+            const detailCategory = document.getElementById("detailCategory");
+
+            productCards.forEach(card => {
+                card.addEventListener("click", (e) => {
+                    if (e.target.closest('.add-to-cart-btn')) return;
+
+                    const imgUrl = card.querySelector(".product-image-frame img").src;
+                    const category = card.querySelector(".category-badge").innerText;
+                    const title = card.querySelector(".product-title").innerText;
+                    const price = card.querySelector(".product-badge-price").innerText;
+                    const desc = card.querySelector(".product-desc").innerText;
+
+                    detailImg.src = imgUrl;
+                    detailCategory.innerText = category;
+                    detailTitle.innerText = title;
+                    detailPrice.innerText = price;
+                    detailDesc.innerText = desc;
+
+                    overlay.classList.add("open");
+                });
+            });
+
+            closeBtn.addEventListener("click", () => overlay.classList.remove("open"));
+            overlay.addEventListener("click", (e) => {
+                if (e.target === overlay) overlay.classList.remove("open");
+            });
+
+            // Liquid Navigation Physics Engine
+            const navWrapper = document.querySelector('.liquid-nav-wrapper');
+            const navItems = document.querySelectorAll('.nav-item');
+            const liquidPill = document.querySelector('.liquid-pill');
+
+            function movePill(targetElement) {
+                if (!targetElement) return;
+                const wrapperRect = navWrapper.getBoundingClientRect();
+                const targetRect = targetElement.getBoundingClientRect();
+                const relativeLeft = targetRect.left - wrapperRect.left;
+                
+                liquidPill.style.left = `${relativeLeft}px`;
+                liquidPill.style.width = `${targetRect.width}px`;
+            }
+
+            const activeItem = document.querySelector('.nav-item.active');
+            if (activeItem) movePill(activeItem);
+
+            navItems.forEach(item => {
+                item.addEventListener('mouseenter', (e) => movePill(e.target));
+                item.addEventListener('click', (e) => {
+                    navItems.forEach(t => t.classList.remove('active'));
+                    e.target.classList.add('active');
+                });
+            });
+
+            navWrapper.addEventListener('mouseleave', () => {
+                const currentActive = document.querySelector('.nav-item.active');
+                if (currentActive) movePill(currentActive);
+            });
+        });
+    </script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
+
+<script>
+const lenis = new Lenis({
+  autoRaf: true,
+  duration: 2,
+  smoothWheel: true,
+  wheelMultiplier: 0.7,
+  touchMultiplier: 1.5
+});
+</script>
+</body>
+</html>
