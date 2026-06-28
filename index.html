@@ -228,17 +228,60 @@
             </a>
 
             <button class="hidden sm:block bg-indigo-600 px-6 py-2 rounded-full font-bold text-xs text-white">Console</button>
-<a href="Portfolio.html"
-class="px-3 py-2 rounded-2xl font-bold text-sm text-white transition-all duration-300 hover:scale-105"
-style="background:#CAA228; box-shadow:0 10px 25px rgba(60,26,71,.35);">
-    Portfolio
+<a href="myapp.html" class="try-btn">
+    Try This
 </a>
+
+<style>
+.try-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:8px 18px;
+    font-size:12px;
+    font-weight:700;
+    color:#fff;
+    text-decoration:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,#CAA228,#FFD54F);
+    box-shadow:0 8px 20px rgba(202,162,40,.35);
+    transition:all .25s ease;
+    position:relative;
+    overflow:hidden;
+}
+
+.try-btn::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-120%;
+    width:60%;
+    height:100%;
+    background:rgba(255,255,255,.35);
+    transform:skewX(-25deg);
+    transition:.6s;
+}
+
+.try-btn:hover::before{
+    left:140%;
+}
+
+.try-btn:hover{
+    transform:translateY(-2px) scale(1.08);
+    box-shadow:0 14px 35px rgba(202,162,40,.45);
+}
+
+.try-btn:active{
+    transform:scale(1.15);
+}
+</style>
 <a href="Fashion.html" class="premium-btn">
     <span>Fashion</span>
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
         <path d="M5 12H19M19 12L13 6M19 12L13 18"
               stroke="currentColor"
-              stroke-width="2.5"
+              stroke-width="2.4"
               stroke-linecap="round"
               stroke-linejoin="round"/>
     </svg>
@@ -248,41 +291,62 @@ style="background:#CAA228; box-shadow:0 10px 25px rgba(60,26,71,.35);">
 .premium-btn{
     display:inline-flex;
     align-items:center;
-    gap:10px;
-    padding:14px 26px;
-    border-radius:18px;
+    justify-content:center;
+    gap:8px;
+
+    padding:8px 18px;
+    border-radius:14px;
+
     text-decoration:none;
     color:#fff;
+    font-size:12px;
     font-weight:700;
-    letter-spacing:.5px;
 
-    background:linear-gradient(
-        135deg,
-        #3c1a47,
-        #5b2a6d,
-        #7b38a0
-    );
+    background:linear-gradient(135deg,#3c1a47,#5b2a6d,#7b38a0);
 
     box-shadow:
-        0 10px 30px rgba(123,56,160,.35),
-        inset 0 1px 1px rgba(255,255,255,.15);
+        0 8px 20px rgba(123,56,160,.35),
+        inset 0 1px 1px rgba(255,255,255,.18);
 
-    transition:all .4s cubic-bezier(.22,1,.36,1);
+    transition:all .25s ease;
+    position:relative;
+    overflow:hidden;
+}
+
+/* Shine Effect */
+.premium-btn::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-120%;
+    width:60%;
+    height:100%;
+    background:rgba(255,255,255,.35);
+    transform:skewX(-25deg);
+    transition:.6s;
+}
+
+.premium-btn:hover::before{
+    left:140%;
 }
 
 .premium-btn:hover{
-    transform:translateY(-4px) scale(1.04);
+    transform:translateY(-2px) scale(1.08);
     box-shadow:
-        0 20px 40px rgba(123,56,160,.45),
-        0 0 30px rgba(123,56,160,.3);
+        0 14px 35px rgba(123,56,160,.45),
+        0 0 25px rgba(123,56,160,.25);
+}
+
+.premium-btn:active{
+    transform:scale(1.15);
 }
 
 .premium-btn svg{
-    transition:transform .4s ease;
+    transition:transform .25s ease;
 }
 
 .premium-btn:hover svg{
-    transform:translateX(5px);
+    transform:translateX(4px);
 }
 </style>
             <button onclick="toggleMenu()" class="lg:hidden text-2xl">☰</button>
