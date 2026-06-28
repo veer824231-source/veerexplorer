@@ -4,23 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <link rel="icon" type="image/png" href="logo.png">
-    <title>AI Hand Tracking Heavy 3D Air Draw with Live Bones</title>
+    <title>Sci-Fi AI Cyber Hand Draw 3D</title>
     
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <style>
-        body { margin: 0; overflow: hidden; background: #050505; font-family: sans-serif; }
+        body { margin: 0; overflow: hidden; background: #020205; font-family: 'Segoe UI', sans-serif; }
         
         #webcam {
             position: absolute;
-            width: 100vw;
-            height: 100vh;
+            width: 100vw; height: 100vh;
             object-fit: cover;
             transform: scaleX(-1);
             z-index: 1;
-            opacity: 0.2; 
+            opacity: 0.15;
+            transition: opacity 0.5s;
         }
         
         #canvas3d {
@@ -35,52 +35,125 @@
             top: 20px; left: 50%;
             transform: translateX(-50%);
             z-index: 10;
-            background: rgba(0,0,0,0.85);
+            background: rgba(5, 5, 15, 0.85);
             color: #00ffcc;
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-size: 14px;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: bold;
             text-align: center;
             pointer-events: none;
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
-            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
+            border: 1px solid rgba(0, 255, 204, 0.2);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        /* Interactive Expandable HUD styling */
+        .controls-hud {
+            position: absolute;
+            bottom: 30px; left: 30px;
+            z-index: 10;
+            color: #fff;
+            background: rgba(5, 5, 20, 0.85);
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 12px;
+            border-left: 3px solid #ff3366;
+            cursor: pointer;
+            pointer-events: auto;
+            line-height: 1.6;
+            max-width: 280px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255, 51, 102, 0.2);
+            border-left: 4px solid #ff3366;
+        }
+        
+        .controls-hud:hover {
+            background: rgba(10, 10, 30, 0.95);
+            box-shadow: 0 0 15px rgba(255, 51, 102, 0.4);
+        }
+
+        .hud-content {
+            display: none;
+            margin-top: 8px;
         }
 
         #clearBtn {
             position: absolute;
-            bottom: 30px; left: 50%;
-            transform: translateX(-50%);
+            bottom: 30px; right: 30px;
             z-index: 10;
-            padding: 15px 40px;
-            background: linear-gradient(45deg, #ff3366, #ff0044);
+            padding: 15px 35px;
+            background: linear-gradient(45deg, #ff0055, #7000ff);
             color: white;
             border: none;
-            border-radius: 30px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 14px;
             font-weight: bold;
-            box-shadow: 0 5px 20px rgba(255, 51, 102, 0.4);
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.4);
             cursor: pointer;
-            transition: 0.2s ease;
+            letter-spacing: 1px;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        #clearBtn:active { transform: translateX(-50%) scale(0.95); }
+        #clearBtn:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(112, 0, 255, 0.7); }
     </style>
 </head>
 <body>
 
-    <div class="status-panel" id="status">Initializing 3D Skeleton Engine...</div>
+    <div class="status-panel" id="status">Booting Cybernetic Core...</div>
+    
+    <div class="controls-hud" id="hudMenu" onclick="toggleHUD()">
+        <b style="color: #ff3366;" id="hudTitle">ℹ️ CYBER GESTURES (Click to Expand)</b>
+        <div class="hud-content" id="hudContent">
+            • 1 Finger Up = Draw Pipe<br>
+            • 2 Fingers Up = Change Neon Color<br>
+            • 3 Fingers Up = Realtime Eraser Mode ❌<br>
+            • 4 Fingers Up = Heavy Thickness Brush 🖌️<br>
+            • Thumb Only Up = Rainbow Strobe Mode 🌈<br>
+            • Fist Closed = Pause Engine
+        </div>
+    </div>
+
     <video id="webcam" autoplay playsinline></video>
     <div id="canvas3d"></div>
-    <button id="clearBtn">WIPE ALL</button>
+    <button id="clearBtn">PURGE MEMORY (CLEAR)</button>
 
     <script>
         const videoElement = document.getElementById('webcam');
         const statusPanel = document.getElementById('status');
         const clearBtn = document.getElementById('clearBtn');
+        const hudContent = document.getElementById('hudContent');
+        const hudTitle = document.getElementById('hudTitle');
         
-        let isHandDetected = false;
         let last3DPos = null;
+        
+        // --- HUD TOGGLE LOGIC ---
+        let isHudExpanded = false;
+        function toggleHUD() {
+            isHudExpanded = !isHudExpanded;
+            if (isHudExpanded) {
+                hudContent.style.display = "block";
+                hudTitle.innerHTML = "💡 CYBER GESTURES (Click to Collapse)";
+            } else {
+                hudContent.style.display = "none";
+                hudTitle.innerHTML = "ℹ️ CYBER GESTURES (Click to Expand)";
+            }
+        }
+        
+        // --- ULTRA-SMOOTH FILTERS (EMA Smoothing) ---
+        let smoothedPoints3D = Array.from({ length: 21 }, () => new THREE.Vector3());
+        const SMOOTHING_FACTOR = 0.35; // Jitna kam hoga, utna smooth (butter) chalega, lag free.
 
-        // --- 1. THREE.JS SETUP ---
+        // --- MULTI-COLOR PALETTE SYSTEM ---
+        const NEON_COLORS = [0x00ffcc, 0x00ff00,  0xff0055, 0xffaa00, 0x9900ff];
+        let currentColorIndex = 0;
+        let colorSwitchLock = false;
+        
+        let currentBrushRadius = 0.045;
+        let strobeModeActive = false;
+
+        // --- 1. THREE.JS SCI-FI ENGINE SETUP ---
         const container = document.getElementById('canvas3d');
         const scene = new THREE.Scene();
         
@@ -90,230 +163,261 @@
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         container.appendChild(renderer.domElement);
 
-        // Persistent drawings group
         const drawingGroup = new THREE.Group();
         scene.add(drawingGroup);
 
-        // Live hand tracking bones group (yeh sirf tab dikhega jab haath samne ho)
         const skeletonGroup = new THREE.Group();
         scene.add(skeletonGroup);
 
-        // Lights
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        // Cyberpunk Ambient & Directional Lights
+        const ambientLight = new THREE.AmbientLight(0x111122, 0.6);
         scene.add(ambientLight);
 
-        const dirLight = new THREE.DirectionalLight(0xffffff, 1.8);
+        const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
         dirLight.position.set(5, 10, 7);
         dirLight.castShadow = true;
-        dirLight.shadow.mapSize.width = 1024;
-        dirLight.shadow.mapSize.height = 1024;
         scene.add(dirLight);
 
-        const pointLight = new THREE.PointLight(0x00ffcc, 1.5, 10);
-        pointLight.position.set(0, 2, -1);
-        scene.add(pointLight);
+        // Hand glow point light that follows movement dynamically
+        const dynamicLight = new THREE.PointLight(0x00ffcc, 2, 8);
+        scene.add(dynamicLight);
 
-        // --- 2. SKELETON CONNECTIONS MAP ---
-        // MediaPipe ke 21 points ko aapas me jodne ka raasta (Bones Structure)
         const HAND_CONNECTIONS = [
             [0, 1], [1, 2], [2, 3], [3, 4],       // Thumb
-            [0, 5], [5, 6], [6, 7], [7, 8],       // Index Finger
-            [5, 9], [9, 10], [10, 11], [11, 12],  // Middle Finger
-            [9, 13], [13, 14], [14, 15], [15, 16], // Ring Finger
+            [0, 5], [5, 6], [6, 7], [7, 8],       // Index
+            [5, 9], [9, 10], [10, 11], [11, 12],  // Middle
+            [9, 13], [13, 14], [14, 15], [15, 16], // Ring
             [0, 17], [17, 18], [18, 19], [19, 20], // Pinky
-            [5, 17] // Palm base connection
+            [5, 17]
         ];
 
-        // --- 3. GYROSCOPE TRACKING ---
+        // --- 2. GYROSCOPE ORIENTATION ---
         let deviceOrientation = { alpha: 0, beta: 0, gamma: 0 };
         function onDeviceOrientation(event) {
             if (event.alpha !== null) {
-                deviceOrientation.alpha = event.alpha;
-                deviceOrientation.beta = event.beta;
-                deviceOrientation.gamma = event.gamma;
-                
-                const alphaRad = THREE.MathUtils.degToRad(deviceOrientation.alpha);
-                const betaRad = THREE.MathUtils.degToRad(deviceOrientation.beta);
-                const gammaRad = THREE.MathUtils.degToRad(deviceOrientation.gamma);
-                
-                camera.rotation.set(betaRad, alphaRad, -gammaRad, 'YXZ');
+                camera.rotation.set(
+                    THREE.MathUtils.degToRad(event.beta),
+                    THREE.MathUtils.degToRad(event.alpha),
+                    -THREE.MathUtils.degToRad(event.gamma), 
+                    'YXZ'
+                );
             }
         }
-
         if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
             window.addEventListener('click', () => {
-                DeviceOrientationEvent.requestPermission()
-                    .then(response => { if (response == 'granted') window.addEventListener('deviceorientation', onDeviceOrientation); })
-                    .catch(console.error);
+                DeviceOrientationEvent.requestPermission().then(res => { if (res == 'granted') window.addEventListener('deviceorientation', onDeviceOrientation); });
             }, { once: true });
-        } else {
-            window.addEventListener('deviceorientation', onDeviceOrientation);
-        }
+        } else { window.addEventListener('deviceorientation', onDeviceOrientation); }
 
-        // --- 4. MEDIAPIPE (AI HAND & BONES TRACKING) ---
-        const hands = new Hands({
-            locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
-        });
-
-        hands.setOptions({
-            maxNumHands: 1,
-            modelComplexity: 1,
-            minDetectionConfidence: 0.7,
-            minTrackingConfidence: 0.7
-        });
+        // --- 3. ADVANCED GESTURE DETECTION ENGINE ---
+        const hands = new Hands({ locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}` });
+        hands.setOptions({ maxNumHands: 1, modelComplexity: 1, minDetectionConfidence: 0.75, minTrackingConfidence: 0.75 });
 
         hands.onResults((results) => {
-            // Har frame par purani live bones ko clear karo taaki nayi position par ban sakein
             clearSkeleton();
 
             if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
-                isHandDetected = true;
-                statusPanel.innerText = "⚡ TRACKING BONES & AIR DRAW ACTIVE";
-                statusPanel.style.color = "#00ffcc";
-
                 const landmarks = results.multiHandLandmarks[0];
                 
-                // --- Part A: Convert all 21 points into 3D Vector Space ---
-                const points3D = landmarks.map(lm => {
-                    const x = (1 - lm.x * 2) * 2.2; // Adjusted multipliers for mapping look
-                    const y = (1 - lm.y * 2) * 2.2;
-                    const z = -2.2; 
+                // Convert & Smooth Coordinates via Exponential Moving Average (EMA)
+                const points3D = landmarks.map((lm, index) => {
+                    const targetPos = new THREE.Vector3((1 - lm.x * 2) * 2.2, (1 - lm.y * 2) * 2.2, -2.2);
+                    targetPos.applyQuaternion(camera.quaternion);
                     
-                    const pos = new THREE.Vector3(x, y, z);
-                    pos.applyQuaternion(camera.quaternion); // Screen rotation lock
-                    return pos;
+                    // Apply interpolations for Ultra Smooth Tracking
+                    smoothedPoints3D[index].lerp(targetPos, SMOOTHING_FACTOR);
+                    return smoothedPoints3D[index].clone();
                 });
 
-                // --- Part B: Draw Live Skeleton Bones ---
-                // Har connection line par ek heavy capsule/cylinder mesh banana
-                HAND_CONNECTIONS.forEach(connection => {
-                    const startPt = points3D[connection[0]];
-                    const endPt = points3D[connection[1]];
-                    createLiveBone(startPt, endPt);
-                });
+                // Dynamically move light with hand position
+                dynamicLight.position.copy(points3D[9]); 
 
-                // Knuckles par chote chote shiny spheres (points) banana
-                points3D.forEach(pt => {
-                    createLiveJoint(pt);
-                });
+                // Check Finger status
+                const isIndexUp = landmarks[8].y < landmarks[6].y;
+                const isMiddleUp = landmarks[12].y < landmarks[10].y;
+                const isRingUp = landmarks[16].y < landmarks[14].y;
+                const isPinkyUp = landmarks[20].y < landmarks[18].y;
 
-                // --- Part C: Air Drawing Logic (Index Finger Tip = Point 8, Joint = Point 6) ---
-                const tip = landmarks[8];
-                const joint = landmarks[6];
-                const currentDrawingPos = points3D[8]; // Uses index tip 3D pos
+                // Reset Defaults
+                currentBrushRadius = 0.045; 
 
-                if (tip.y < joint.y) { // If finger is straight up
+                // --- GESTURE NEW: RAINBOW STROBE (Thumb Only Up) ---
+                if (landmarks[4].y < landmarks[2].y && !isIndexUp && !isMiddleUp && !isRingUp && !isPinkyUp) {
+                    strobeModeActive = true;
+                    statusPanel.innerText = "🌈 STROBE MODE: RUNNING CYBER RAINBOW";
+                    statusPanel.style.color = "#ff00ff";
+                    last3DPos = null;
+                }
+                // --- GESTURE NEW: BRUSH SIZE MULTIPLIER (4 Fingers Up) ---
+                else if (isIndexUp && isMiddleUp && isRingUp && isPinkyUp) {
+                    strobeModeActive = false;
+                    currentBrushRadius = 0.09; 
+                    statusPanel.innerText = "🖌️ BRUSH MODE: HEAVY DIAMETER OVERRIDE [0.09]";
+                    statusPanel.style.color = "#00ff00";
+                    
+                    const currentDrawingPos = points3D[8];
                     if (last3DPos) {
-                        if (last3DPos.distanceTo(currentDrawingPos) > 0.02) {
-                            create3DTube(last3DPos, currentDrawingPos);
+                        if (last3DPos.distanceTo(currentDrawingPos) > 0.015) {
+                            create3DTube(last3DPos, currentDrawingPos, NEON_COLORS[currentColorIndex]);
                             last3DPos = currentDrawingPos.clone();
                         }
-                    } else {
-                        last3DPos = currentDrawingPos.clone();
-                    }
-                } else {
-                    last3DPos = null; 
+                    } else { last3DPos = currentDrawingPos.clone(); }
                 }
+                // --- GESTURE NEW: REALTIME ERASER (3 Fingers Up) ---
+                else if (isIndexUp && isMiddleUp && isRingUp && !isPinkyUp) {
+                    strobeModeActive = false;
+                    statusPanel.innerText = "❌ ERASER MODE: PURGING PROXIMITY MESHES";
+                    statusPanel.style.color = "#ff3333";
+                    last3DPos = null;
+                    
+                    const eraserTip = points3D[8];
+                    for(let i = drawingGroup.children.length - 1; i >= 0; i--) {
+                        let targetMesh = drawingGroup.children[i];
+                        if(targetMesh.position.distanceTo(eraserTip) < 0.25) { 
+                            targetMesh.geometry.dispose();
+                            targetMesh.material.dispose();
+                            drawingGroup.remove(targetMesh);
+                        }
+                    }
+                }
+                // --- GESTURE 1: CHANGE COLOR (Index + Middle Up) ---
+                else if (isIndexUp && isMiddleUp && !isRingUp) {
+                    strobeModeActive = false;
+                    statusPanel.innerText = "🎨 PALETTE MODE: SWAPPING NEON COLOR";
+                    statusPanel.style.color = "#ffaa00";
+                    last3DPos = null; 
+                    
+                    if (!colorSwitchLock) {
+                        currentColorIndex = (currentColorIndex + 1) % NEON_COLORS.length;
+                        dynamicLight.color.setHex(NEON_COLORS[currentColorIndex]);
+                        colorSwitchLock = true;
+                        setTimeout(() => { colorSwitchLock = false; }, 800); 
+                    }
+                } 
+                // --- GESTURE 2: AIR DRAW MODE (Only Index Up) ---
+                else if (isIndexUp && !isMiddleUp) {
+                    strobeModeActive = false;
+                    statusPanel.innerText = `⚡ CYBER DRAWING: MODE ACTIVE [COLOR #${currentColorIndex+1}]`;
+                    statusPanel.style.color = "#00ffcc";
+                    videoElement.style.opacity = "0.1"; 
+
+                    const currentDrawingPos = points3D[8];
+                    if (last3DPos) {
+                        if (last3DPos.distanceTo(currentDrawingPos) > 0.015) {
+                            create3DTube(last3DPos, currentDrawingPos, NEON_COLORS[currentColorIndex]);
+                            last3DPos = currentDrawingPos.clone();
+                        }
+                    } else { last3DPos = currentDrawingPos.clone(); }
+                } 
+                // --- GESTURE 3: ENGINE PAUSED ---
+                else {
+                    strobeModeActive = false;
+                    statusPanel.innerText = "💤 SYSTEM STANDBY (FIST/PAUSE)";
+                    statusPanel.style.color = "#ff3366";
+                    videoElement.style.opacity = "0.25";
+                    last3DPos = null;
+                }
+
+                // Render Live Tech-Skeleton
+                HAND_CONNECTIONS.forEach(conn => createLiveBone(points3D[conn[0]], points3D[conn[1]]));
+                points3D.forEach(pt => createLiveJoint(pt));
+
             } else {
-                isHandDetected = false;
+                strobeModeActive = false;
                 last3DPos = null;
-                statusPanel.innerText = "👋 Bring your Hand in front of Camera";
+                statusPanel.innerText = "🌌 SCANNING FOR CYBERNETIC HAND...";
                 statusPanel.style.color = "#ffcc00";
             }
         });
 
-        const cameraUtils = new Camera(videoElement, {
-            onFrame: async () => { await hands.send({ image: videoElement }); },
-            width: 640, height: 480
-        });
+        const cameraUtils = new Camera(videoElement, { onFrame: async () => { await hands.send({ image: videoElement }); }, width: 640, height: 480 });
         cameraUtils.start();
 
-        // --- 5. MESH CREATION FUNCTIONS (HEAVY METALLIC LOOK) ---
+        // --- 4. GLOWING SCI-FI MESH CONSTRUCTORS ---
 
-        // 1. Drawing Line Generator
-        function create3DTube(pointStart, pointEnd) {
+        function create3DTube(pointStart, pointEnd, colorHex) {
             const distance = pointStart.distanceTo(pointEnd);
-            const geometry = new THREE.CylinderGeometry(0.04, 0.04, distance, 16); 
+            const geometry = new THREE.CylinderGeometry(currentBrushRadius, currentBrushRadius, distance, 16); 
+            
             const material = new THREE.MeshStandardMaterial({ 
-                color: 0x00ffcc,        
-                metalness: 0.9,          
-                roughness: 0.15,
-                castShadow: true
+                color: colorHex,        
+                metalness: 0.3,          
+                roughness: 0.1,
+                emissive: colorHex,
+                emissiveIntensity: 0.6 
             });
             
             const mesh = new THREE.Mesh(geometry, material);
             mesh.castShadow = true;
             mesh.receiveShadow = true;
 
-            const position = new THREE.Vector3().addVectors(pointStart, pointEnd).multiplyScalar(0.5);
-            mesh.position.copy(position);
+            mesh.position.copy(new THREE.Vector3().addVectors(pointStart, pointEnd).multiplyScalar(0.5));
             mesh.lookAt(pointEnd);
             mesh.rotateX(Math.PI / 2);
-
             drawingGroup.add(mesh);
         }
 
-        // 2. Live tracking bone (Cylinder)
         function createLiveBone(pointStart, pointEnd) {
             const distance = pointStart.distanceTo(pointEnd);
-            const geometry = new THREE.CylinderGeometry(0.015, 0.015, distance, 12); // Slightly thinner than drawing
+            const geometry = new THREE.CylinderGeometry(0.012, 0.012, distance, 8);
             const material = new THREE.MeshStandardMaterial({
-                color: 0xffffff, // White chrome skeleton bones
-                metalness: 0.9,
-                roughness: 0.1,
-                emissive: 0x333333 // Halka self illumination glow
+                color: 0x00ffff, 
+                metalness: 0.9, roughness: 0.1,
+                emissive: 0x005555, emissiveIntensity: 0.4
             });
-
             const mesh = new THREE.Mesh(geometry, material);
-            const position = new THREE.Vector3().addVectors(pointStart, pointEnd).multiplyScalar(0.5);
-            mesh.position.copy(position);
-            mesh.lookAt(pointEnd);
-            mesh.rotateX(Math.PI / 2);
-
+            mesh.position.copy(new THREE.Vector3().addVectors(pointStart, pointEnd).multiplyScalar(0.5));
+            mesh.lookAt(pointEnd); mesh.rotateX(Math.PI / 2);
             skeletonGroup.add(mesh);
         }
 
-        // 3. Live tracking Joint (Sphere)
         function createLiveJoint(position) {
-            const geometry = new THREE.SphereGeometry(0.025, 12, 12);
+            const geometry = new THREE.SphereGeometry(0.022, 10, 10);
             const material = new THREE.MeshStandardMaterial({
-                color: 0xff3366, // Hot Pink joints knuckles par
-                metalness: 0.8,
-                roughness: 0.2
+                color: 0xff0055, metalness: 0.7, roughness: 0.2,
+                emissive: 0xff0022, emissiveIntensity: 0.5
             });
             const mesh = new THREE.Mesh(geometry, material);
             mesh.position.copy(position);
             skeletonGroup.add(mesh);
         }
 
-        // Clear live skeleton frames to avoid ghosting
         function clearSkeleton() {
             while(skeletonGroup.children.length > 0) {
                 const obj = skeletonGroup.children[0];
-                obj.geometry.dispose();
-                obj.material.dispose();
+                obj.geometry.dispose(); obj.material.dispose();
                 skeletonGroup.remove(obj);
             }
         }
 
-        // Wipe all Drawings button
         clearBtn.addEventListener('click', () => {
             while(drawingGroup.children.length > 0){ 
                 const obj = drawingGroup.children[0];
-                obj.geometry.dispose();  
-                obj.material.dispose();
+                obj.geometry.dispose(); obj.material.dispose();
                 drawingGroup.remove(obj); 
             }
         });
 
-        // --- 6. RENDER LOOP ---
+        // --- 5. ANIMATION RENDERING ---
+        let clock = new THREE.Clock();
         function animate() {
             requestAnimationFrame(animate);
+            
+            if (strobeModeActive) {
+                const time = clock.getElapsedTime() * 5;
+                const r = Math.sin(time) * 127 + 128;
+                const g = Math.sin(time + 2) * 127 + 128;
+                const b = Math.sin(time + 4) * 127 + 128;
+                const hexColor = (r << 16) + (g << 8) + b;
+                
+                dynamicLight.color.setHex(hexColor);
+                statusPanel.style.color = `#${hexColor.toString(16)}`;
+            }
+
             renderer.render(scene, camera);
         }
         animate();
