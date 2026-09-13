@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <meta name="theme-color" content="#f5f5f7">
+<link rel="manifest" href="manifest.json">
 <title>Attendly — Smart Attendance</title>
 
 <style>
@@ -17,7 +19,7 @@
 :root{
     --bg:#f5f5f7;
     --bg2:#ffffff;
-    --card:rgba(255,255,255,.72);
+    --card:rgba(255,255,255,.46);
     --card-solid:#fff;
     --text:#17181d;
     --muted:#7c7f89;
@@ -32,7 +34,7 @@
     --orange:#e89128;
     --orange-soft:#fff3df;
     --blue:#3488e9;
-    --shadow:0 25px 70px rgba(35,38,60,.08);
+    --shadow:0 25px 70px rgba(35,38,60,.10);
     --radius:25px;
 }
 
@@ -62,6 +64,43 @@ body{
         var(--bg);
     overflow-x:hidden;
 }
+
+/* PREMIUM GLASS + AIRY TYPOGRAPHY */
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    letter-spacing:.22px;
+    background:
+        radial-gradient(circle at 8% 8%, rgba(125,108,255,.12), transparent 28%),
+        radial-gradient(circle at 88% 18%, rgba(70,150,255,.10), transparent 25%),
+        radial-gradient(circle at 50% 100%, rgba(190,130,255,.08), transparent 30%),
+        var(--bg);
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:-20%;
+    pointer-events:none;
+    z-index:-1;
+    background:radial-gradient(circle, rgba(255,255,255,.24), transparent 42%);
+    filter:blur(55px);
+}
+
+button,input,select{
+    letter-spacing:.22px;
+}
+
+h1,h2,h3,h4,strong{
+    letter-spacing:.05px;
+}
+
+p,small,label,.stat-label,.nav-title,.brand-sub{
+    letter-spacing:.35px;
+}
+
 
 button,input,select{
     font:inherit;
@@ -261,28 +300,24 @@ body.dark .class-mini{
 
 .history-nav{
     display:none;
-    gap:5px;
-    padding:5px;
-    border:1px solid var(--line);
-    background:var(--card);
-    backdrop-filter:blur(20px);
-    border-radius:17px;
-    box-shadow:0 10px 35px rgba(20,20,30,.05);
 }
 
 .history-btn{
-    width:37px;
-    height:37px;
-    border-radius:12px;
-    background:transparent;
-    color:var(--muted);
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.55);
+    background:rgba(255,255,255,.34);
+    color:var(--text);
     display:grid;
     place-items:center;
-    transition:
-        transform .28s cubic-bezier(.2,.8,.2,1),
-        background .2s,
-        color .2s;
-    font-size:19px;
+    backdrop-filter:blur(24px) saturate(160%);
+    -webkit-backdrop-filter:blur(24px) saturate(160%);
+    box-shadow:0 8px 28px rgba(40,45,80,.10), inset 0 1px 0 rgba(255,255,255,.55);
+    transition:transform .28s cubic-bezier(.2,.8,.2,1), background .2s, color .2s;
+    font-size:27px;
+    font-weight:300;
+    line-height:1;
 }
 
 .history-btn:hover:not(:disabled){
@@ -1196,22 +1231,33 @@ body.dark .class-mini{
 }
 
 @media(max-width:800px){
+    html,body{
+        width:100%;
+        max-width:100%;
+        overflow-x:hidden;
+    }
+
     .sidebar{
         display:none;
     }
 
     .main{
         width:100%;
+        max-width:100%;
+        min-width:0;
         margin:0;
-        padding:16px 14px 100px;
+        padding:14px 12px calc(92px + env(safe-area-inset-bottom));
+        overflow:hidden;
     }
 
     .topbar{
         position:relative;
-        height:auto;
+        width:100%;
+        min-width:0;
         min-height:58px;
-        margin-bottom:17px;
-        padding-left:48px;
+        margin-bottom:16px;
+        padding:4px 0 4px 45px;
+        gap:8px;
     }
 
     .history-nav{
@@ -1220,12 +1266,20 @@ body.dark .class-mini{
         top:50%;
         transform:translateY(-50%);
         display:flex;
-        padding:4px;
-        z-index:5;
+        z-index:20;
+    }
+
+    .page-title{
+        min-width:0;
+        overflow:hidden;
     }
 
     .page-title h1{
-        font-size:23px;
+        font-size:22px;
+        line-height:1.12;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
     }
 
     .page-title p{
@@ -1233,28 +1287,36 @@ body.dark .class-mini{
     }
 
     .top-actions{
-        gap:6px;
+        flex-shrink:0;
+        gap:5px;
+        max-width:48%;
     }
 
     .class-select{
-        min-width:100px;
-        max-width:115px;
-        padding:9px 8px;
+        min-width:0;
+        width:100px;
+        max-width:100px;
+        padding:9px 7px;
         font-size:10px;
     }
 
     .history-btn{
-        width:34px;
-        height:34px;
+        width:38px;
+        height:38px;
+        font-size:24px;
     }
 
     .stats{
-        gap:10px;
+        width:100%;
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:9px;
     }
 
     .stat{
-        padding:15px;
+        min-width:0;
+        padding:14px 12px;
         border-radius:19px;
+        overflow:hidden;
     }
 
     .stat-number{
@@ -1262,7 +1324,19 @@ body.dark .class-mini{
     }
 
     .attendance-list{
-        grid-template-columns:1fr;
+        width:100%;
+        min-width:0;
+        grid-template-columns:minmax(0,1fr);
+    }
+
+    .card,.class-card,.student-card,.att-card,.report-card{
+        min-width:0;
+        max-width:100%;
+    }
+
+    .toolbar,.card-head,.student-row,.attendance-row{
+        min-width:0;
+        max-width:100%;
     }
 
     .class-grid,
@@ -1272,37 +1346,46 @@ body.dark .class-mini{
 
     .mobile-nav{
         position:fixed;
-        left:10px;
-        right:10px;
-        bottom:10px;
-        height:67px;
+        left:max(8px, env(safe-area-inset-left));
+        right:max(8px, env(safe-area-inset-right));
+        bottom:max(8px, env(safe-area-inset-bottom));
+        width:auto;
+        max-width:520px;
+        height:64px;
+        margin:0 auto;
         display:flex;
         align-items:center;
         justify-content:space-around;
-        padding:7px;
+        gap:3px;
+        padding:6px;
         z-index:300;
         border:1px solid var(--line);
         background:var(--card);
         backdrop-filter:blur(28px) saturate(160%);
         -webkit-backdrop-filter:blur(28px) saturate(160%);
-        border-radius:23px;
+        border-radius:22px;
         box-shadow:0 18px 50px rgba(20,20,30,.13);
     }
 
     .mobile-nav button{
-        flex:1;
-        height:53px;
-        border-radius:17px;
+        flex:1 1 0;
+        min-width:0;
+        width:20%;
+        height:52px;
+        padding:0;
+        border-radius:16px;
         background:transparent;
         color:var(--muted);
-        font-size:8px;
-        font-weight:700;
+        font-size:0;
+        line-height:0;
         display:flex;
-        flex-direction:column;
         align-items:center;
         justify-content:center;
-        gap:4px;
-        transition:.25s;
+        transition:transform .25s var(--ease),background .25s var(--ease),color .25s var(--ease);
+    }
+
+    .mobile-nav button:active{
+        transform:scale(.91);
     }
 
     .mobile-nav button.active{
@@ -1311,8 +1394,24 @@ body.dark .class-mini{
     }
 
     .mobile-icon{
-        font-size:12px;
-        font-weight:900;
+        width:42px;
+        height:42px;
+        display:grid;
+        place-items:center;
+        font-size:0;
+        line-height:0;
+        border-radius:14px;
+    }
+
+    .mobile-icon .ui-icon{
+        width:21px;
+        height:21px;
+        display:block;
+        stroke-width:1.8;
+    }
+
+    .mobile-nav button.active .mobile-icon{
+        background:var(--soft);
     }
 
     .toolbar{
@@ -1320,7 +1419,58 @@ body.dark .class-mini{
     }
 
     .search{
-        min-width:100%;
+        min-width:0;
+        width:100%;
+    }
+}
+
+@media(max-width:420px){
+    .main{
+        padding-left:10px;
+        padding-right:10px;
+    }
+
+    .topbar{
+        padding-left:42px;
+    }
+
+    .page-title h1{
+        font-size:20px;
+    }
+
+    .page-title p{
+        max-width:145px;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+    }
+
+    .class-select{
+        width:86px;
+        max-width:86px;
+    }
+
+    .history-btn{
+        width:36px;
+        height:36px;
+    }
+
+    .mobile-nav{
+        left:7px;
+        right:7px;
+        height:61px;
+        border-radius:20px;
+        padding:5px;
+    }
+
+    .mobile-nav button{
+        height:51px;
+        border-radius:15px;
+    }
+
+    .mobile-icon{
+        width:40px;
+        height:40px;
     }
 }
 
@@ -1354,6 +1504,96 @@ body.dark .class-mini{
         transition-duration:.01ms!important;
     }
 }
+
+/* ================= ULTRA SMOOTH VISUAL UPGRADE ================= */
+:root{
+  --ease:cubic-bezier(.22,1,.36,1);
+  --glass:rgba(255,255,255,.48);
+  --glass-strong:rgba(255,255,255,.62);
+}
+*{font-synthesis:none;text-rendering:optimizeLegibility}
+body{
+  font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
+  letter-spacing:.18px;
+  -webkit-font-smoothing:antialiased;
+}
+.sidebar,.card,.stat,.class-card,.student-card,.att-card,.mobile-nav,.modal,.history-btn,.class-select,.search,.date-input,.month-select{
+  border-color:rgba(255,255,255,.52);
+  box-shadow:0 20px 70px rgba(31,35,58,.08),inset 0 1px 0 rgba(255,255,255,.58);
+}
+body.dark .sidebar,body.dark .card,body.dark .stat,body.dark .class-card,body.dark .student-card,body.dark .att-card,body.dark .mobile-nav,body.dark .modal,body.dark .history-btn,body.dark .class-select,body.dark .search,body.dark .date-input,body.dark .month-select{
+  border-color:rgba(255,255,255,.09);
+  box-shadow:0 25px 80px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.05);
+}
+.sidebar{transition:transform .55s var(--ease),box-shadow .45s var(--ease)}
+.sidebar:hover{transform:translateY(-2px)}
+.brand-text,.page-title h1,.card-head h2,.class-card h3,.student-card-info strong,.stat-number,.detail-name h2{
+  font-weight:800;
+  letter-spacing:-.035em;
+}
+.page-title h1{font-size:clamp(25px,2.2vw,32px);line-height:1.05}
+.page-title p,.card-head p,.student-info span,.student-card-info span,.class-card p,.student-hint,.stat-label,.nav-title,.brand-sub,.legend span,.bar-day,.bar-value,.summary-item,.cal-head div,.cal-day{
+  letter-spacing:.045em;
+}
+.nav button,.mobile-nav button,.small-btn,.primary-btn,.danger-btn,.theme-btn,.history-btn,.close,.class-select{
+  transition:transform .35s var(--ease),background .35s var(--ease),color .35s var(--ease),box-shadow .35s var(--ease),filter .35s var(--ease);
+}
+.nav button:hover{transform:translate3d(5px,0,0)}
+.nav button.active{box-shadow:inset 0 0 0 1px rgba(91,75,219,.06),0 8px 25px rgba(91,75,219,.08)}
+.card,.stat,.class-card,.student-card,.att-card{position:relative;isolation:isolate}
+.card::before,.stat::before,.class-card::before,.student-card::before,.att-card::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:-1;
+  background:linear-gradient(135deg,rgba(255,255,255,.26),transparent 42%,rgba(120,100,255,.04));
+  opacity:.7;
+}
+.card::after,.stat::after,.class-card::after,.student-card::after,.att-card::after{
+  content:"";position:absolute;width:120px;height:120px;right:-65px;top:-65px;border-radius:50%;
+  background:radial-gradient(circle,rgba(121,107,234,.13),transparent 68%);filter:blur(2px);pointer-events:none;z-index:-1;
+}
+.stat:hover,.card:hover,.class-card:hover,.student-card:hover,.att-card:hover{box-shadow:0 28px 80px rgba(35,38,60,.12),inset 0 1px 0 rgba(255,255,255,.65)}
+.primary-btn{position:relative;overflow:hidden}
+.primary-btn::after{content:"";position:absolute;inset:-80% -30%;background:linear-gradient(100deg,transparent 35%,rgba(255,255,255,.3) 50%,transparent 65%);transform:translateX(-80%);transition:transform .8s var(--ease)}
+.primary-btn:hover::after{transform:translateX(80%)}
+.primary-btn:hover{transform:translateY(-3px) scale(1.01);filter:saturate(1.08)}
+.primary-btn:active,.small-btn:active,.danger-btn:active,.theme-btn:active{transform:scale(.96)}
+.avatar,.big-avatar,.class-letter,.logo,.stat-icon,.nav-icon,.mobile-icon{transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+.student-card:hover .avatar,.att-card:hover .avatar,.class-card:hover .class-letter,.stat:hover .stat-icon{transform:scale(1.08) rotate(-2deg)}
+.logo{position:relative;overflow:hidden}
+.logo::after{content:"";position:absolute;inset:-50%;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.4) 50%,transparent 65%);animation:logoSheen 4s infinite var(--ease)}
+@keyframes logoSheen{0%,55%{transform:translateX(-70%)}80%,100%{transform:translateX(70%)}}
+.view.active{animation:pageIn .62s var(--ease)}
+.page-content{animation:contentIn .7s var(--ease)}
+@keyframes pageIn{from{opacity:0;transform:translateY(18px) scale(.985);filter:blur(3px)}to{opacity:1;transform:none;filter:none}}
+@keyframes contentIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.student-row,.summary-item,.history-row{transition:background .3s var(--ease),transform .3s var(--ease),padding .3s var(--ease)}
+.student-row:hover{background:rgba(120,120,140,.07);transform:translateX(3px)}
+.summary-item:hover{padding-left:5px;padding-right:5px}
+.history-row:hover{background:rgba(120,120,140,.06);padding-left:7px;padding-right:7px}
+.status-pill{transition:transform .3s var(--ease),filter .3s var(--ease)}
+.status-pill:hover{transform:scale(1.04);filter:saturate(1.08)}
+.cal-day{transition:transform .28s var(--ease),background .28s var(--ease),box-shadow .28s var(--ease)}
+.cal-day:not(.empty):hover{transform:translateY(-2px) scale(1.04);box-shadow:0 8px 20px rgba(60,55,120,.1)}
+.bar{box-shadow:0 8px 22px rgba(91,75,219,.14)}
+.modal{animation:modalIn .5s var(--ease)}
+@keyframes modalIn{from{opacity:0;transform:translateY(32px) scale(.92);filter:blur(5px)}to{opacity:1;transform:none;filter:none}}
+.overlay.show{animation:fadeIn .3s ease}
+input:focus,select:focus{border-color:rgba(91,75,219,.35);box-shadow:0 0 0 4px rgba(91,75,219,.08),inset 0 1px 0 rgba(255,255,255,.5);transform:translateY(-1px)}
+.search::placeholder,input::placeholder{color:var(--muted);opacity:.72}
+.mobile-nav{bottom:12px}
+.mobile-nav button.active{box-shadow:0 8px 24px rgba(91,75,219,.1)}
+@media(max-width:800px){
+  .main{padding-top:18px}
+  .card,.stat,.class-card,.student-card,.att-card{box-shadow:0 16px 45px rgba(35,38,60,.075),inset 0 1px 0 rgba(255,255,255,.58)}
+  .page-title h1{letter-spacing:-.045em}
+}
+@media(prefers-reduced-motion:reduce){.logo::after{animation:none}}
+/* SVG icon system */
+.ui-icon{width:17px;height:17px;display:block;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ui-icon.sm{width:15px;height:15px}.ui-icon.lg{width:19px;height:19px}
+.nav-icon,.mobile-icon,.stat-icon{font-size:0}
+.nav-icon .ui-icon,.mobile-icon .ui-icon{width:15px;height:15px}
+.stat-icon .ui-icon{width:16px;height:16px}
+
 </style>
 </head>
 
@@ -1365,7 +1605,7 @@ body.dark .class-mini{
 <aside class="sidebar">
 
     <div class="brand">
-        <div class="logo">A</div>
+        <div class="logo"><svg class="ui-icon lg" viewBox="0 0 24 24"><path d="M5 18 9.5 6h5L19 18M7.2 14h9.6" stroke="currentColor" stroke-width="2.2"/></svg></div>
         <div>
             <div class="brand-text">Attendly</div>
             <div class="brand-sub">SMART ATTENDANCE</div>
@@ -1376,27 +1616,27 @@ body.dark .class-mini{
 
     <nav class="nav">
         <button data-view="dashboard" class="active">
-            <span class="nav-icon">D</span>
+            <span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M4 13h6V4H4zM14 20h6v-9h-6zM14 4h6v4h-6zM4 20h6v-3H4z"/></svg></span>
             Dashboard
         </button>
 
         <button data-view="attendance">
-            <span class="nav-icon">A</span>
+            <span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="8"/></svg></span>
             Attendance
         </button>
 
         <button data-view="students">
-            <span class="nav-icon">S</span>
+            <span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c.7-3.5 3.1-5.2 7-5.2s6.3 1.7 7 5.2"/></svg></span>
             Students
         </button>
 
         <button data-view="classes">
-            <span class="nav-icon">C</span>
+            <span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="3"/><path d="M8 5v14M4 10h16"/></svg></span>
             Classes
         </button>
 
         <button data-view="reports">
-            <span class="nav-icon">R</span>
+            <span class="nav-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M5 19V9M12 19V5M19 19v-7"/></svg></span>
             Reports
         </button>
     </nav>
@@ -1404,7 +1644,7 @@ body.dark .class-mini{
     <div class="side-bottom">
         <div class="class-mini">
             <small>ACTIVE CLASS</small>
-            <strong id="sideClassName">Class 8-A</strong>
+            <strong id="sideClassName">My Class</strong>
         </div>
 
         <button class="theme-btn" onclick="toggleTheme()">
@@ -1432,7 +1672,7 @@ body.dark .class-mini{
                     class="history-btn"
                     onclick="goBack()"
                     title="Back"
-                >‹</button>
+                ><svg class="ui-icon lg" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
 
             </div>
 
@@ -1449,7 +1689,7 @@ body.dark .class-mini{
             <div class="stat">
                 <div class="stat-top">
                     <span class="stat-label">TOTAL STUDENTS</span>
-                    <span class="stat-icon">T</span>
+                    <span class="stat-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M5 5h14M12 5v14M8 19h8"/></svg></span>
                 </div>
                 <div id="totalStudents" class="stat-number">0</div>
             </div>
@@ -1465,7 +1705,7 @@ body.dark .class-mini{
             <div class="stat stat-red">
                 <div class="stat-top">
                     <span class="stat-label">ABSENT TODAY</span>
-                    <span class="stat-icon">A</span>
+                    <span class="stat-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="8"/></svg></span>
                 </div>
                 <div id="absentToday" class="stat-number">0</div>
             </div>
@@ -1473,7 +1713,7 @@ body.dark .class-mini{
             <div class="stat stat-blue">
                 <div class="stat-top">
                     <span class="stat-label">ATTENDANCE RATE</span>
-                    <span class="stat-icon">%</span>
+                    <span class="stat-icon"><svg class="ui-icon" viewBox="0 0 24 24"><circle cx="7" cy="7" r="2"/><circle cx="17" cy="17" r="2"/><path d="M6 18 18 6"/></svg></span>
                 </div>
                 <div id="attendanceRate" class="stat-number">0%</div>
             </div>
@@ -1663,27 +1903,27 @@ body.dark .class-mini{
 <nav class="mobile-nav">
 
     <button data-view="dashboard" class="active">
-        <span class="mobile-icon">D</span>
+        <span class="mobile-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M4 13h6V4H4zM14 20h6v-9h-6zM14 4h6v4h-6zM4 20h6v-3H4z"/></svg></span>
         Home
     </button>
 
     <button data-view="attendance">
-        <span class="mobile-icon">A</span>
+        <span class="mobile-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="8"/></svg></span>
         Attendance
     </button>
 
     <button data-view="students">
-        <span class="mobile-icon">S</span>
+        <span class="mobile-icon"><svg class="ui-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c.7-3.5 3.1-5.2 7-5.2s6.3 1.7 7 5.2"/></svg></span>
         Students
     </button>
 
     <button data-view="classes">
-        <span class="mobile-icon">C</span>
+        <span class="mobile-icon"><svg class="ui-icon" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="3"/><path d="M8 5v14M4 10h16"/></svg></span>
         Classes
     </button>
 
     <button data-view="reports">
-        <span class="mobile-icon">R</span>
+        <span class="mobile-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M5 19V9M12 19V5M19 19v-7"/></svg></span>
         Reports
     </button>
 
@@ -1696,17 +1936,17 @@ body.dark .class-mini{
 
         <div class="modal-head">
             <h2>Add student</h2>
-            <button class="close" onclick="closeStudentModal()">×</button>
+            <button class="close" onclick="closeStudentModal()"><svg class="ui-icon" viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg></button>
         </div>
 
         <div class="form-group">
             <label>STUDENT NAME</label>
-            <input id="studentName" placeholder="e.g. Aarav Kumar">
+            <input id="studentName" placeholder="Enter student name">
         </div>
 
         <div class="form-group">
             <label>ROLL NUMBER</label>
-            <input id="studentRoll" placeholder="e.g. 01">
+            <input id="studentRoll" placeholder="Enter roll number">
         </div>
 
         <div class="modal-actions">
@@ -1725,12 +1965,12 @@ body.dark .class-mini{
 
         <div class="modal-head">
             <h2>Add class</h2>
-            <button class="close" onclick="closeClassModal()">×</button>
+            <button class="close" onclick="closeClassModal()"><svg class="ui-icon" viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg></button>
         </div>
 
         <div class="form-group">
             <label>CLASS NAME</label>
-            <input id="className" placeholder="e.g. Class 9-A">
+            <input id="className" placeholder="Enter class name">
         </div>
 
         <div class="modal-actions">
@@ -1749,7 +1989,7 @@ body.dark .class-mini{
 
         <div class="modal-head">
             <h2>Student profile</h2>
-            <button class="close" onclick="closeDetail()">×</button>
+            <button class="close" onclick="closeDetail()"><svg class="ui-icon" viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg></button>
         </div>
 
         <div id="studentDetail"></div>
@@ -1766,7 +2006,7 @@ body.dark .class-mini{
    COMPLETE ATTENDANCE ENGINE
 ========================================================= */
 
-const STORAGE_KEY = "attendly_fresh_v4";
+const STORAGE_KEY = "attendly_clean_v6";
 const THEME_KEY = "attendly_theme_v3";
 
 let app = loadApp();
