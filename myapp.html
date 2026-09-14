@@ -1644,6 +1644,109 @@ input:focus,select:focus{border-color:rgba(91,75,219,.35);box-shadow:0 0 0 4px r
         min-width:0;
     }
 }
+
+
+/* =========================================================
+   ATTENDLY INSTALL GLASS POPUP
+========================================================= */
+.install-overlay{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(238,240,246,.34);
+    backdrop-filter:blur(24px) saturate(150%);
+    -webkit-backdrop-filter:blur(24px) saturate(150%);
+}
+.install-overlay.show{display:flex;animation:attInstallOverlayIn .55s cubic-bezier(.22,1,.36,1) both}
+.install-overlay.closing{animation:attInstallOverlayOut .35s ease forwards}
+.install-popup{
+    width:min(430px,100%);
+    position:relative;
+    overflow:hidden;
+    padding:32px 28px 25px;
+    border-radius:32px;
+    background:linear-gradient(145deg,rgba(255,255,255,.76),rgba(255,255,255,.43));
+    border:1px solid rgba(255,255,255,.78);
+    box-shadow:0 35px 100px rgba(25,30,45,.20),0 8px 30px rgba(25,30,45,.08),inset 0 1px 0 rgba(255,255,255,.95);
+    backdrop-filter:blur(42px) saturate(165%);
+    -webkit-backdrop-filter:blur(42px) saturate(165%);
+    transform:translateY(24px) scale(.86);
+    opacity:0;
+}
+.install-overlay.show .install-popup{animation:attInstallPopupIn .78s cubic-bezier(.16,1.25,.35,1) .04s forwards}
+.install-overlay.closing .install-popup{animation:attInstallPopupOut .34s cubic-bezier(.4,0,1,1) forwards}
+.install-popup::before{
+    content:"";position:absolute;width:170%;height:90px;left:-35%;top:-62px;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.75),transparent);
+    transform:rotate(-8deg);filter:blur(9px);pointer-events:none;
+    animation:attInstallShine 5.5s ease-in-out infinite;
+}
+.install-popup::after{
+    content:"";position:absolute;inset:1px;border-radius:31px;pointer-events:none;
+    background:linear-gradient(135deg,rgba(255,255,255,.45),transparent 36%,transparent 70%,rgba(255,255,255,.12));
+}
+.install-close{
+    position:absolute;right:15px;top:15px;width:35px;height:35px;border:0;border-radius:50%;
+    display:grid;place-items:center;cursor:pointer;color:#55565c;background:rgba(255,255,255,.42);
+    backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);z-index:4;
+    transition:transform .22s ease,background .22s ease;
+}
+.install-close:hover{transform:scale(1.07);background:rgba(255,255,255,.70)}
+.install-close:active{transform:scale(.88)}
+.install-close svg{width:15px;height:15px}
+.install-app-icon-wrap{display:flex;justify-content:center;margin-bottom:21px;position:relative;z-index:2}
+.install-app-icon{
+    width:76px;height:76px;border-radius:22px;display:grid;place-items:center;position:relative;
+    background:linear-gradient(145deg,rgba(255,255,255,.95),rgba(225,230,242,.70));
+    box-shadow:0 16px 32px rgba(50,58,80,.15),inset 0 1px 1px rgba(255,255,255,1);
+    animation:attInstallIconFloat 4s ease-in-out infinite;
+}
+.install-app-icon::before{content:"";position:absolute;inset:5px;border-radius:18px;background:linear-gradient(135deg,rgba(255,255,255,.78),rgba(255,255,255,.08))}
+.install-app-icon svg{width:43px;height:43px;position:relative;z-index:2}
+.install-title{position:relative;z-index:2;text-align:center;font-size:28px;line-height:1.1;letter-spacing:-.04em;font-weight:700;color:#151519}
+.install-description{position:relative;z-index:2;text-align:center;margin:11px auto 23px;max-width:335px;font-size:15px;line-height:1.55;color:rgba(50,51,57,.68)}
+.install-actions{position:relative;z-index:2;display:grid;gap:10px}
+.install-btn,.install-not-now{
+    width:100%;height:52px;border:0;border-radius:17px;font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;
+    transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s ease,background .22s ease,opacity .22s ease;
+}
+.install-btn{position:relative;overflow:hidden;color:#fff;background:linear-gradient(135deg,#17181c,#3a3c44);box-shadow:0 10px 25px rgba(20,21,25,.20),inset 0 1px 0 rgba(255,255,255,.18)}
+.install-btn::before{content:"";position:absolute;top:0;left:-100%;width:70%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.30),transparent);transform:skewX(-18deg);animation:attInstallButtonShine 3.8s ease-in-out infinite}
+.install-btn span{position:relative;z-index:2}
+.install-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 15px 30px rgba(20,21,25,.24),inset 0 1px 0 rgba(255,255,255,.20)}
+.install-btn:active:not(:disabled){transform:scale(.965)}
+.install-btn:disabled{opacity:.58;cursor:default}
+.install-btn.loading{pointer-events:none;background:#4b4c53}
+.install-btn.success{background:#25262b}
+.install-not-now{color:#505158;background:rgba(255,255,255,.32);border:1px solid rgba(255,255,255,.40)}
+.install-not-now:hover{background:rgba(255,255,255,.58);transform:translateY(-1px)}
+.install-not-now:active{transform:scale(.97)}
+.install-note{position:relative;z-index:2;text-align:center;margin-top:15px;font-size:11px;color:rgba(60,61,67,.48)}
+.install-loader{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;vertical-align:-2px;margin-right:7px;animation:attInstallSpin .7s linear infinite}
+@keyframes attInstallOverlayIn{from{opacity:0}to{opacity:1}}
+@keyframes attInstallOverlayOut{to{opacity:0}}
+@keyframes attInstallPopupIn{0%{opacity:0;transform:translateY(35px) scale(.82)}55%{opacity:1;transform:translateY(-5px) scale(1.015)}75%{transform:translateY(2px) scale(.995)}100%{opacity:1;transform:none}}
+@keyframes attInstallPopupOut{to{opacity:0;transform:translateY(15px) scale(.92)}}
+@keyframes attInstallShine{0%,55%{transform:translateX(-45%) rotate(-8deg);opacity:0}65%{opacity:.8}85%,100%{transform:translateX(45%) rotate(-8deg);opacity:0}}
+@keyframes attInstallButtonShine{0%,45%{left:-100%}70%,100%{left:140%}}
+@keyframes attInstallIconFloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-5px) rotate(1deg)}}
+@keyframes attInstallSpin{to{transform:rotate(360deg)}}
+@media(max-width:520px){
+    .install-overlay{padding:16px}
+    .install-popup{padding:28px 20px 21px;border-radius:28px}
+    .install-popup::after{border-radius:27px}
+    .install-app-icon{width:70px;height:70px;border-radius:20px}
+    .install-app-icon svg{width:39px;height:39px}
+    .install-title{font-size:25px}
+    .install-description{font-size:14px;margin-bottom:21px}
+    .install-btn,.install-not-now{height:50px;border-radius:16px}
+}
+@media(prefers-reduced-motion:reduce){.install-overlay,.install-popup,.install-app-icon,.install-popup::before,.install-btn::before{animation:none!important;transition:none!important}}
+
 </style>
 </head>
 
@@ -3856,6 +3959,38 @@ setInterval(()=>{
 },500);
 
 </script>
+
+
+
+<!-- =========================================================
+     ATTENDLY PWA INSTALL POPUP
+========================================================= -->
+<div class="install-overlay" id="attInstallOverlay" aria-hidden="true">
+    <div class="install-popup" id="attInstallPopup" role="dialog" aria-modal="true" aria-labelledby="attInstallTitle">
+        <button class="install-close" id="attInstallClose" aria-label="Close install dialog">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M7 7L17 17M17 7L7 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+
+        <div class="install-app-icon-wrap">
+            <div class="install-app-icon">
+                <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                    <rect x="7" y="7" width="34" height="34" rx="10" fill="url(#attInstallGradient)"/>
+                    <path d="M16 24.5L21.2 29.5L32.5 18" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <defs><linearGradient id="attInstallGradient" x1="9" y1="8" x2="39" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#858991"/><stop offset="1" stop-color="#292B31"/></linearGradient></defs>
+                </svg>
+            </div>
+        </div>
+
+        <h2 class="install-title" id="attInstallTitle">Install Attendly?</h2>
+        <p class="install-description" id="attInstallDescription">Get a faster, smoother experience with Attendly right from your device.</p>
+
+        <div class="install-actions">
+            <button class="install-btn" id="attInstallButton"><span>Install App</span></button>
+            <button class="install-not-now" id="attInstallNotNow">Not Now</button>
+        </div>
+        <div class="install-note" id="attInstallNote">Opens like a native app</div>
+    </div>
+</div>
 
 </body>
 </html>
