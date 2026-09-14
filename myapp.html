@@ -1594,6 +1594,55 @@ input:focus,select:focus{border-color:rgba(91,75,219,.35);box-shadow:0 0 0 4px r
 .nav-icon .ui-icon,.mobile-icon .ui-icon{width:15px;height:15px}
 .stat-icon .ui-icon{width:16px;height:16px}
 
+
+/* ================= EXPORT + MODAL BUTTON FIX ================= */
+.modal-actions{
+    flex-wrap:wrap;
+    align-items:center;
+}
+.modal-actions button{
+    min-height:38px;
+}
+.export-btn{
+    padding:9px 12px;
+    border-radius:11px;
+    color:var(--primary);
+    background:var(--soft);
+    font-size:11px;
+    font-weight:800;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    transition:transform .35s var(--ease),background .35s var(--ease),box-shadow .35s var(--ease),filter .35s var(--ease);
+}
+.export-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 9px 24px rgba(91,75,219,.12);
+}
+.export-btn:active{transform:scale(.96)}
+.export-btn .ui-icon{width:15px;height:15px}
+.close{
+    display:grid;
+    place-items:center;
+    flex:none;
+    cursor:pointer;
+    transition:transform .28s var(--ease),background .28s var(--ease),color .28s var(--ease);
+}
+.close:hover{
+    background:var(--soft);
+    color:var(--primary);
+    transform:scale(1.05);
+}
+.close:active{transform:scale(.88)}
+@media(max-width:470px){
+    .modal{padding:18px;border-radius:25px}
+    .modal-actions{justify-content:stretch}
+    .modal-actions button{flex:1 1 auto}
+    .modal-actions .danger-btn,.modal-actions .export-btn,.modal-actions .primary-btn,.modal-actions .small-btn{
+        min-width:0;
+    }
+}
 </style>
 </head>
 
@@ -1936,7 +1985,7 @@ input:focus,select:focus{border-color:rgba(91,75,219,.35);box-shadow:0 0 0 4px r
 
         <div class="modal-head">
             <h2>Add student</h2>
-            <button class="close" onclick="closeStudentModal()"><svg class="ui-icon" viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg></button>
+            <button class="close" type="button" aria-label="Close" onclick="event.stopPropagation();closeStudentModal()"><svg class="ui-icon" viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg></button>
         </div>
 
         <div class="form-group">
@@ -1950,7 +1999,7 @@ input:focus,select:focus{border-color:rgba(91,75,219,.35);box-shadow:0 0 0 4px r
         </div>
 
         <div class="modal-actions">
-            <button class="small-btn" onclick="closeStudentModal()">Cancel</button>
+            <button class="small-btn" type="button" onclick="event.stopPropagation();closeStudentModal()">Cancel</button>
             <button class="primary-btn" onclick="addStudent()">Add student</button>
         </div>
 
@@ -1965,7 +2014,7 @@ input:focus,select:focus{border-color:rgba(91,75,219,.35);box-shadow:0 0 0 4px r
 
         <div class="modal-head">
             <h2>Add class</h2>
-            <button class="close" onclick="closeClassModal()"><svg class="ui-icon" viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg></button>
+            <button class="close" type="button" aria-label="Close" onclick="event.stopPropagation();closeClassModal()"><svg class="ui-icon" viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg></button>
         </div>
 
         <div class="form-group">
@@ -1974,7 +2023,7 @@ input:focus,select:focus{border-color:rgba(91,75,219,.35);box-shadow:0 0 0 4px r
         </div>
 
         <div class="modal-actions">
-            <button class="small-btn" onclick="closeClassModal()">Cancel</button>
+            <button class="small-btn" type="button" onclick="event.stopPropagation();closeClassModal()">Cancel</button>
             <button class="primary-btn" onclick="addClass()">Create class</button>
         </div>
 
@@ -1989,7 +2038,7 @@ input:focus,select:focus{border-color:rgba(91,75,219,.35);box-shadow:0 0 0 4px r
 
         <div class="modal-head">
             <h2>Student profile</h2>
-            <button class="close" onclick="closeDetail()"><svg class="ui-icon" viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg></button>
+            <button class="close" type="button" aria-label="Close" onclick="event.stopPropagation();closeDetail()"><svg class="ui-icon" viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg></button>
         </div>
 
         <div id="studentDetail"></div>
@@ -2634,13 +2683,25 @@ function openStudentDetail(studentId){
 
             <button
                 class="danger-btn"
+                type="button"
                 onclick="deleteStudent('${student.id}')"
             >
                 Delete student
             </button>
 
             <button
+                class="export-btn"
+                type="button"
+                onclick="exportAllRecordsJPG()"
+                title="Export all attendance records as JPG"
+            >
+                <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 20h14"/></svg>
+                Export records
+            </button>
+
+            <button
                 class="primary-btn"
+                type="button"
                 onclick="closeDetail();navigate('attendance')"
             >
                 Open attendance
@@ -3533,6 +3594,176 @@ document.addEventListener("keydown",event=>{
     closeDetail();
 
 });
+
+/* =========================================================
+   EXPORT ALL ATTENDANCE RECORDS AS JPG
+========================================================= */
+
+function exportText(value){
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&apos;");
+}
+
+function exportAllRecordsJPG(){
+    if(!app || !Array.isArray(app.classes) || !app.classes.length){
+        showToast("No attendance records to export");
+        return;
+    }
+
+    const records=[];
+    let totalRecords=0;
+
+    app.classes.forEach(cls=>{
+        const classDates=getRecordedDates(cls);
+        cls.students.forEach(student=>{
+            const history=Object.entries(student.history || {})
+                .sort((a,b)=>b[0].localeCompare(a[0]));
+
+            if(history.length){
+                history.forEach(([date,status])=>{
+                    records.push({
+                        className:cls.name,
+                        studentName:student.name,
+                        roll:student.roll || "-",
+                        date,
+                        status:statusLabel(status)
+                    });
+                    totalRecords++;
+                });
+            }
+        });
+    });
+
+    const now=new Date();
+    const generatedAt=now.toLocaleString("en-IN",{
+        day:"2-digit",month:"short",year:"numeric",
+        hour:"2-digit",minute:"2-digit"
+    });
+
+    const width=1500;
+    const rowHeight=42;
+    const headerHeight=190;
+    const tableHeadHeight=58;
+    const footerHeight=55;
+    const height=Math.max(
+        520,
+        headerHeight+tableHeadHeight+Math.max(records.length,1)*rowHeight+footerHeight
+    );
+
+    let y=headerHeight+tableHeadHeight;
+    let rows="";
+
+    if(records.length){
+        records.forEach((record,index)=>{
+            const fill=index%2===0 ? "#f7f7fb" : "#ffffff";
+            const statusColor=
+                record.status==="Present" ? "#159765" :
+                record.status==="Absent" ? "#d94159" : "#d98620";
+
+            rows += `
+                <rect x="70" y="${y}" width="1360" height="${rowHeight}" rx="8" fill="${fill}"/>
+                <text x="90" y="${y+27}" font-family="Arial,Segoe UI,sans-serif" font-size="18" fill="#17181d">${exportText(record.className)}</text>
+                <text x="430" y="${y+27}" font-family="Arial,Segoe UI,sans-serif" font-size="18" fill="#17181d">${exportText(record.studentName)}</text>
+                <text x="840" y="${y+27}" font-family="Arial,Segoe UI,sans-serif" font-size="18" fill="#5f626d">${exportText(record.roll)}</text>
+                <text x="970" y="${y+27}" font-family="Arial,Segoe UI,sans-serif" font-size="18" fill="#5f626d">${exportText(formatDate(record.date))}</text>
+                <rect x="1270" y="${y+8}" width="125" height="26" rx="13" fill="${statusColor}" opacity=".12"/>
+                <text x="1332" y="${y+26}" text-anchor="middle" font-family="Arial,Segoe UI,sans-serif" font-size="15" font-weight="700" fill="${statusColor}">${exportText(record.status)}</text>
+            `;
+            y+=rowHeight;
+        });
+    }else{
+        rows=`
+            <rect x="70" y="${y}" width="1360" height="${rowHeight}" rx="8" fill="#f7f7fb"/>
+            <text x="750" y="${y+27}" text-anchor="middle" font-family="Arial,Segoe UI,sans-serif" font-size="18" fill="#777b86">No attendance records yet</text>
+        `;
+        y+=rowHeight;
+    }
+
+    const finalHeight=y+footerHeight;
+    const svg=`<?xml version="1.0" encoding="UTF-8"?>
+    <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${finalHeight}" viewBox="0 0 ${width} ${finalHeight}">
+        <defs>
+            <linearGradient id="hero" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stop-color="#5b4bdb"/>
+                <stop offset="100%" stop-color="#796bea"/>
+            </linearGradient>
+        </defs>
+        <rect width="100%" height="100%" fill="#ffffff"/>
+        <rect x="0" y="0" width="100%" height="145" fill="url(#hero)"/>
+        <text x="70" y="63" font-family="Arial,Segoe UI,sans-serif" font-size="42" font-weight="800" fill="#ffffff">Attendly</text>
+        <text x="70" y="105" font-family="Arial,Segoe UI,sans-serif" font-size="22" fill="#ffffff" opacity=".9">Complete Attendance Records</text>
+        <text x="1430" y="60" text-anchor="end" font-family="Arial,Segoe UI,sans-serif" font-size="18" fill="#ffffff" opacity=".9">${exportText(generatedAt)}</text>
+        <text x="1430" y="102" text-anchor="end" font-family="Arial,Segoe UI,sans-serif" font-size="19" font-weight="700" fill="#ffffff">${totalRecords} record${totalRecords===1?"":"s"}</text>
+
+        <text x="70" y="177" font-family="Arial,Segoe UI,sans-serif" font-size="17" fill="#777b86">All classes · All students · All recorded dates</text>
+
+        <rect x="70" y="${headerHeight}" width="1360" height="${tableHeadHeight}" rx="12" fill="#f0eefc"/>
+        <text x="90" y="${headerHeight+36}" font-family="Arial,Segoe UI,sans-serif" font-size="17" font-weight="800" fill="#5b4bdb">CLASS</text>
+        <text x="430" y="${headerHeight+36}" font-family="Arial,Segoe UI,sans-serif" font-size="17" font-weight="800" fill="#5b4bdb">STUDENT</text>
+        <text x="840" y="${headerHeight+36}" font-family="Arial,Segoe UI,sans-serif" font-size="17" font-weight="800" fill="#5b4bdb">ROLL</text>
+        <text x="970" y="${headerHeight+36}" font-family="Arial,Segoe UI,sans-serif" font-size="17" font-weight="800" fill="#5b4bdb">DATE</text>
+        <text x="1332" y="${headerHeight+36}" text-anchor="middle" font-family="Arial,Segoe UI,sans-serif" font-size="17" font-weight="800" fill="#5b4bdb">STATUS</text>
+
+        ${rows}
+
+        <line x1="70" y1="${finalHeight-45}" x2="1430" y2="${finalHeight-45}" stroke="#e7e7ec"/>
+        <text x="70" y="${finalHeight-18}" font-family="Arial,Segoe UI,sans-serif" font-size="14" fill="#8a8d97">Generated by Attendly</text>
+        <text x="1430" y="${finalHeight-18}" text-anchor="end" font-family="Arial,Segoe UI,sans-serif" font-size="14" fill="#8a8d97">Attendance export</text>
+    </svg>`;
+
+    const blob=new Blob([svg],{type:"image/svg+xml;charset=utf-8"});
+    const url=URL.createObjectURL(blob);
+    const image=new Image();
+
+    image.onload=()=>{
+        try{
+            const scale=Math.min(2,Math.max(1,window.devicePixelRatio||1));
+            const canvas=document.createElement("canvas");
+            canvas.width=width*scale;
+            canvas.height=finalHeight*scale;
+            const ctx=canvas.getContext("2d");
+            ctx.setTransform(scale,0,0,scale,0,0);
+            ctx.fillStyle="#ffffff";
+            ctx.fillRect(0,0,width,finalHeight);
+            ctx.drawImage(image,0,0,width,finalHeight);
+
+            canvas.toBlob(jpgBlob=>{
+                URL.revokeObjectURL(url);
+                if(!jpgBlob){
+                    showToast("JPG export failed");
+                    return;
+                }
+
+                const downloadUrl=URL.createObjectURL(jpgBlob);
+                const link=document.createElement("a");
+                const stamp=todayISO();
+                link.href=downloadUrl;
+                link.download=`attendly-all-records-${stamp}.jpg`;
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                setTimeout(()=>URL.revokeObjectURL(downloadUrl),1200);
+                showToast("All records exported as JPG");
+            },"image/jpeg",0.94);
+        }catch(error){
+            URL.revokeObjectURL(url);
+            console.error("JPG export error:",error);
+            showToast("JPG export failed");
+        }
+    };
+
+    image.onerror=()=>{
+        URL.revokeObjectURL(url);
+        showToast("JPG export failed");
+    };
+
+    showToast("Preparing JPG export...");
+    image.src=url;
+}
 
 /* =========================================================
    TOAST
