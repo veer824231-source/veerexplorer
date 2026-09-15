@@ -148,7 +148,7 @@ button{
 .logo{
     width:42px;
     height:42px;
-    border-radius:14px;
+    border-radius:100px;
     display:grid;
     place-items:center;
     background:linear-gradient(145deg,var(--primary),var(--primary2));
@@ -182,7 +182,7 @@ button{
 .nav{
     display:flex;
     flex-direction:column;
-    gap:6px;
+    gap:5px;
 }
 
 .nav button{
@@ -191,11 +191,11 @@ button{
     align-items:center;
     gap:12px;
     padding:12px;
-    border-radius:15px;
+    border-radius:50px;
     background:transparent;
     color:var(--muted);
     text-align:left;
-    transition:.25s ease;
+    transition:.15s ease;
 }
 
 .nav button:hover{
@@ -211,13 +211,13 @@ button{
 }
 
 .nav-icon{
-    width:25px;
-    height:25px;
-    border-radius:9px;
+    width:50px;
+    height:50px;
+    border-radius:50px;
     display:grid;
     place-items:center;
     font-size:11px;
-    font-weight:800;
+    font-weight:1000;
     background:rgba(120,120,130,.09);
 }
 
@@ -351,7 +351,7 @@ body.dark .class-mini{
 
 .view{
     display:none;
-    animation:pageIn .42s cubic-bezier(.2,.8,.2,1);
+    animation:pageIn .25s cubic-bezier(.2,.8,.2,1);
 }
 
 .view.active{
@@ -1592,7 +1592,7 @@ input:focus,select:focus{border-color:rgba(91,75,219,.35);box-shadow:0 0 0 4px r
 .ui-icon{width:17px;height:17px;display:block;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .ui-icon.sm{width:15px;height:15px}.ui-icon.lg{width:19px;height:19px}
 .nav-icon,.mobile-icon,.stat-icon{font-size:0}
-.nav-icon .ui-icon,.mobile-icon .ui-icon{width:15px;height:15px}
+.nav-icon .ui-icon,.mobile-icon .ui-icon{width:30px;height:30px}
 .stat-icon .ui-icon{width:16px;height:16px}
 
 
@@ -1605,7 +1605,7 @@ input:focus,select:focus{border-color:rgba(91,75,219,.35);box-shadow:0 0 0 4px r
     min-height:38px;
 }
 .export-btn{
-    padding:9px 12px;
+    padding:11px 12px;
     border-radius:11px;
     color:var(--primary);
     background:var(--soft);
@@ -1746,24 +1746,6 @@ input:focus,select:focus{border-color:rgba(91,75,219,.35);box-shadow:0 0 0 4px r
     .install-btn,.install-not-now{height:50px;border-radius:16px}
 }
 @media(prefers-reduced-motion:reduce){.install-overlay,.install-popup,.install-app-icon,.install-popup::before,.install-btn::before{animation:none!important;transition:none!important}}
-
-
-/* ================= REAL PWA INSTALL STATES ================= */
-.install-btn.is-unavailable{
-    background:rgba(120,120,130,.14);
-    color:var(--text);
-    box-shadow:none;
-}
-.install-btn.is-unavailable:hover{
-    transform:none;
-    box-shadow:none;
-}
-.install-btn.is-ready{
-    background:linear-gradient(135deg,#17181c,#3a3c44);
-}
-.install-note.is-error{
-    color:#c94b5c;
-}
 
 </style>
 </head>
@@ -4009,303 +3991,6 @@ setInterval(()=>{
         <div class="install-note" id="attInstallNote">Opens like a native app</div>
     </div>
 </div>
-
-
-<script>
-/* =========================================================
-   ATTENDLY — REAL PWA INSTALL CONTROLLER
-   Custom popup + beforeinstallprompt + appinstalled + SW
-========================================================= */
-(function(){
-
-    const overlay = document.getElementById("attInstallOverlay");
-    const popup = document.getElementById("attInstallPopup");
-    const installBtn = document.getElementById("attInstallButton");
-    const notNowBtn = document.getElementById("attInstallNotNow");
-    const closeBtn = document.getElementById("attInstallClose");
-    const description = document.getElementById("attInstallDescription");
-    const note = document.getElementById("attInstallNote");
-    const buttonText = installBtn ? installBtn.querySelector("span") : null;
-
-    if(!overlay || !installBtn || !notNowBtn) return;
-
-    let deferredInstallPrompt = null;
-    let popupOpened = false;
-    let installCompleted = false;
-
-    const DISMISS_KEY = "attendly_install_dismissed";
-    const INSTALLED_KEY = "attendly_pwa_installed";
-
-    function isStandalone(){
-        return window.matchMedia("(display-mode: standalone)").matches ||
-               window.matchMedia("(display-mode: fullscreen)").matches ||
-               window.navigator.standalone === true;
-    }
-
-    function isIOS(){
-        return /iphone|ipad|ipod/i.test(navigator.userAgent);
-    }
-
-    function isInAppBrowser(){
-        return /FBAN|FBAV|Instagram|Line|wv/i.test(navigator.userAgent);
-    }
-
-    function setButton(text, disabled, state){
-        if(buttonText) buttonText.textContent = text;
-        installBtn.disabled = !!disabled;
-        installBtn.classList.remove("is-ready","is-unavailable");
-        if(state) installBtn.classList.add(state);
-    }
-
-    function setMessage(text, error){
-        description.textContent = text;
-        note.textContent = error ? "Installation is not available in this browser" : "Opens like a native app";
-        note.classList.toggle("is-error", !!error);
-    }
-
-    function openPopup(){
-        if(popupOpened || installCompleted || isStandalone()) return;
-
-        popupOpened = true;
-        overlay.classList.remove("closing");
-        overlay.classList.add("show");
-        overlay.setAttribute("aria-hidden","false");
-
-        setButton("Install App", true, "is-unavailable");
-        setMessage(
-            "Get a faster, smoother experience with Attendly right from your device.",
-            false
-        );
-
-        // Give Chrome/Edge a moment to deliver beforeinstallprompt.
-        setTimeout(function(){
-            if(deferredInstallPrompt) return;
-
-            if(isIOS()){
-                setButton("How to Install", false, "is-unavailable");
-                setMessage(
-                    "Use your browser's Share menu and choose “Add to Home Screen” to install Attendly.",
-                    false
-                );
-            }else if(isInAppBrowser()){
-                setButton("Open in Browser", false, "is-unavailable");
-                setMessage(
-                    "Open Attendly in Chrome, Edge, or another supported browser to install it.",
-                    true
-                );
-            }else{
-                setButton("Install Unavailable", true, "is-unavailable");
-                setMessage(
-                    "Your browser has not provided a PWA installation option yet. Try Chrome or Edge over HTTPS.",
-                    true
-                );
-            }
-        }, 1800);
-    }
-
-    function closePopup(saveDismiss){
-        overlay.classList.add("closing");
-
-        setTimeout(function(){
-            overlay.classList.remove("show","closing");
-            overlay.setAttribute("aria-hidden","true");
-            popupOpened = false;
-        }, 340);
-
-        if(saveDismiss){
-            try{
-                localStorage.setItem(DISMISS_KEY, String(Date.now()));
-            }catch(e){}
-        }
-    }
-
-    /* Register the service worker for offline/cache support. */
-    if("serviceWorker" in navigator){
-        window.addEventListener("load", function(){
-            navigator.serviceWorker.register("./sw.js")
-                .then(function(reg){
-                    console.log("Attendly service worker registered:", reg.scope);
-                })
-                .catch(function(error){
-                    console.warn("Attendly service worker registration failed:", error);
-                });
-        });
-    }
-
-    /*
-       This is the browser-controlled real installation event.
-       We save it and use it only after the user presses Install App.
-    */
-    window.addEventListener("beforeinstallprompt", function(event){
-        event.preventDefault();
-        deferredInstallPrompt = event;
-
-        if(!popupOpened) return;
-
-        setButton("Install App", false, "is-ready");
-        setMessage(
-            "Install Attendly on your device for a fast, app-like experience.",
-            false
-        );
-    });
-
-    /* Fired after a successful browser installation. */
-    window.addEventListener("appinstalled", function(){
-        installCompleted = true;
-        deferredInstallPrompt = null;
-
-        try{
-            localStorage.setItem(INSTALLED_KEY, "1");
-            localStorage.removeItem(DISMISS_KEY);
-        }catch(e){}
-
-        closePopup(false);
-    });
-
-    installBtn.addEventListener("click", async function(){
-
-        /* iOS does not expose beforeinstallprompt. */
-        if(isIOS() && !deferredInstallPrompt){
-            setButton("Add to Home Screen", false, "is-unavailable");
-            setMessage(
-                "Tap your browser's Share button, then choose “Add to Home Screen”.",
-                false
-            );
-            return;
-        }
-
-        /* Unsupported browser / prompt not supplied. */
-        if(!deferredInstallPrompt){
-            setButton("Not Available", true, "is-unavailable");
-            setMessage(
-                "This browser has not provided the real PWA install option. Try Chrome or Edge over HTTPS.",
-                true
-            );
-            return;
-        }
-
-        const promptEvent = deferredInstallPrompt;
-        deferredInstallPrompt = null;
-
-        installBtn.classList.add("loading");
-        installBtn.disabled = true;
-        if(buttonText){
-            buttonText.innerHTML =
-                '<span class="install-loader"></span>Installing…';
-        }
-
-        try{
-            await promptEvent.prompt();
-            const result = await promptEvent.userChoice;
-
-            if(result && result.outcome === "accepted"){
-                installBtn.classList.remove("loading");
-                installBtn.classList.add("success");
-                if(buttonText) buttonText.textContent = "Installed";
-                installCompleted = true;
-
-                try{
-                    localStorage.setItem(INSTALLED_KEY, "1");
-                }catch(e){}
-
-                setMessage("Attendly has been added to your device.", false);
-
-                setTimeout(function(){
-                    closePopup(false);
-                }, 650);
-            }else{
-                installBtn.classList.remove("loading");
-                setButton("Install App", false, "is-ready");
-                setMessage(
-                    "Installation was cancelled. You can install Attendly anytime by pressing Install App.",
-                    false
-                );
-            }
-        }catch(error){
-            console.error("PWA install error:", error);
-            installBtn.classList.remove("loading");
-            setButton("Install App", false, "is-ready");
-            setMessage(
-                "The browser could not start the installation. Please try again.",
-                true
-            );
-        }
-    });
-
-    function iosInstallHelp(){
-        if(!isIOS()) return false;
-
-        setButton("How to Install", false, "is-unavailable");
-        setMessage(
-            "Tap Share in Safari, then choose “Add to Home Screen”.",
-            false
-        );
-        return true;
-    }
-
-    notNowBtn.addEventListener("click", function(){
-        closePopup(true);
-    });
-
-    if(closeBtn){
-        closeBtn.addEventListener("click", function(){
-            closePopup(true);
-        });
-    }
-
-    overlay.addEventListener("click", function(event){
-        if(event.target === overlay) closePopup(true);
-    });
-
-    document.addEventListener("keydown", function(event){
-        if(event.key === "Escape" && overlay.classList.contains("show")){
-            closePopup(true);
-        }
-    });
-
-    /* If already installed, never show the custom popup. */
-    window.addEventListener("load", function(){
-
-        if(isStandalone()) return;
-
-        let installed = false;
-        try{
-            installed = localStorage.getItem(INSTALLED_KEY) === "1";
-        }catch(e){}
-
-        if(installed) return;
-
-        /*
-          The popup intentionally appears on every fresh eligible visit unless
-          the user dismissed it during this browser session/day.
-          A saved dismissal expires after 24 hours.
-        */
-        let dismissedRecently = false;
-        try{
-            const dismissedAt = Number(localStorage.getItem(DISMISS_KEY) || 0);
-            dismissedRecently = dismissedAt &&
-                (Date.now() - dismissedAt < 24 * 60 * 60 * 1000);
-        }catch(e){}
-
-        if(dismissedRecently) return;
-
-        setTimeout(function(){
-            if(isStandalone()) return;
-            openPopup();
-        }, 550);
-    });
-
-    /* Handles an installation started from another browser UI. */
-    window.matchMedia("(display-mode: standalone)")
-        .addEventListener?.("change", function(event){
-            if(event.matches){
-                installCompleted = true;
-                closePopup(false);
-            }
-        });
-
-})();
-</script>
 
 </body>
 </html>
