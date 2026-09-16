@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="theme-color" content="#f5f5f7">
+<meta name="theme-color" content="#5B4BDB">
 <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
+<link rel="icon" type="image/png" href="logo512.png">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -352,20 +352,19 @@ body.dark .class-mini{
 }
 
 /* ================= VIEWS ================= */
-
 .view{
     display:none;
-    animation:pageIn .25s cubic-bezier(.2,.8,.2,1);
 }
 
 .view.active{
     display:block;
+    animation:pageIn .18s cubic-bezier(.22,1,.36,1) both;
 }
 
 @keyframes pageIn{
     from{
         opacity:0;
-        transform:translateY(13px) scale(.985);
+        transform:translateY(6px) scale(.995);
     }
     to{
         opacity:1;
@@ -374,20 +373,19 @@ body.dark .class-mini{
 }
 
 .page-content{
-    animation:contentIn .5s cubic-bezier(.2,.8,.2,1);
+    animation:contentIn .15s cubic-bezier(.22,1,.36,1) both;
 }
 
 @keyframes contentIn{
     from{
         opacity:0;
-        transform:translateY(10px);
+        transform:translateY(4px);
     }
     to{
         opacity:1;
         transform:none;
     }
 }
-
 /* ================= STATS ================= */
 
 .stats{
@@ -1596,7 +1594,7 @@ input:focus,select:focus{border-color:rgba(91,75,219,.35);box-shadow:0 0 0 4px r
 .ui-icon{width:17px;height:17px;display:block;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .ui-icon.sm{width:15px;height:15px}.ui-icon.lg{width:19px;height:19px}
 .nav-icon,.mobile-icon,.stat-icon{font-size:0}
-.nav-icon .ui-icon,.mobile-icon .ui-icon{width:30px;height:30px}
+.nav-icon .ui-icon,.mobile-icon .ui-icon{width:40px;height:40px}
 .stat-icon .ui-icon{width:16px;height:16px}
 
 
@@ -1750,6 +1748,614 @@ input:focus,select:focus{border-color:rgba(91,75,219,.35);box-shadow:0 0 0 4px r
     .install-btn,.install-not-now{height:50px;border-radius:16px}
 }
 @media(prefers-reduced-motion:reduce){.install-overlay,.install-popup,.install-app-icon,.install-popup::before,.install-btn::before{animation:none!important;transition:none!important}}
+
+
+/* =========================================================
+   ATTENDLY COMPACT UI
+   Smaller overall UI without removing existing features
+========================================================= */
+
+/* Faster page navigation */
+.view.active{
+    animation:pageIn .18s cubic-bezier(.22,1,.36,1) both !important;
+}
+.page-content{
+    animation:contentIn .15s cubic-bezier(.22,1,.36,1) both !important;
+}
+@keyframes pageIn{
+    from{opacity:0;transform:translateY(4px) scale(.998)}
+    to{opacity:1;transform:none}
+}
+@keyframes contentIn{
+    from{opacity:0;transform:translateY(3px)}
+    to{opacity:1;transform:none}
+}
+
+/* ---------- Desktop / tablet ---------- */
+@media(min-width:801px){
+    .sidebar{
+        left:14px;
+        top:14px;
+        bottom:14px;
+        width:215px;
+        padding:15px;
+        border-radius:24px;
+    }
+
+    .brand{
+        gap:9px;
+        padding:6px 5px 19px;
+    }
+
+    .logo{
+        width:37px;
+        height:37px;
+        font-size:16px;
+    }
+
+    .brand-text{font-size:17px}
+    .brand-sub{font-size:9px}
+
+    .nav-title{
+        font-size:9px;
+        padding:0 7px 8px;
+    }
+
+    .nav{gap:3px}
+
+    .nav button{
+        gap:9px;
+        padding:9px;
+    }
+
+    .nav-icon{
+        width:38px;
+        height:38px;
+    }
+
+    .nav-icon .ui-icon{
+        width:31px;
+        height:31px;
+    }
+
+    .class-mini{
+        padding:10px;
+        border-radius:15px;
+    }
+
+    .theme-btn{
+        padding:9px;
+        font-size:11px;
+    }
+
+    .main{
+        width:calc(100% - 245px);
+        margin-left:245px;
+        padding:20px 24px 90px;
+    }
+
+    .topbar{
+        height:57px;
+        margin-bottom:15px;
+    }
+
+    .page-title h1{
+        font-size:24px !important;
+    }
+
+    .page-title p{font-size:11px}
+
+    .history-btn{
+        width:37px;
+        height:37px;
+        font-size:23px;
+    }
+
+    .class-select{
+        min-width:120px;
+        padding:8px 11px;
+        font-size:11px;
+    }
+
+    .stats{
+        gap:11px;
+        margin-bottom:14px;
+    }
+
+    .stat{
+        padding:15px;
+        border-radius:20px;
+    }
+
+    .stat-number{
+        font-size:26px;
+        margin-top:8px;
+    }
+
+    .stat-icon{
+        width:30px;
+        height:30px;
+        border-radius:9px;
+    }
+
+    .two-col{
+        gap:14px;
+    }
+
+    .card{
+        border-radius:20px;
+    }
+
+    .card-head{
+        padding:16px 16px 11px;
+    }
+
+    .card-head h2{font-size:14px}
+    .card-head p{font-size:10px}
+
+    .small-btn{
+        padding:7px 10px;
+        font-size:10px;
+    }
+
+    .primary-btn{
+        padding:9px 13px;
+        font-size:11px;
+    }
+
+    .danger-btn{
+        padding:7px 10px;
+        font-size:10px;
+    }
+
+    .student-row{
+        gap:10px;
+        padding:10px 16px;
+    }
+
+    .avatar{
+        width:35px;
+        height:35px;
+        border-radius:11px;
+        font-size:11px;
+    }
+
+    .student-info strong{font-size:11px}
+    .student-info span{font-size:9px}
+
+    .status-pill{
+        padding:5px 8px;
+        font-size:8px;
+    }
+
+    .toolbar{
+        gap:7px;
+        margin-bottom:13px;
+    }
+
+    .search{
+        padding:10px 12px;
+        border-radius:13px;
+    }
+
+    .date-input{
+        padding:10px 11px;
+        border-radius:13px;
+    }
+
+    .attendance-list{
+        gap:10px;
+    }
+
+    .att-card{
+        padding:12px;
+        border-radius:17px;
+        gap:10px;
+    }
+
+    .att-main strong{font-size:12px}
+    .att-main small{font-size:9px}
+
+    .cycle-status{min-width:60px}
+    .cycle-status small{font-size:7px}
+
+    .class-grid{
+        gap:11px;
+    }
+
+    .class-card{
+        padding:16px;
+        border-radius:19px;
+    }
+
+    .class-letter{
+        width:39px;
+        height:39px;
+        border-radius:12px;
+        font-size:12px;
+    }
+
+    .class-card h3{
+        margin-top:13px;
+        font-size:15px;
+    }
+
+    .class-card p{font-size:10px}
+
+    .class-progress{
+        height:6px;
+        margin:13px 0 8px;
+    }
+
+    .class-meta{font-size:9px}
+    .class-actions{margin-top:12px;gap:6px}
+
+    .student-grid{
+        gap:10px;
+    }
+
+    .student-card{
+        padding:14px;
+        border-radius:18px;
+    }
+
+    .student-card-top{gap:9px}
+    .student-card-info strong{font-size:12px}
+    .student-card-info span{font-size:9px}
+
+    .percent{
+        margin-top:13px;
+        font-size:10px;
+    }
+
+    .student-hint{
+        font-size:8px;
+        margin-top:9px;
+    }
+
+    .report-grid{gap:13px}
+
+    .chart{
+        padding:16px;
+        height:225px;
+        gap:11px;
+    }
+
+    .summary-list{
+        padding:0 16px 16px;
+    }
+
+    .summary-item{
+        padding:10px 0;
+        font-size:10px;
+    }
+
+    .calendar{
+        padding:4px 16px 16px;
+    }
+
+    .cal-head,.cal-grid{gap:5px}
+    .cal-head div{font-size:8px;padding:6px 0}
+
+    .cal-day{
+        min-height:33px;
+        border-radius:9px;
+        font-size:9px;
+    }
+
+    .modal{
+        width:min(480px,100%);
+        padding:19px;
+        border-radius:24px;
+    }
+
+    .modal-head{margin-bottom:15px}
+    .modal-head h2{font-size:17px}
+
+    .close{
+        width:32px;
+        height:32px;
+    }
+
+    .form-group{margin-bottom:11px}
+    .form-group label{font-size:9px}
+    .form-group input{padding:10px 11px}
+
+    .modal-actions{
+        margin-top:14px;
+    }
+}
+
+/* ---------- Mobile ---------- */
+@media(max-width:800px){
+    .main{
+        padding:12px 10px calc(86px + env(safe-area-inset-bottom));
+    }
+
+    .topbar{
+        min-height:52px;
+        margin-bottom:12px;
+        padding:3px 0 3px 40px;
+    }
+
+    .page-title h1{
+        font-size:19px !important;
+    }
+
+    .page-title p{
+        font-size:9px;
+        margin-top:3px;
+    }
+
+    .history-btn{
+        width:35px;
+        height:35px;
+        font-size:22px;
+    }
+
+    .class-select{
+        width:88px;
+        max-width:88px;
+        padding:8px 6px;
+        font-size:9px;
+    }
+
+    .stats{
+        gap:7px;
+        margin-bottom:12px;
+    }
+
+    .stat{
+        padding:11px 10px;
+        border-radius:16px;
+    }
+
+    .stat-label{font-size:8px}
+    .stat-number{
+        font-size:20px;
+        margin-top:6px;
+    }
+
+    .stat-icon{
+        width:27px;
+        height:27px;
+        border-radius:8px;
+    }
+
+    .card{
+        border-radius:17px;
+    }
+
+    .card-head{
+        padding:13px 13px 9px;
+    }
+
+    .card-head h2{font-size:13px}
+    .card-head p{font-size:9px}
+
+    .small-btn{
+        padding:6px 8px;
+        font-size:9px;
+    }
+
+    .primary-btn{
+        padding:8px 11px;
+        font-size:10px;
+    }
+
+    .danger-btn{
+        padding:6px 8px;
+        font-size:9px;
+    }
+
+    .student-row{
+        gap:8px;
+        padding:9px 13px;
+    }
+
+    .avatar{
+        width:32px;
+        height:32px;
+        border-radius:10px;
+        font-size:10px;
+    }
+
+    .student-info strong{font-size:10px}
+    .student-info span{font-size:8px}
+
+    .status-pill{
+        padding:4px 7px;
+        font-size:7px;
+    }
+
+    .toolbar{
+        gap:6px;
+        margin-bottom:10px;
+    }
+
+    .search{
+        padding:9px 10px;
+        border-radius:12px;
+    }
+
+    .date-input{
+        padding:9px 10px;
+        border-radius:12px;
+    }
+
+    .att-card{
+        padding:10px;
+        border-radius:15px;
+        gap:8px;
+    }
+
+    .att-main strong{font-size:11px}
+    .att-main small{font-size:8px}
+
+    .cycle-status{min-width:54px}
+    .cycle-status small{font-size:7px}
+
+    .class-grid,.student-grid{
+        gap:9px;
+    }
+
+    .class-card{
+        padding:13px;
+        border-radius:17px;
+    }
+
+    .class-letter{
+        width:35px;
+        height:35px;
+        border-radius:11px;
+    }
+
+    .class-card h3{
+        margin-top:10px;
+        font-size:14px;
+    }
+
+    .class-card p{font-size:9px}
+
+    .class-progress{
+        height:5px;
+        margin:11px 0 7px;
+    }
+
+    .class-meta{font-size:8px}
+    .class-actions{margin-top:10px;gap:5px}
+
+    .student-card{
+        padding:12px;
+        border-radius:16px;
+    }
+
+    .student-card-top{gap:8px}
+    .student-card-info strong{font-size:11px}
+    .student-card-info span{font-size:8px}
+
+    .percent{
+        margin-top:11px;
+        font-size:9px;
+    }
+
+    .student-hint{
+        font-size:7px;
+        margin-top:8px;
+    }
+
+    .chart{
+        padding:13px;
+        height:205px;
+        gap:8px;
+    }
+
+    .summary-list{
+        padding:0 13px 13px;
+    }
+
+    .summary-item{
+        padding:9px 0;
+        font-size:9px;
+    }
+
+    .calendar{
+        padding:3px 13px 13px;
+    }
+
+    .cal-head,.cal-grid{gap:4px}
+    .cal-head div{font-size:7px;padding:5px 0}
+
+    .cal-day{
+        min-height:30px;
+        border-radius:8px;
+        font-size:8px;
+    }
+
+    .mobile-nav{
+        height:58px;
+        bottom:8px;
+        border-radius:19px;
+        padding:5px;
+    }
+
+    .mobile-nav button{
+        height:48px;
+    }
+
+    .mobile-icon{
+        width:37px;
+        height:37px;
+        border-radius:12px;
+    }
+
+    .mobile-icon .ui-icon{
+        width:19px;
+        height:19px;
+    }
+
+    .modal{
+        padding:17px;
+        border-radius:22px;
+    }
+
+    .modal-head h2{font-size:16px}
+
+    .form-group input{
+        padding:9px 10px;
+    }
+
+    .install-popup{
+        width:min(390px,100%);
+        padding:26px 21px 21px;
+        border-radius:26px;
+    }
+
+    .install-app-icon{
+        width:66px;
+        height:66px;
+        border-radius:19px;
+    }
+
+    .install-app-icon svg{
+        width:36px;
+        height:36px;
+    }
+
+    .install-title{font-size:23px}
+    .install-description{font-size:13px}
+    .install-btn,.install-not-now{
+        height:47px;
+        border-radius:15px;
+        font-size:14px;
+    }
+}
+
+@media(max-width:420px){
+    .main{
+        padding-left:8px;
+        padding-right:8px;
+    }
+
+    .page-title h1{
+        font-size:18px !important;
+    }
+
+    .stat{
+        padding:10px 9px;
+    }
+
+    .stat-number{font-size:19px}
+
+    .mobile-nav{
+        left:6px;
+        right:6px;
+        height:56px;
+    }
+
+    .mobile-nav button{height:46px}
+    .mobile-icon{width:35px;height:35px}
+}
 
 </style>
 </head>
