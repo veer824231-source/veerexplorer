@@ -682,5 +682,38 @@ window.addEventListener('beforeunload',()=>{for(const url of [])URL.revokeObject
 })();
 </script>
 
+
+<style id="mobile-default-cursor-fix">
+/* Use a neutral cursor everywhere; preserve text-selection behavior for editable fields. */
+html,body,body *{cursor:default!important}
+input,textarea,[contenteditable="true"]{cursor:text!important}
+button,a,[role="button"],[role="menuitem"],label,select{cursor:default!important;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+button:focus:not(:focus-visible),input:focus,textarea:focus{outline:none}
+@media(hover:none),(pointer:coarse){button:hover,.iconbtn:hover,.chat-item:hover{filter:none!important;transform:none!important}button:active,.iconbtn:active{opacity:.82}}
+</style>
+<script>
+/* Useful recommendation added: search within the currently open conversation. */
+(()=>{
+ const addChatSearch=()=>{
+  const menu=document.getElementById('chatToolsPopover');
+  if(!menu||menu.querySelector('[data-extra-action="search-chat"]'))return;
+  const b=document.createElement('button');b.type='button';b.className='app-menu-action';b.dataset.extraAction='search-chat';b.textContent='Search in chat';
+  b.addEventListener('click',()=>{
+   menu.classList.remove('show');
+   const term=window.prompt('Search messages in this chat');
+   if(term===null||!term.trim())return;
+   const query=term.trim().toLocaleLowerCase();
+   const bubbles=[...document.querySelectorAll('#messages .bubble')];
+   const match=bubbles.reverse().find(el=>el.innerText.toLocaleLowerCase().includes(query));
+   if(match){match.scrollIntoView({behavior:'smooth',block:'center'});match.animate([{outline:'2px solid #25a895',transform:'scale(1.015)'},{outline:'2px solid transparent',transform:'scale(1)'}],{duration:1100,easing:'ease-out'});}
+   else {const toast=document.getElementById('toast');if(toast){toast.textContent='No matching message found in this chat';toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2200)}}
+  });
+  menu.insertBefore(b,menu.firstChild);
+ };
+ addChatSearch();
+ const observer=new MutationObserver(addChatSearch);observer.observe(document.body,{childList:true,subtree:true});
+})();
+</script>
+
 </body>
 </html>
