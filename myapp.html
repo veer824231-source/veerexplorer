@@ -543,6 +543,32 @@ button,input,textarea,select{font-family:var(--apple-font)!important}
 #chatToolsPopover{top:58px!important;bottom:auto!important;right:10px!important;transform-origin:top right!important}
 @media(max-width:390px){#chatMoreBtn{width:34px;min-width:34px;flex-basis:34px;height:36px}}
 </style>
+
+
+<style id="ios26-profile-personalization">
+/* iOS 26-inspired profile editor and richer optical liquid-glass finish */
+.profile-photo-editor{display:flex;align-items:center;gap:15px;padding:15px;margin:2px 0 20px;border:1px solid rgba(255,255,255,.94);border-radius:22px;background:linear-gradient(135deg,rgba(255,255,255,.82),rgba(232,241,255,.54));box-shadow:0 10px 30px rgba(48,73,115,.075),inset 0 1px 0 #fff;position:relative;overflow:hidden}
+.profile-photo-editor:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.55),transparent 45%,rgba(255,255,255,.18))}
+.profile-photo-preview{width:76px;height:76px;flex:0 0 76px;border-radius:50%;display:grid;place-items:center;overflow:hidden;color:#087aff;font-size:25px;font-weight:700;background:linear-gradient(145deg,#e4f1ff,#b8d9ff);border:2px solid rgba(255,255,255,.96);box-shadow:0 7px 20px rgba(0,122,255,.16),inset 0 1px 0 #fff;background-size:cover;background-position:center;position:relative;z-index:1}
+.profile-photo-copy{min-width:0;position:relative;z-index:1}
+.profile-photo-copy strong,.profile-photo-copy span{display:block}
+.profile-photo-copy strong{font-size:14px;color:#202938;letter-spacing:-.2px}
+.profile-photo-copy span{font-size:11px;color:#818b9a;margin-top:4px}
+.profile-photo-actions{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap}
+.photo-action{border:1px solid rgba(0,122,255,.16);border-radius:999px;padding:7px 12px;background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(236,244,255,.82));color:#087aff;font-size:11px;font-weight:700;box-shadow:0 3px 9px rgba(30,65,120,.07),inset 0 1px 0 #fff;transition:transform .2s,box-shadow .2s}
+.photo-action:active{transform:scale(.95)}
+.photo-action.subtle{color:#788394;border-color:rgba(90,105,130,.13);background:rgba(255,255,255,.58)}
+.avatar.has-profile-photo{background-size:cover!important;background-position:center!important;color:transparent!important;text-shadow:none!important}
+.myid .avatar{width:48px;height:48px}
+.custom-modal{position:relative;overflow-x:hidden}
+.custom-modal:before{content:"";position:absolute;inset:0 0 auto;height:150px;pointer-events:none;background:radial-gradient(ellipse at 15% 0%,rgba(107,178,255,.15),transparent 70%)}
+.custom-modal>*{position:relative}
+.setting-label{letter-spacing:-.1px}
+.setting-input{background:rgba(255,255,255,.78);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 4px 14px rgba(30,50,80,.035)}
+.custom-actions .primary{min-height:42px;padding-inline:20px}
+@media(max-width:720px){.profile-photo-editor{padding:12px;gap:12px}.profile-photo-preview{width:68px;height:68px;flex-basis:68px}}
+</style>
+
 </head>
 <body>
 <div class="app"><div class="shell" id="shell">
@@ -562,7 +588,7 @@ button,input,textarea,select{font-family:var(--apple-font)!important}
 </div></div>
 <div class="modal-backdrop" id="modalBackdrop"><div class="modal"><h3 id="modalTitle">About LinkChat</h3><p id="modalText">LinkChat uses peer-to-peer WebRTC connections. Your messages are not stored on a LinkChat server, but connection setup uses a public signaling service.</p><div class="modal-actions"><button class="secondary" id="modalCancel">Close</button><button class="primary hidden" id="modalConfirm">Disconnect</button></div></div></div>
 
-<div class="custom-backdrop" id="customBackdrop" aria-hidden="true"><section class="custom-modal" role="dialog" aria-modal="true" aria-labelledby="customTitle"><div class="custom-head"><div><div class="custom-kicker">PERSONALIZE YOUR SPACE</div><h2 id="customTitle">Chat appearance</h2></div><button class="iconbtn" id="customClose" aria-label="Close customization">×</button></div><label class="setting-label" for="profileNameInput">Your display name</label><input class="setting-input" id="profileNameInput" maxlength="32" placeholder="Enter your name"><div class="setting-help">Your name is shared with connected LinkChat devices.</div><label class="setting-label" for="accentSelect">Accent color</label><select class="setting-input" id="accentSelect"><option value="mint">Apple Mint</option><option value="whatsapp">WhatsApp Green</option><option value="blue">Ocean Blue</option><option value="purple">Soft Violet</option><option value="orange">Warm Orange</option></select><label class="setting-label" for="wallpaperSelect">Chat wallpaper</label><select class="setting-input" id="wallpaperSelect"><option value="classic">Classic paper</option><option value="plain">Clean white</option><option value="soft">Soft mint</option><option value="night">Midnight blue</option></select><div class="setting-row"><label class="setting-label" for="fontSizeInput">Message text size</label><output id="fontSizeValue">14 px</output></div><input id="fontSizeInput" class="setting-range" type="range" min="12" max="19" value="14"><label class="motion-toggle"><input id="motionToggle" type="checkbox" checked><span><strong>Motion effects</strong><small>Animated chat entry, bubbles and button feedback</small></span></label><div class="custom-actions"><button class="secondary" id="customReset">Reset</button><button class="primary" id="customSave">Save changes</button></div></section></div>
+<div class="custom-backdrop" id="customBackdrop" aria-hidden="true"><section class="custom-modal" role="dialog" aria-modal="true" aria-labelledby="customTitle"><div class="custom-head"><div><div class="custom-kicker">PERSONALIZE YOUR SPACE</div><h2 id="customTitle">Chat appearance</h2></div><button class="iconbtn" id="customClose" aria-label="Close customization">×</button></div><div class="profile-photo-editor"><div class="profile-photo-preview" id="profilePhotoPreview"><span id="profilePhotoInitial">Y</span></div><div class="profile-photo-copy"><strong>Profile photo</strong><span>Choose a picture from your device</span><div class="profile-photo-actions"><button type="button" class="photo-action" id="chooseProfilePhoto">Choose photo</button><button type="button" class="photo-action subtle" id="removeProfilePhoto">Remove</button></div></div><input id="profilePhotoFile" type="file" accept="image/*" hidden></div><label class="setting-label" for="profileNameInput">Your display name</label><input class="setting-input" id="profileNameInput" maxlength="32" placeholder="Enter your name"><div class="setting-help">Your name is shared with connected LinkChat devices.</div><label class="setting-label" for="accentSelect">Accent color</label><select class="setting-input" id="accentSelect"><option value="mint">Apple Mint</option><option value="whatsapp">WhatsApp Green</option><option value="blue">Ocean Blue</option><option value="purple">Soft Violet</option><option value="orange">Warm Orange</option></select><label class="setting-label" for="wallpaperSelect">Chat wallpaper</label><select class="setting-input" id="wallpaperSelect"><option value="classic">Classic paper</option><option value="plain">Clean white</option><option value="soft">Soft mint</option><option value="night">Midnight blue</option></select><div class="setting-row"><label class="setting-label" for="fontSizeInput">Message text size</label><output id="fontSizeValue">14 px</output></div><input id="fontSizeInput" class="setting-range" type="range" min="12" max="19" value="14"><label class="motion-toggle"><input id="motionToggle" type="checkbox" checked><span><strong>Motion effects</strong><small>Animated chat entry, bubbles and button feedback</small></span></label><div class="custom-actions"><button class="secondary" id="customReset">Reset</button><button class="primary" id="customSave">Save changes</button></div></section></div>
 <script src="https://unpkg.com/peerjs@1.5.5/dist/peerjs.min.js"></script>
 <script>
 (()=>{'use strict';
@@ -578,7 +604,14 @@ function setState(text,online=false){stateText.textContent=text;stateDot.classLi
 function setConnectingUI(on){if(!connectBtn)return;connectBtn.classList.toggle('is-loading',on);connectBtn.disabled=on;peerInput.disabled=on;}
 function shortId(id){return id? (id.length>24?id.slice(0,24)+'…':id):'Waiting for ID'}
 function makeAvatar(text){return (text||'D').trim().slice(0,1).toUpperCase()}
-function applyProfileName(){ $('myName').textContent=localDisplayName; $('myAvatar').textContent=makeAvatar(localDisplayName); document.title=(localDisplayName==='Your device'?'LinkChat':localDisplayName+' · LinkChat'); }
+let localProfilePhoto=localStorage.getItem('linkchat-profile-photo')||'';
+function paintProfilePhoto(){
+ const avatar=$('myAvatar'),preview=$('profilePhotoPreview'),initial=$('profilePhotoInitial');
+ if(avatar){avatar.classList.toggle('has-profile-photo',!!localProfilePhoto);avatar.style.backgroundImage=localProfilePhoto?`url("${localProfilePhoto}")`:'';avatar.textContent=localProfilePhoto?'':makeAvatar(localDisplayName);}
+ if(preview){preview.style.backgroundImage=localProfilePhoto?`url("${localProfilePhoto}")`:'';preview.classList.toggle('has-profile-photo',!!localProfilePhoto);}
+ if(initial){initial.textContent=makeAvatar(localDisplayName);initial.style.display=localProfilePhoto?'none':'';}
+}
+function applyProfileName(){ $('myName').textContent=localDisplayName; $('myAvatar').textContent=makeAvatar(localDisplayName); paintProfilePhoto(); document.title=(localDisplayName==='Your device'?'LinkChat':localDisplayName+' · LinkChat'); }
 function sendProfileToPeers(){for(const [id,conn] of connections){if(conn&&conn.open)try{conn.send({type:'rename',name:localDisplayName})}catch(e){}}}
 function timeNow(){return new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}
 function formatSize(bytes){if(bytes<1024)return bytes+' B';if(bytes<1048576)return (bytes/1024).toFixed(1)+' KB';return (bytes/1048576).toFixed(1)+' MB'}
@@ -637,12 +670,33 @@ function stopVoiceNote(send){if(!mediaRecorder||mediaRecorder.state==='inactive'
 $('voiceNoteBtn').addEventListener('click',()=>{if(mediaRecorder&&mediaRecorder.state==='recording')stopVoiceNote(true);else startVoiceNote()});$('finishRecording').addEventListener('click',()=>stopVoiceNote(true));$('cancelRecording').addEventListener('click',()=>stopVoiceNote(false));
 $('searchInput').addEventListener('input',renderChatList);$('backBtn').addEventListener('click',()=>shell.classList.remove('chat-open'));$('newChatBtn').addEventListener('click',()=>{if(window.matchMedia('(max-width:720px)').matches)shell.classList.remove('chat-open');peerInput.focus();$('connectPanel').scrollIntoView({behavior:'smooth',block:'nearest'})});$('infoBtn').addEventListener('click',()=>openModal('About LinkChat','LinkChat is a browser-based peer-to-peer chat demo. WebRTC encrypts data in transit between connected browsers, while a public signaling service helps devices find each other. Messages are kept in this page memory and are lost when you reload. Only connect to people you trust.','',null));$('shareIdBtn').addEventListener('click',async()=>{if(!myPeerId){toast('Your ID is still loading');return}const text='Connect with me on LinkChat. My connection ID: '+myPeerId;try{if(navigator.share)await navigator.share({title:'LinkChat connection',text});else{await navigator.clipboard.writeText(text);toast('Connection details copied')}}catch(e){if(e.name!=='AbortError')toast('Could not share automatically')}});$('disconnectBtn').addEventListener('click',()=>{if(!activePeerId){toast('No active chat selected');return}const id=activePeerId;openModal('Disconnect device?','This will close the peer-to-peer connection with '+recordFor(id).name+'. Your current chat history will remain until you reload.','Disconnect',()=>{connections.get(id)?.close();connections.delete(id);const r=recordFor(id);r.online=false;r.conn=null;messageInput.disabled=true;sendBtn.disabled=true;$('activeStatus').textContent='offline';$('activeStatus').classList.remove('is-online','is-connecting');setState(connections.size?'Connected to a device':'Ready to connect',connections.size>0);renderChatList()})});$('modalCancel').addEventListener('click',closeModal);$('modalBackdrop').addEventListener('click',e=>{if(e.target===$('modalBackdrop'))closeModal()});
 const customBackdrop=$('customBackdrop');
-function openCustomize(){ $('profileNameInput').value=localDisplayName==='Your device'?'':localDisplayName; $('accentSelect').value=localStorage.getItem('linkchat-accent')||'mint'; $('wallpaperSelect').value=localStorage.getItem('linkchat-wallpaper')||'classic'; $('fontSizeInput').value=localStorage.getItem('linkchat-font-size')||'14'; $('fontSizeValue').textContent=$('fontSizeInput').value+' px'; $('motionToggle').checked=localStorage.getItem('linkchat-motion')!=='off'; customBackdrop.classList.add('show');customBackdrop.setAttribute('aria-hidden','false');setTimeout(()=>$('profileNameInput').focus(),120); }
+function openCustomize(){ paintProfilePhoto(); $('profileNameInput').value=localDisplayName==='Your device'?'':localDisplayName; $('accentSelect').value=localStorage.getItem('linkchat-accent')||'mint'; $('wallpaperSelect').value=localStorage.getItem('linkchat-wallpaper')||'classic'; $('fontSizeInput').value=localStorage.getItem('linkchat-font-size')||'14'; $('fontSizeValue').textContent=$('fontSizeInput').value+' px'; $('motionToggle').checked=localStorage.getItem('linkchat-motion')!=='off'; customBackdrop.classList.add('show');customBackdrop.setAttribute('aria-hidden','false');setTimeout(()=>$('profileNameInput').focus(),120); }
 function closeCustomize(){customBackdrop.classList.remove('show');customBackdrop.setAttribute('aria-hidden','true')}
 function applyCustomSettings(){const accent=localStorage.getItem('linkchat-accent')||'mint';document.body.classList.remove('accent-blue','accent-purple','accent-orange','accent-whatsapp');if(accent!=='mint')document.body.classList.add('accent-'+accent);document.body.classList.remove('wallpaper-plain','wallpaper-soft','wallpaper-night');const wall=localStorage.getItem('linkchat-wallpaper')||'classic';if(wall!=='classic')document.body.classList.add('wallpaper-'+wall);document.documentElement.style.setProperty('--message-size',(localStorage.getItem('linkchat-font-size')||'14')+'px');document.querySelectorAll('.bubble').forEach(b=>b.style.fontSize='var(--message-size)');document.body.classList.toggle('motion-off',localStorage.getItem('linkchat-motion')==='off')}
+$('chooseProfilePhoto').addEventListener('click',()=>$('profilePhotoFile').click());
+$('profilePhotoFile').addEventListener('change',e=>{
+ const file=e.target.files&&e.target.files[0];if(!file)return;
+ if(!file.type.startsWith('image/')){toast('Choose an image file');return}
+ if(file.size>12*1024*1024){toast('Choose an image under 12 MB');e.target.value='';return}
+ const reader=new FileReader();
+ reader.onload=()=>{
+  const img=new Image();
+  img.onload=()=>{
+   const canvas=document.createElement('canvas'),max=480,scale=Math.min(1,max/Math.max(img.width,img.height));
+   canvas.width=Math.max(1,Math.round(img.width*scale));canvas.height=Math.max(1,Math.round(img.height*scale));
+   const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0,canvas.width,canvas.height);
+   localProfilePhoto=canvas.toDataURL('image/jpeg',.82);
+   try{localStorage.setItem('linkchat-profile-photo',localProfilePhoto)}catch(err){localProfilePhoto='';toast('Photo is too large to save in this browser');return}
+   paintProfilePhoto();toast('Profile photo updated');
+  };
+  img.onerror=()=>toast('Could not open this image');img.src=reader.result;
+ };
+ reader.readAsDataURL(file);
+});
+$('removeProfilePhoto').addEventListener('click',()=>{localProfilePhoto='';localStorage.removeItem('linkchat-profile-photo');$('profilePhotoFile').value='';paintProfilePhoto();toast('Profile photo removed')});
 $('customizeBtn').addEventListener('click',openCustomize);$('customClose').addEventListener('click',closeCustomize);customBackdrop.addEventListener('click',e=>{if(e.target===customBackdrop)closeCustomize()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCustomize()});$('fontSizeInput').addEventListener('input',e=>{$('fontSizeValue').textContent=e.target.value+' px'});
 $('customSave').addEventListener('click',()=>{const newName=$('profileNameInput').value.trim().slice(0,32)||'Your device';const oldName=localDisplayName;localDisplayName=newName;localStorage.setItem('linkchat-display-name',localDisplayName);localStorage.setItem('linkchat-accent',$('accentSelect').value);localStorage.setItem('linkchat-wallpaper',$('wallpaperSelect').value);localStorage.setItem('linkchat-font-size',$('fontSizeInput').value);localStorage.setItem('linkchat-motion',$('motionToggle').checked?'on':'off');applyProfileName();applyCustomSettings();if(oldName!==newName)sendProfileToPeers();closeCustomize();toast('Appearance saved');});
-$('customReset').addEventListener('click',()=>{localStorage.removeItem('linkchat-display-name');localStorage.removeItem('linkchat-accent');localStorage.removeItem('linkchat-wallpaper');localStorage.removeItem('linkchat-font-size');localStorage.removeItem('linkchat-motion');localDisplayName='Your device';applyProfileName();applyCustomSettings();openCustomize();toast('Appearance reset')});
+$('customReset').addEventListener('click',()=>{localStorage.removeItem('linkchat-display-name');localStorage.removeItem('linkchat-profile-photo');localProfilePhoto='';localStorage.removeItem('linkchat-accent');localStorage.removeItem('linkchat-wallpaper');localStorage.removeItem('linkchat-font-size');localStorage.removeItem('linkchat-motion');localDisplayName='Your device';applyProfileName();applyCustomSettings();openCustomize();toast('Appearance reset')});
 
 /* App-native style sheets and contextual menus: keep actions out of the way until requested. */
 function openInputSheet(title,description,value,onSubmit,opts={}){
@@ -714,6 +768,20 @@ button:focus:not(:focus-visible),input:focus,textarea:focus{outline:none}
  const observer=new MutationObserver(addChatSearch);observer.observe(document.body,{childList:true,subtree:true});
 })();
 </script>
+
+
+
+<style id="ios26-liquid-glass-refinement">
+:root{--glass-edge:rgba(255,255,255,.88)}
+.shell{box-shadow:0 34px 100px rgba(45,67,105,.18),0 8px 24px rgba(45,67,105,.07),inset 0 1px 0 rgba(255,255,255,.98)}
+.shell:after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:6;background:linear-gradient(118deg,rgba(255,255,255,.22),transparent 24%,transparent 68%,rgba(255,255,255,.16));mix-blend-mode:screen}
+.topbar,.chat-head,.composer-wrap{box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 5px 20px rgba(45,65,100,.035)}
+.iconbtn,.copybtn,.primary,.sendbtn,.photo-action{position:relative;overflow:hidden}
+.iconbtn:after,.primary:after,.sendbtn:after{content:"";position:absolute;inset:1px 12% auto;height:45%;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.38),transparent);pointer-events:none}
+.chat-item.active{box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 5px 16px rgba(0,122,255,.055)}
+.bubble.incoming,.bubble.outgoing{backdrop-filter:blur(14px) saturate(155%);-webkit-backdrop-filter:blur(14px) saturate(155%)}
+@media(max-width:720px){.shell:after{display:none}.topbar,.chat-head{box-shadow:0 5px 18px rgba(45,65,100,.035)}}
+</style>
 
 </body>
 </html>
