@@ -718,6 +718,14 @@ if(featureStrip){const existing=[...featureStrip.children];const more=document.c
 
 const originalRenderMessage=renderMessage; // apply editable text size to future bubbles
 applyProfileName();applyCustomSettings();
+/* Attach & send files: the paperclip opens the picker, chosen files wait in the preview bar, Send (or Enter) delivers them. */
+function refreshAttachPreview(){const n=pendingFiles.length;attachPreview.classList.toggle('show',n>0);if(n){const total=pendingFiles.reduce((s,f)=>s+f.size,0);attachName.textContent=(n===1?pendingFiles[0].name:n+' files')+' · '+formatSize(total)}}
+$('attachBtn').addEventListener('click',()=>{if(!activePeerId||!recordFor(activePeerId).online){toast('Connect a device first');return}fileInput.click()});
+fileInput.addEventListener('change',()=>{const picked=[...fileInput.files];fileInput.value='';for(const f of picked){if(f.size===0){toast(f.name+' is empty');continue}if(f.size>MAX_FILE_SIZE){toast(f.name+' is larger than 20 MB');continue}pendingFiles.push(f)}refreshAttachPreview()});
+$('removeAttach').addEventListener('click',()=>{pendingFiles=[];refreshAttachPreview()});
+const sendTextOnly=sendText;
+sendText=async function(){if(pendingFiles.length){if(!activePeerId||!recordFor(activePeerId).online){toast('Connect a device first');return}const queue=pendingFiles;pendingFiles=[];refreshAttachPreview();for(const f of queue)await sendFile(f)}return sendTextOnly()};
+const selectChatBeforeAttach=selectChat;selectChat=function(id){const switching=id!==activePeerId;selectChatBeforeAttach(id);if(switching&&pendingFiles.length){pendingFiles=[];refreshAttachPreview()}};
 window.addEventListener('beforeunload',()=>{for(const url of [])URL.revokeObjectURL(url);if(peer)peer.destroy()});initPeer();
 })();
 </script>
