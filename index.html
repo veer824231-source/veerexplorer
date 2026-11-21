@@ -1332,7 +1332,21 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
       const registration=await navigator.serviceWorker.ready;
       const key=Uint8Array.from(atob(VAPID_PUBLIC_KEY.replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0));
       const subscription=await registration.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:key});
-      const response=await fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(subscription)});
+      const response=await fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},const response = await fetch('/api/subscribe', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    subscription: subscription.toJSON()
+  })
+});
+
+const result = await response.json();
+
+if (!response.ok) {
+  throw new Error(result.error || 'Could not save this device.');
+}
       if(!response.ok) throw new Error('Could not save this device. Please try again.');
       showToast('Push notifications enabled on this device.');
       enable.textContent='Push enabled';
