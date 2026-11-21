@@ -6,9 +6,6 @@
 <meta name="theme-color" content="#F8FAFC">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="logo.png">
-
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -186,6 +183,30 @@
             }
         }
     </style>
+
+<style id="veer-notification-styles">
+#vx-notification-trigger{position:fixed;right:22px;top:100px;z-index:180;display:flex;align-items:center;gap:9px;padding:12px 16px;border:1px solid rgba(99,102,241,.28);border-radius:18px;background:rgba(255,255,255,.78);color:#111827;box-shadow:0 12px 35px rgba(15,23,42,.12);backdrop-filter:blur(22px);font:700 12px 'Plus Jakarta Sans',sans-serif;cursor:pointer}
+html:not(.light) #vx-notification-trigger{background:rgba(15,23,42,.82);color:#e2e8f0}
+#vx-notification-trigger svg{width:18px;height:18px}
+#vx-notification-count{display:none;min-width:18px;height:18px;padding:0 5px;border-radius:20px;background:#4f46e5;color:white;font-size:10px;align-items:center;justify-content:center}
+#vx-notification-panel{position:fixed;right:22px;top:154px;width:min(370px,calc(100vw - 32px));max-height:min(570px,calc(100vh - 180px));overflow:auto;z-index:181;border:1px solid rgba(99,102,241,.2);border-radius:24px;background:rgba(255,255,255,.94);color:#0f172a;box-shadow:0 24px 80px rgba(15,23,42,.22);backdrop-filter:blur(28px);display:none}
+html:not(.light) #vx-notification-panel{background:rgba(15,23,42,.96);color:#e2e8f0}
+#vx-notification-panel.open{display:block;animation:vxPanelIn .22s ease-out}
+@keyframes vxPanelIn{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:none}}
+.vx-n-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid rgba(148,163,184,.2)}
+.vx-n-item{padding:15px 20px;border-bottom:1px solid rgba(148,163,184,.14)}
+.vx-n-item:last-child{border-bottom:0}
+.vx-n-title{font-size:13px;font-weight:800;margin-bottom:4px}
+.vx-n-body{font-size:12px;line-height:1.55;opacity:.68}
+.vx-n-empty{padding:28px 20px;text-align:center;font-size:12px;opacity:.55}
+.vx-n-actions{display:flex;gap:8px;padding:14px 18px;border-top:1px solid rgba(148,163,184,.18)}
+.vx-n-btn{border:0;border-radius:12px;padding:10px 13px;font-size:11px;font-weight:800;cursor:pointer;background:#4f46e5;color:white}
+.vx-n-btn.secondary{background:rgba(148,163,184,.18);color:inherit}
+#vx-notification-toast{position:fixed;right:22px;bottom:24px;z-index:500;max-width:min(360px,calc(100vw - 32px));padding:15px 18px;border-radius:18px;background:#111827;color:white;box-shadow:0 18px 50px rgba(0,0,0,.25);font:12px 'Plus Jakarta Sans',sans-serif;display:none}
+#vx-notification-toast.show{display:block;animation:vxPanelIn .2s ease-out}
+@media(max-width:640px){#vx-notification-trigger{top:auto;bottom:100px;right:14px}#vx-notification-panel{top:auto;bottom:158px;right:14px}}
+</style>
+
 </head>
 <body class="antialiased">
 
@@ -504,9 +525,7 @@
         </div>
     </section>
 
-</body>
-</html>
-    <section id="tech" class="py-40 px-6 max-w-7xl mx-auto">
+<section id="tech" class="py-40 px-6 max-w-7xl mx-auto">
         <h2 class="text-4xl md:text-8xl font-black tracking-tighter mb-24 text-center">CORE <span class="text-indigo-500">ENGINE.</span></h2>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div class="glass p-10 rounded-[40px] hover:-translate-y-4 transition-transform duration-500">
@@ -861,14 +880,11 @@
             }
         });
 
-        // SERVICE WORKER REGISTRATION (Bina iske install button nahi dikhega)
+        // Register the real external service worker (required for web push).
         if ('serviceWorker' in navigator) {
-            const swCode = `
-                self.addEventListener('install', e => self.skipWaiting());
-                self.addEventListener('fetch', e => e.respondWith(fetch(e.request)));
-            `;
-            const blob = new Blob([swCode], {type: 'text/javascript'});
-            navigator.serviceWorker.register(URL.createObjectURL(blob));
+            navigator.serviceWorker.register('/sw.js').catch(err => {
+                console.error('Service worker registration failed:', err);
+            });
         }
     </script>
 <div id="cookie-portal" class="fixed bottom-6 left-6 z-[250] hidden max-w-sm w-[calc(100%-48px)] sm:w-80 p-6 rounded-3xl border border-white/10 bg-black/40 backdrop-blur-xl text-white shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-500 opacity-0 translate-y-4 overflow-hidden html-light:bg-white/60 html-light:text-[#0f172a] html-light:border-black/10 html-light:backdrop-blur-xl">
@@ -1262,5 +1278,70 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 
 });
 </script>
+
+<!-- VEER EXPLOREX NOTIFICATIONS: additive component -->
+<button id="vx-notification-trigger" type="button" aria-label="Open notifications">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>
+  <span>Notifications</span><span id="vx-notification-count">0</span>
+</button>
+<section id="vx-notification-panel" aria-label="Notifications">
+  <div class="vx-n-head"><strong style="font-size:14px">Notifications</strong><button id="vx-notification-close" type="button" aria-label="Close" style="font-size:22px;opacity:.6">×</button></div>
+  <div id="vx-notification-list"><div class="vx-n-empty">No notifications yet</div></div>
+  <div class="vx-n-actions">
+    <button id="vx-enable-push" class="vx-n-btn" type="button">Enable push notifications</button>
+    <button id="vx-refresh-notifications" class="vx-n-btn secondary" type="button">Refresh</button>
+  </div>
+</section>
+<div id="vx-notification-toast" role="status"></div>
+<script>
+(() => {
+  const trigger=document.getElementById('vx-notification-trigger');
+  const panel=document.getElementById('vx-notification-panel');
+  const list=document.getElementById('vx-notification-list');
+  const count=document.getElementById('vx-notification-count');
+  const toast=document.getElementById('vx-notification-toast');
+  const enable=document.getElementById('vx-enable-push');
+  const VAPID_PUBLIC_KEY='__VAPID_PUBLIC_KEY__';
+
+  function showToast(message){
+    toast.textContent=message; toast.classList.add('show');
+    clearTimeout(showToast.timer); showToast.timer=setTimeout(()=>toast.classList.remove('show'),4200);
+  }
+  function safeText(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function render(items){
+    count.textContent=String(items.length); count.style.display=items.length?'inline-flex':'none';
+    if(!items.length){list.innerHTML='<div class="vx-n-empty">No notifications yet</div>';return;}
+    list.innerHTML=items.map(n=>`<article class="vx-n-item"><div class="vx-n-title">${safeText(n.title||'VEER EXPLOREX')}</div><div class="vx-n-body">${safeText(n.body||'')}</div><div class="vx-n-body" style="margin-top:7px;font-size:10px">${n.createdAt?new Date(n.createdAt).toLocaleString():''}</div></article>`).join('');
+  }
+  async function loadNotifications(){
+    try{
+      const r=await fetch('/api/notifications',{cache:'no-store'});
+      if(!r.ok) throw new Error('Could not load notifications');
+      const data=await r.json(); render(Array.isArray(data.notifications)?data.notifications:[]);
+    }catch(e){list.innerHTML='<div class="vx-n-empty">Notifications will appear here when the server is connected.</div>';}
+  }
+  trigger.addEventListener('click',()=>{panel.classList.toggle('open');if(panel.classList.contains('open'))loadNotifications();});
+  document.getElementById('vx-notification-close').addEventListener('click',()=>panel.classList.remove('open'));
+  document.getElementById('vx-refresh-notifications').addEventListener('click',loadNotifications);
+  enable.addEventListener('click',async()=>{
+    try{
+      if(!('serviceWorker' in navigator)||!('PushManager' in window)||!('Notification' in window)) throw new Error('This browser does not support web push.');
+      if(!VAPID_PUBLIC_KEY||VAPID_PUBLIC_KEY.startsWith('__')) throw new Error('Push setup is not finished yet. Add your VAPID public key first.');
+      const permission=await Notification.requestPermission();
+      if(permission!=='granted') throw new Error('Notification permission was not granted.');
+      const registration=await navigator.serviceWorker.ready;
+      const key=Uint8Array.from(atob(VAPID_PUBLIC_KEY.replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0));
+      const subscription=await registration.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:key});
+      const response=await fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(subscription)});
+      if(!response.ok) throw new Error('Could not save this device. Please try again.');
+      showToast('Push notifications enabled on this device.');
+      enable.textContent='Push enabled';
+    }catch(e){showToast(e.message||'Could not enable notifications.');}
+  });
+  window.addEventListener('load',loadNotifications);
+  window.addEventListener('veer:notification',e=>showToast(e.detail?.body||e.detail?.title||'New notification'));
+})();
+</script>
+
 </body>
 </html>
