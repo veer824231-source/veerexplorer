@@ -204,7 +204,18 @@ html:not(.light) #vx-notification-panel{background:rgba(15,23,42,.96);color:#e2e
 .vx-n-btn.secondary{background:rgba(148,163,184,.18);color:inherit}
 #vx-notification-toast{position:fixed;right:22px;bottom:24px;z-index:500;max-width:min(360px,calc(100vw - 32px));padding:15px 18px;border-radius:18px;background:#111827;color:white;box-shadow:0 18px 50px rgba(0,0,0,.25);font:12px 'Plus Jakarta Sans',sans-serif;display:none}
 #vx-notification-toast.show{display:block;animation:vxPanelIn .2s ease-out}
-@media(max-width:640px){#vx-notification-trigger{top:auto;bottom:100px;right:14px}#vx-notification-panel{top:auto;bottom:158px;right:14px}}
+@media(max-width:640px){
+  #vx-notification-trigger{
+    top:100px;
+    bottom:auto;
+    right:14px;
+  }
+  #vx-notification-panel{
+    top:154px;
+    bottom:auto;
+    right:14px;
+  }
+}
 </style>
 
 </head>
