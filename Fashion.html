@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta name="theme-color" content="#F97316">
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="logo.png">
 
     <meta name="mobile-web-app-capable" content="yes">
@@ -375,7 +375,89 @@
                 width: 100%;
             }
         }
-    </style>
+    
+/* ===== UPGRADE LAYER ===== */
+:root{--bg:#fff7ed;--card:rgba(255,255,255,.72);--line:rgba(251,146,60,.22);--ink:#1c1917}
+html.dark{--bg:#0c0a09;--card:rgba(28,25,23,.72);--line:rgba(251,146,60,.2);--ink:#fafaf9;color-scheme:dark}
+body{background:var(--bg)!important;color:var(--ink);transition:background .4s,color .4s}
+body::before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none;
+ background:radial-gradient(40% 40% at 20% 20%,rgba(249,115,22,.35),transparent 70%),
+ radial-gradient(35% 35% at 80% 30%,rgba(244,63,94,.25),transparent 70%),
+ radial-gradient(40% 40% at 50% 90%,rgba(250,204,21,.25),transparent 70%);
+ filter:blur(30px);animation:aurora 18s ease-in-out infinite alternate}
+@keyframes aurora{to{transform:translate3d(4%,3%,0) rotate(6deg) scale(1.08)}}
+header{background:linear-gradient(90deg,#ea580c,#f97316,#fb923c)!important;backdrop-filter:blur(14px)}
+main .bg-white,main .bg-slate-50,main .bg-white\/50{background:var(--card)!important;backdrop-filter:blur(18px);border-color:var(--line)!important}
+main .shadow-xl{box-shadow:0 20px 60px -20px rgba(234,88,12,.3)!important}
+main .rounded-2xl,main .rounded-3xl{transition:transform .25s,box-shadow .25s}
+html.dark main h1,html.dark main h2,html.dark main h3,html.dark main h4,html.dark main .text-slate-900,html.dark main .text-slate-800{color:var(--ink)!important}
+html.dark main .text-slate-600,html.dark main .text-slate-700,html.dark main .text-slate-500{color:#d6d3d1!important}
+html.dark main input{background:#1c1917!important;color:var(--ink)!important;border-color:#44403c!important}
+html.dark .toast,html.dark .connection-card{background:#1c1917;color:var(--ink);border-color:#44403c}
+html.dark #connection-overlay,html.dark .modal-backdrop{background:rgba(12,10,9,.8)}
+.progress-fill{background:linear-gradient(90deg,#f97316,#f43f5e,#f97316);background-size:200% 100%;animation:flow 1.2s linear infinite}
+@keyframes flow{to{background-position:-200% 0}}
+.radar{position:relative;width:120px;height:120px;margin:0 auto 18px}
+.radar i.r{position:absolute;inset:0;border-radius:50%;border:2px solid #fb923c;opacity:0;animation:ping 3s ease-out infinite}
+.radar i.r:nth-child(2){animation-delay:1s}.radar i.r:nth-child(3){animation-delay:2s}
+@keyframes ping{0%{transform:scale(.3);opacity:.9}100%{transform:scale(1.2);opacity:0}}
+.radar .core{position:absolute;inset:38px;border-radius:50%;background:linear-gradient(135deg,#f97316,#f43f5e);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 8px 30px rgba(249,115,22,.5)}
+#msg-panel{border:1px solid var(--line);background:var(--card);backdrop-filter:blur(18px);border-radius:24px;padding:16px}
+#msg-list{max-height:220px;overflow:auto;display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.bubble{max-width:82%;padding:8px 12px;border-radius:16px;font-size:13px;word-break:break-word;animation:itemIn .3s}
+.bubble.me{align-self:flex-end;background:linear-gradient(135deg,#f97316,#f43f5e);color:#fff;border-bottom-right-radius:4px}
+.bubble.them{align-self:flex-start;background:rgba(120,113,108,.18);border-bottom-left-radius:4px}
+.bubble a{text-decoration:underline}.bubble small{display:block;opacity:.6;font-size:10px;margin-top:2px}
+#theme-btn{width:36px;height:36px;border-radius:12px;background:rgba(255,255,255,.2);color:#fff;margin-right:10px}
+.confetti{position:fixed;top:-12px;width:9px;height:14px;z-index:9999;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translate3d(var(--dx),105vh,0) rotate(720deg);opacity:.9}}
+#drag-veil{position:fixed;inset:0;z-index:7000;display:none;align-items:center;justify-content:center;background:rgba(249,115,22,.18);backdrop-filter:blur(6px);font-size:22px;font-weight:700;color:#ea580c;border:4px dashed #f97316;pointer-events:none}
+@media (prefers-reduced-motion:reduce){body::before,.progress-fill,.radar i.r{animation:none}}
+
+#tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+#tools button,#tools label.tb{padding:8px 12px;border-radius:12px;font-size:12px;font-weight:600;border:1px solid var(--line);background:var(--card);cursor:pointer}
+#tools button:hover{border-color:#f97316}#tools .rec{background:#f43f5e;color:#fff;animation:pulseRec 1s infinite}
+@keyframes pulseRec{50%{opacity:.6}}
+#accept-modal{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;background:rgba(12,10,9,.55);backdrop-filter:blur(8px)}
+#accept-modal .card{width:min(380px,calc(100% - 32px));background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:26px;padding:26px;text-align:center;box-shadow:0 30px 90px rgba(0,0,0,.35)}
+#accept-modal .ic{width:64px;height:64px;margin:0 auto 14px;border-radius:20px;background:linear-gradient(135deg,#f97316,#f43f5e);color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px}
+#accept-modal button{flex:1;padding:11px;border-radius:14px;font-weight:700;font-size:14px}
+#spark{width:100%;height:44px;margin-top:10px;display:block}
+#hist-search{width:100%;padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:var(--card);font-size:13px;margin-bottom:10px;color:var(--ink)}
+#typing{font-size:11px;opacity:.6;height:14px;margin-bottom:6px}
+
+#splash-screen{background:radial-gradient(60% 50% at 15% 10%,rgba(250,204,21,.45),transparent 70%),radial-gradient(60% 60% at 90% 90%,rgba(244,63,94,.65),transparent 70%),linear-gradient(145deg,#ea580c,#f97316 55%,#fb923c);overflow:hidden}
+#splash-screen::before,#splash-screen::after{content:"";position:absolute;width:55vmax;height:55vmax;border-radius:50%;border:1px solid rgba(255,255,255,.16);left:50%;top:50%;margin:-27.5vmax 0 0 -27.5vmax;animation:spRing 5s ease-out infinite}
+#splash-screen::after{animation-delay:2.5s}
+@keyframes spRing{0%{transform:scale(.15);opacity:.9}100%{transform:scale(1);opacity:0}}
+.sp-stage{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:30px}
+.sp-dev{width:68px;height:68px;border-radius:22px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:28px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);backdrop-filter:blur(10px);box-shadow:0 18px 50px rgba(120,30,0,.3);animation:spPulse 1.8s ease-in-out infinite}
+.sp-dev.sp-b{animation-delay:.9s}
+@keyframes spPulse{50%{transform:scale(1.07);box-shadow:0 0 0 12px rgba(255,255,255,.12),0 18px 50px rgba(120,30,0,.3)}}
+.sp-line{position:relative;width:118px;height:2px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.55) 0 6px,transparent 6px 12px)}
+.sp-dot{position:absolute;top:-6px;left:0;width:14px;height:14px;border-radius:5px;background:#fff;box-shadow:0 0 18px 4px rgba(255,255,255,.7);opacity:0;animation:spSend 1.8s cubic-bezier(.5,0,.5,1) infinite}
+.sp-dot.d2{animation-delay:.3s;transform:scale(.75)}.sp-dot.d3{animation-delay:.6s;transform:scale(.55)}
+@keyframes spSend{0%{left:0;opacity:0}15%{opacity:1}85%{opacity:1}100%{left:calc(100% - 14px);opacity:0}}
+.splash-title{font-size:38px!important;font-weight:800!important;letter-spacing:-.04em!important;text-shadow:0 4px 30px rgba(120,30,0,.35)}
+.splash-subtitle{font-size:14px!important;min-height:20px;transition:opacity .25s}
+.splash-loader{width:170px!important;height:4px!important}
+@media (prefers-reduced-motion:reduce){#splash-screen::before,#splash-screen::after,.sp-dev,.sp-dot{animation:none}.sp-dot{opacity:1;left:calc(50% - 7px)}}
+
+#pair-tabs{display:none;position:relative;width:min(280px,100%);margin:0 auto 18px;padding:5px;border-radius:999px;background:#fff;box-shadow:0 10px 35px -10px rgba(0,0,0,.18),0 0 0 1px rgba(0,0,0,.04)}
+#pair-tabs .pill{position:absolute;top:5px;bottom:5px;left:5px;width:calc(50% - 5px);border-radius:999px;background:#eee;transition:transform .3s cubic-bezier(.3,.9,.3,1)}
+#pair-tabs[data-tab="send"] .pill{transform:translateX(100%)}
+#pair-tabs button{position:relative;flex:1;padding:11px 0;font-size:17px;font-weight:600;color:#111;border-radius:999px}
+html.dark #pair-tabs{background:#1c1917;box-shadow:0 0 0 1px #44403c}html.dark #pair-tabs .pill{background:#44403c}html.dark #pair-tabs button{color:#fafaf9}
+@media (max-width:767px){#pair-tabs:not(.off){display:flex}
+#pairing-section[data-tab="receive"]>:nth-child(2),#pairing-section[data-tab="send"]>:nth-child(1){display:none}
+#pairing-section{margin-bottom:0!important}}
+
+@keyframes fromR{from{opacity:0;transform:translateX(36px)}to{opacity:1;transform:none}}
+@keyframes fromL{from{opacity:0;transform:translateX(-36px)}to{opacity:1;transform:none}}
+@media (max-width:767px){#pairing-section[data-tab="send"]>:nth-child(2){animation:fromR .3s cubic-bezier(.3,.9,.3,1)}
+#pairing-section[data-tab="receive"]>:nth-child(1){animation:fromL .3s cubic-bezier(.3,.9,.3,1)}}
+@media (prefers-reduced-motion:reduce){#pairing-section>*{animation:none!important}}
+</style>
 </head>
 
 <body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased">
@@ -383,22 +465,16 @@
     <!-- SPLASH SCREEN -->
     <div id="splash-screen">
         <div class="splash-content">
-            <div class="splash-logo">
-                <i class="fa-solid fa-share-nodes"></i>
+            <div class="sp-stage" aria-hidden="true">
+                <div class="sp-dev"><i class="fa-solid fa-mobile-screen"></i></div>
+                <div class="sp-line"><span class="sp-dot"></span><span class="sp-dot d2"></span><span class="sp-dot d3"></span></div>
+                <div class="sp-dev sp-b"><i class="fa-solid fa-laptop"></i></div>
             </div>
-
-            <div class="splash-title">
-                Welcome To Airdrop
-            </div>
-
-            <div class="splash-subtitle">
-                Direct peer-to-peer file sharing
-            </div>
-
+            <div class="splash-title">AirDrop Web</div>
+            <div class="splash-subtitle" id="sp-msg">Direct peer-to-peer file sharing</div>
             <div class="splash-loader"></div>
         </div>
     </div>
-
 
     <!-- TOAST -->
     <div id="toast-container"></div>
@@ -1193,7 +1269,7 @@
                     .getElementById('splash-screen')
                     .classList.add('hide');
 
-            }, 1100);
+            }, 2300);
 
         }
 
@@ -3557,7 +3633,7 @@
                 () => {
 
                     navigator.serviceWorker
-                        .register('/sw.js')
+                        .register('sw.js')
                         .catch(() => {
                             /* sw.js can be added later */
                         });
@@ -3605,7 +3681,149 @@
             }
         );
 
-    </script>
+    
+/* ===== UPGRADE LAYER ===== */
+(function(){
+ const $=id=>document.getElementById(id);
+ // Dark mode (remembers choice, follows system by default)
+ const saved=localStorage.getItem('airdrop_theme');
+ if(saved?saved==='dark':matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark');
+ const btn=document.createElement('button');btn.id='theme-btn';btn.setAttribute('aria-label','Toggle dark mode');
+ const sync=()=>btn.innerHTML='<i class="fa-solid '+(document.documentElement.classList.contains('dark')?'fa-sun':'fa-moon')+'"></i>';
+ btn.onclick=()=>{const d=document.documentElement.classList.toggle('dark');localStorage.setItem('airdrop_theme',d?'dark':'light');sync()};
+ sync();const badge=$('connection-status-badge');badge.parentNode.style.display='flex';badge.parentNode.insertBefore(btn,badge);
+ const wrap=document.createElement('div');wrap.className='flex items-center';badge.parentNode.insertBefore(wrap,btn);wrap.append(btn,badge);
+
+ // Radar on the pairing screen
+ const pair=$('pairing-section');
+ pair.insertAdjacentHTML('beforebegin','<div class="radar" aria-hidden="true"><i class="r"></i><i class="r"></i><i class="r"></i><div class="core"><i class="fa-solid fa-wifi text-xl"></i></div></div>');
+
+ // Chime, haptics, confetti
+ let ac;const chime=()=>{try{ac=ac||new AudioContext();[660,880,1175].forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;o.connect(g);g.connect(ac.destination);const t=ac.currentTime+i*.09;g.gain.setValueAtTime(.12,t);g.gain.exponentialRampToValueAtTime(.001,t+.3);o.start(t);o.stop(t+.3)})}catch{}};
+ const confetti=()=>{const c=['#f97316','#f43f5e','#facc15','#22c55e','#38bdf8'];for(let i=0;i<70;i++){const e=document.createElement('i');e.className='confetti';e.style.cssText='left:'+Math.random()*100+'vw;background:'+c[i%5]+';--dx:'+(Math.random()*240-120)+'px;animation-duration:'+(1.6+Math.random()*1.4)+'s;animation-delay:'+Math.random()*.3+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),3500)}};
+ const buzz=p=>navigator.vibrate&&navigator.vibrate(p);
+
+ // Keep screen awake during a session
+ let lock=null;const wake=async()=>{try{lock=await navigator.wakeLock.request('screen')}catch{}};
+ const unwake=()=>{try{lock&&lock.release()}catch{}lock=null};
+
+ // Messages panel (text, links, clipboard)
+ $('drop-zone').insertAdjacentHTML('afterend','<div id="msg-panel"><div class="flex items-center justify-between mb-3"><h3 class="text-sm font-semibold">Quick message</h3><span class="text-xs opacity-60">Send text or links instantly</span></div><div id="msg-list"></div><div class="flex gap-2"><input id="msg-input" type="text" placeholder="Type or paste a message" class="flex-1 px-3 py-2 rounded-xl border border-slate-200 bg-white text-sm outline-none focus:border-orange-500"><button id="msg-send" class="px-4 py-2 rounded-xl text-sm font-semibold text-white" style="background:linear-gradient(135deg,#f97316,#f43f5e)">Send</button></div></div>');
+ const linkify=t=>escapeHTML(t).replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+ const bubble=(m,me)=>{const d=document.createElement('div');d.className='bubble '+(me?'me':'them');d.innerHTML=linkify(m.text)+'<small>'+escapeHTML(m.name||'')+' · '+new Date(m.ts).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+'</small>';const l=$('msg-list');l.appendChild(d);l.scrollTop=l.scrollHeight};
+ const send=()=>{const i=$('msg-input'),t=i.value.trim();if(!t||!conn||!conn.open)return;const m={type:'text-msg',text:t.slice(0,4000),name:getDeviceName(),ts:Date.now()};conn.send(m);bubble(m,true);i.value=''};
+ $('msg-send').onclick=send;$('msg-input').onkeydown=e=>{if(e.key==='Enter')send()};
+
+ // Hook existing functions
+ const _in=handleIncomingData;
+ handleIncomingData=function(d){if(d&&d.type==='text-msg'){bubble(d,false);chime();buzz(40);if(document.hidden&&Notification.permission==='granted')new Notification(d.name||'New message',{body:d.text});return}return _in(d)};
+ const _fin=finalizeIncomingFile;
+ finalizeIncomingFile=function(){const m=incomingFileMeta;_fin.apply(this,arguments);confetti();chime();buzz([60,40,60]);if(document.hidden&&Notification.permission==='granted'&&m)new Notification('File received',{body:m.name})};
+ const _con=onConnectedState;
+ onConnectedState=function(){_con.apply(this,arguments);document.querySelector('.radar').style.display='none';wake();chime();if('Notification' in window&&Notification.permission==='default')Notification.requestPermission()};
+ const _rst=resetConnectionState;
+ resetConnectionState=function(){_rst.apply(this,arguments);unwake();document.querySelector('.radar').style.display='';$('msg-list').innerHTML=''};
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&conn&&conn.open&&!lock)wake()});
+
+ // Paste files/images to send; paste text into the message box
+ document.addEventListener('paste',e=>{if(!conn||!conn.open)return;const f=[...(e.clipboardData.files||[])];if(f.length){addFilesToQueue(f);showToast(f.length+' pasted file(s) added to queue','success');return}const t=e.clipboardData.getData('text');if(t&&document.activeElement.tagName!=='INPUT'){$('msg-input').value=t;$('msg-input').focus()}});
+
+ // Full-screen drop veil
+ const veil=document.createElement('div');veil.id='drag-veil';veil.textContent='Drop to send';document.body.appendChild(veil);
+ let dc=0;addEventListener('dragenter',e=>{if(conn&&conn.open&&e.dataTransfer.types.includes('Files')){dc++;veil.style.display='flex'}});
+ addEventListener('dragleave',()=>{if(--dc<=0){dc=0;veil.style.display='none'}});
+ addEventListener('drop',()=>{dc=0;veil.style.display='none'});
+})();
+
+/* ===== UPGRADE LAYER 2 ===== */
+(function(){
+ const $=id=>document.getElementById(id);
+ // 1. Short pairing codes (6 characters)
+ const P=window.Peer,AL='ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+ const code=()=>Array.from({length:6},()=>AL[Math.random()*AL.length|0]).join('');
+ window.Peer=function(id,o){return new P(id||('adw-'+code()),o)};window.Peer.prototype=P.prototype;
+ const ti=$('target-peer-id');ti.placeholder='Enter code, e.g. K7M2QX';
+ const _ctp=connectToPeer;
+ connectToPeer=function(){let v=ti.value.trim();if(/^(adw-)?[A-Za-z0-9]{6}$/i.test(v)){ti.value='adw-'+v.replace(/^adw-/i,'').toUpperCase()}return _ctp.apply(this,arguments)};
+
+ // 2. Accept / decline prompt
+ document.body.insertAdjacentHTML('beforeend','<div id="accept-modal" role="dialog" aria-modal="true"><div class="card"><div class="ic"><i class="fa-solid fa-file-arrow-down"></i></div><h3 class="font-bold text-lg" id="am-title"></h3><p class="text-sm opacity-70 mb-3" id="am-info"></p><label class="text-xs opacity-70 flex items-center justify-center gap-2 mb-4"><input type="checkbox" id="am-all"> Accept all files in this session</label><div class="flex gap-3"><button id="am-no" style="background:rgba(120,113,108,.2)">Decline</button><button id="am-yes" class="text-white" style="background:linear-gradient(135deg,#f97316,#f43f5e)">Accept</button></div></div></div>');
+ let gate=null,auto=false;const hashes={};
+ const ask=(meta)=>{const g=gate={q:[],state:'pending'};
+  const done=ok=>{$('accept-modal').style.display='none';if(ok){auto=auto||$('am-all').checked;g.state='open';const q=g.q;gate=null;_in(meta);q.forEach(_in)}else{g.state='declined';try{conn.send({type:'decline'})}catch{}}};
+  if(auto)return done(true);
+  $('am-title').textContent=meta.name;$('am-info').textContent=formatBytes(meta.size)+' · from '+(meta.senderName||'connected device');$('am-all').checked=false;
+  $('accept-modal').style.display='flex';$('am-yes').onclick=()=>done(true);$('am-no').onclick=()=>done(false);$('am-yes').focus()};
+ const _in=handleIncomingData;
+ handleIncomingData=function(d){
+  if(d&&d.type==='decline'){try{cancelCurrentTransfer()}catch{}showToast('The receiver declined the file','info');return}
+  if(d&&d.type==='typing'){const t=$('typing');t.textContent='Typing...';clearTimeout(t._t);t._t=setTimeout(()=>t.textContent='',2000);return}
+  if(d&&d.type==='file-hash'){hashes[d.name+'|'+d.size]=d.sha;return}
+  if(d&&d.type==='file-meta'){ask(d);return}
+  if(gate){if(gate.state==='pending')gate.q.push(d);return}
+  return _in(d)};
+ const _rst=resetConnectionState;resetConnectionState=function(){gate=null;auto=false;$('accept-modal').style.display='none';return _rst.apply(this,arguments)};
+
+ // 3. SHA-256 integrity check
+ const sha=async b=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',await b.arrayBuffer()))].map(x=>x.toString(16).padStart(2,'0')).join('');
+ const LIM=300*1048576;
+ const _sf=sendFile;
+ sendFile=async function(f){try{if(f.size<=LIM&&conn&&conn.open)conn.send({type:'file-hash',name:f.name,size:f.size,sha:await sha(f)})}catch{}return _sf.call(this,f)};
+ const _fin=finalizeIncomingFile;
+ finalizeIncomingFile=function(){const m=incomingFileMeta;_fin.apply(this,arguments);const r=receivedFiles[0];if(!m||!r||r.size>LIM)return;
+  sha(r.blob).then(h=>{const e=hashes[m.name+'|'+m.size];if(!e)return;r.verified=e===h;showToast(e===h?'Verified: '+m.name+' arrived intact':'Checksum mismatch for '+m.name+'. Ask for a resend.',e===h?'success':'error')})};
+
+ // 4. Toolbar: folder, camera, voice note, compression, ZIP
+ $('msg-panel').insertAdjacentHTML('beforebegin','<div id="tools"><label class="tb"><i class="fa-solid fa-folder-open"></i> Folder<input type="file" id="t-folder" webkitdirectory multiple hidden></label><label class="tb"><i class="fa-solid fa-camera"></i> Camera<input type="file" id="t-cam" accept="image/*,video/*" capture="environment" hidden></label><button id="t-voice" type="button"><i class="fa-solid fa-microphone"></i> Voice note</button><label class="tb"><input type="checkbox" id="t-comp"> Shrink photos</label><button id="t-zip" type="button"><i class="fa-solid fa-file-zipper"></i> All received as ZIP</button></div>');
+ $('t-folder').onchange=e=>{addFilesToQueue([...e.target.files]);e.target.value=''};
+ $('t-cam').onchange=e=>{addFilesToQueue([...e.target.files]);e.target.value=''};
+ const comp=async f=>{if(!/^image\/(jpeg|png|webp)$/.test(f.type)||f.size<300*1024)return f;try{const b=await createImageBitmap(f),k=Math.min(1,1920/Math.max(b.width,b.height)),c=document.createElement('canvas');c.width=b.width*k;c.height=b.height*k;c.getContext('2d').drawImage(b,0,0,c.width,c.height);const o=await new Promise(r=>c.toBlob(r,'image/jpeg',.75));return o&&o.size<f.size?new File([o],f.name.replace(/\.\w+$/,'')+'.jpg',{type:'image/jpeg'}):f}catch{return f}};
+ const _afq=addFilesToQueue;
+ addFilesToQueue=async function(files){files=[...files];if($('t-comp').checked)files=await Promise.all(files.map(comp));return _afq.call(this,files)};
+ let rec=null,chunks=[];
+ $('t-voice').onclick=async()=>{const b=$('t-voice');if(rec){rec.stop();return}
+  try{const st=await navigator.mediaDevices.getUserMedia({audio:true});rec=new MediaRecorder(st);chunks=[];rec.ondataavailable=e=>chunks.push(e.data);
+   rec.onstop=()=>{st.getTracks().forEach(t=>t.stop());const f=new File(chunks,'voice-note-'+Date.now()+'.webm',{type:'audio/webm'});rec=null;b.classList.remove('rec');b.innerHTML='<i class="fa-solid fa-microphone"></i> Voice note';addFilesToQueue([f])};
+   rec.start();b.classList.add('rec');b.innerHTML='<i class="fa-solid fa-stop"></i> Stop and send'}catch{showToast('Microphone access was blocked. Allow it in your browser settings.','error')}};
+ $('t-zip').onclick=async()=>{if(!receivedFiles.length)return showToast('No received files yet','info');
+  try{if(!window.JSZip)await new Promise((ok,no)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';s.onload=ok;s.onerror=no;document.head.appendChild(s)});
+   const z=new JSZip(),used={};receivedFiles.forEach(f=>{let n=f.name;if(used[n]){n=(used[n]++)+'-'+n}else used[n]=1;z.file(n,f.blob)});
+   const u=URL.createObjectURL(await z.generateAsync({type:'blob'})),a=document.createElement('a');a.href=u;a.download='airdrop-files.zip';a.click();setTimeout(()=>URL.revokeObjectURL(u),4000)}
+  catch{showToast('Could not build the ZIP. Check your connection and try again.','error')}};
+
+ // 5. Typing indicator
+ $('msg-list').insertAdjacentHTML('afterend','<div id="typing"></div>');
+ let lt=0;$('msg-input').addEventListener('input',()=>{const n=Date.now();if(n-lt>1200&&conn&&conn.open){lt=n;try{conn.send({type:'typing'})}catch{}}});
+
+ // 6. History search
+ const rl=$('received-files-list');rl.insertAdjacentHTML('beforebegin','<input id="hist-search" type="search" placeholder="Search received files">');
+ $('hist-search').oninput=e=>{const q=e.target.value.toLowerCase();[...rl.children].forEach(c=>c.style.display=c.textContent.toLowerCase().includes(q)?'':'none')};
+
+ // 7. Live speed graph
+ const cv=document.createElement('canvas');cv.id='spark';$('transfer-dashboard').appendChild(cv);
+ let pts=[];const U={bytes:1,kb:1024,mb:1048576,gb:1073741824};
+ const draw=()=>{const w=cv.width=cv.clientWidth*2,h=cv.height=88,c=cv.getContext('2d');c.clearRect(0,0,w,h);if(pts.length<2)return;const m=Math.max(...pts)||1;c.beginPath();pts.forEach((v,i)=>{const x=i/(pts.length-1)*w,y=h-4-v/m*(h-12);i?c.lineTo(x,y):c.moveTo(x,y)});c.strokeStyle='#f97316';c.lineWidth=3;c.stroke();c.lineTo(w,h);c.lineTo(0,h);c.fillStyle='rgba(249,115,22,.18)';c.fill()};
+ new MutationObserver(()=>{const m=$('transfer-speed').textContent.match(/([\d.]+)\s*(bytes|kb|mb|gb)/i);if(!m)return;pts.push(parseFloat(m[1])*U[m[2].toLowerCase()]);if(pts.length>60)pts.shift();draw()}).observe($('transfer-speed'),{childList:true,characterData:true,subtree:true});
+ new MutationObserver(()=>{if($('transfer-dashboard').classList.contains('hidden'))pts=[]}).observe($('transfer-dashboard'),{attributes:true,attributeFilter:['class']});
+})();
+
+(function(){const m=document.getElementById('sp-msg');if(!m)return;
+['Starting secure connection','Creating your pairing code','Ready to share'].forEach((t,i)=>setTimeout(()=>{m.style.opacity=0;setTimeout(()=>{m.textContent=t;m.style.opacity=1},200)},i*700+500))})();
+
+(function(){const ps=document.getElementById('pairing-section'),r=document.querySelector('.radar');
+const t=document.createElement('div');t.id='pair-tabs';t.setAttribute('role','tablist');t.dataset.tab='receive';
+t.innerHTML='<span class="pill"></span><button type="button" role="tab" data-t="receive" aria-selected="true">Receive</button><button type="button" role="tab" data-t="send" aria-selected="false">Send</button>';
+r.parentNode.insertBefore(t,r);ps.dataset.tab='receive';
+t.onclick=e=>{const b=e.target.closest('button');if(!b)return;ps.dataset.tab=t.dataset.tab=b.dataset.t;t.querySelectorAll('button').forEach(x=>x.setAttribute('aria-selected',x===b))};
+new MutationObserver(()=>t.classList.toggle('off',ps.classList.contains('hidden'))).observe(ps,{attributes:true,attributeFilter:['class']})})();
+
+(function(){const ps=document.getElementById('pairing-section'),t=document.getElementById('pair-tabs'),m=document.querySelector('main');
+let x=0,y=0,ok=false;
+m.addEventListener('touchstart',e=>{ok=matchMedia('(max-width:767px)').matches&&!ps.classList.contains('hidden')&&!e.target.closest('input,textarea');x=e.touches[0].clientX;y=e.touches[0].clientY},{passive:true});
+m.addEventListener('touchend',e=>{if(!ok)return;const dx=e.changedTouches[0].clientX-x,dy=e.changedTouches[0].clientY-y;
+if(Math.abs(dx)<55||Math.abs(dx)<Math.abs(dy)*1.5)return;
+const to=dx<0?'send':'receive';if(ps.dataset.tab!==to){t.querySelector('[data-t="'+to+'"]').click();navigator.vibrate&&navigator.vibrate(15)}},{passive:true})})();
+</script>
 
 </body>
 </html>
